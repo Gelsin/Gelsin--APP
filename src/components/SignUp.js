@@ -5,7 +5,7 @@ import {Grid, Row, Col} from 'react-native-easy-grid';
 import  ButtonRound  from './common/ButtonRound';
 import  IconInput  from './common/IconInput';
 
-class SignIn extends Component {
+class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {email: '', password: '', error: '', loading: false};
@@ -60,12 +60,22 @@ class SignIn extends Component {
             <Container style={styles.container}>
                 {/*<Content style={styles.content}>*/}
                 <Grid style={styles.content}>
-                    <Row size={3} style={styles.headerRow}>
-                        <H3 style={styles.header}>Login</H3>
+                    <Row  style={styles.headerRow}>
+                        <H3 style={styles.header}>Register</H3>
                     </Row>
 
-                    <Row size={4} style={styles.formRow}>
+                    <Row  style={styles.formRow}>
                         <Form style={styles.form}>
+                            <IconInput
+                                placeholder="+994 44 444 44 44"
+                                icon="person"
+                            />
+
+                            <IconInput
+                                placeholder="Ad Soyad"
+                                icon="person"
+                            />
+
                             <IconInput
                                 placeholder="istifadəçi@email.az"
                                 icon="person"
@@ -82,13 +92,13 @@ class SignIn extends Component {
 
                             <ButtonRound disabled={false} onPress={this.onButtonPress.bind(this)} text="Enter"/>
 
-                            <Text style={styles.text}>Forget password?</Text>
+                            <Text style={styles.text}>Already have an account? Sign In</Text>
 
                             <Text style={styles.text}>{this.state.error}</Text>
                         </Form>
                     </Row>
 
-                    <Row size={1} style={styles.footerRow}>
+                    <Row  style={styles.footerRow}>
                         <Footer style={styles.footer}>
                             <Text style={styles.text}>Dont have an account. Create one</Text>
                         </Footer>
@@ -100,4 +110,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default SignUp;
