@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Dimensions, View} from 'react-native';
-import {Container, Content, Form, H3, Footer, Button, Text} from 'native-base';
+import {Container, Content, Form, H3, Footer, FooterTab, Button, Text} from 'native-base';
 import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
 import  IconInput  from './common/IconInput';
 
-class SignUp extends Component {
+class Verification extends Component {
     constructor(props) {
         super(props);
         this.state = {email: '', password: '', error: '', loading: false};
@@ -29,14 +29,16 @@ class SignUp extends Component {
             },
             headerRow: {
                 backgroundColor: '#fff',
-                alignItems: 'center',
-                justifyContent: 'center'
+                alignItems:'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
             },
             header: {
                 alignSelf: 'center',
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
-                marginTop: 60,
+                // marginTop: 60,
+                marginBottom: 30
             },
             formRow: {
                 backgroundColor: '#ccc',
@@ -54,7 +56,9 @@ class SignUp extends Component {
                 alignItems: 'flex-end'
             },
             footer: {
-                // backgroundColor: 'transparent'
+                // backgroundColor: 'blue',
+                // justifyContent: 'center',
+                // alignItems: 'flex-end'
             }
         };
 
@@ -63,49 +67,35 @@ class SignUp extends Component {
                 {/*<Content style={styles.content}>*/}
                 <Grid style={styles.content}>
                     <Row size={1} style={styles.headerRow}>
-                        <H3 style={styles.header}>Register</H3>
+                        <H3 style={styles.header}>Verification</H3>
+
+                        <Text style={styles.text}>Please enter the verification code</Text>
+                        <Text style={styles.text}>that we just send to your mobile</Text>
+
                     </Row>
 
-                    <Row size={3} style={styles.formRow}>
+                    <Row size={1} style={styles.formRow}>
                         <Form style={styles.form}>
-                            <IconInput
-                                placeholder="+994 44 444 44 44"
-                                icon="person"
-                            />
-
-                            <IconInput
-                                placeholder="Ad Soyad"
-                                icon="person"
-                            />
-
                             <IconInput
                                 placeholder="istifadəçi@email.az"
                                 icon="person"
                                 value={this.state.email}
                                 onChangeText={email => this.setState({email})}
                             />
-                            <IconInput
-                                secureTextEntry
-                                placeholder="Şifrə"
-                                icon="key"
-                                value={this.state.password}
-                                onChangeText={password => this.setState({password})}
-                            />
 
                             <ButtonRound disabled={false} onPress={this.onButtonPress.bind(this)} text="Enter"/>
-                            <Button transparent onPress={()=>Actions.signin()}>
-                                <Text style={styles.text}>Already have an account? Sign In</Text>
-                            </Button>
-
-                            <Text style={styles.text}>{this.state.error}</Text>
                         </Form>
                     </Row>
 
                     <Row size={1} style={styles.footerRow}>
                         <Footer style={styles.footer}>
-                            <Button transparent onPress={()=>Actions.signin()}>
-                                <Text style={styles.text}>Skip</Text>
+                            {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
+                            <Button transparent onPress={()=>Actions.signup()}>
+                                <Text style={styles.text}>
+                                    Resend Code
+                                </Text>
                             </Button>
+                            {/*</FooterTab>*/}
                         </Footer>
                     </Row>
                 </Grid>
@@ -115,4 +105,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default Verification;

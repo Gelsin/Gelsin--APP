@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Dimensions, View} from 'react-native';
-import {Container, Content, Form, H3, Footer, Text} from 'native-base';
+import {Container, Content, Form, H3, Footer, FooterTab, Button, Text} from 'native-base';
 import {Grid, Row, Col} from 'react-native-easy-grid';
+import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
 import  IconInput  from './common/IconInput';
 
@@ -49,10 +50,13 @@ class SignIn extends Component {
             },
             footerRow: {
                 backgroundColor: '#fff',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignItems: 'flex-end'
             },
             footer: {
-                // backgroundColor: 'transparent'
+                // backgroundColor: 'blue',
+                // justifyContent: 'center',
+                // alignItems: 'flex-end'
             }
         };
 
@@ -60,11 +64,11 @@ class SignIn extends Component {
             <Container style={styles.container}>
                 {/*<Content style={styles.content}>*/}
                 <Grid style={styles.content}>
-                    <Row size={3} style={styles.headerRow}>
-                        <H3 style={styles.header}>Login</H3>
+                    <Row size={2} style={styles.headerRow}>
+                        <H3 style={styles.header}>LOGIN</H3>
                     </Row>
 
-                    <Row size={4} style={styles.formRow}>
+                    <Row size={3} style={styles.formRow}>
                         <Form style={styles.form}>
                             <IconInput
                                 placeholder="istifadəçi@email.az"
@@ -88,9 +92,15 @@ class SignIn extends Component {
                         </Form>
                     </Row>
 
-                    <Row size={1} style={styles.footerRow}>
+                    <Row size={2} style={styles.footerRow}>
                         <Footer style={styles.footer}>
-                            <Text style={styles.text}>Dont have an account. Create one</Text>
+                            {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
+                                <Button transparent onPress={()=>Actions.signup()}>
+                                    <Text style={styles.text}>
+                                        Don't have an account. Create one
+                                    </Text>
+                                </Button>
+                            {/*</FooterTab>*/}
                         </Footer>
                     </Row>
                 </Grid>
