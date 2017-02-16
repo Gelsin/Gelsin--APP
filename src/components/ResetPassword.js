@@ -6,7 +6,7 @@ import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
 import  IconInput  from './common/IconInput';
 
-class SignIn extends Component {
+class ResetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {email: '', password: '', error: '', loading: false};
@@ -30,12 +30,15 @@ class SignIn extends Component {
             headerRow: {
                 backgroundColor: '#fff',
                 alignItems:'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                flexDirection: 'column'
             },
             header: {
                 alignSelf: 'center',
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
+                // marginTop: 60,
+                marginBottom: 30
             },
             formRow: {
                 backgroundColor: '#ccc',
@@ -43,8 +46,6 @@ class SignIn extends Component {
             },
             form: {
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
             },
             button: {
                 alignSelf: 'center'
@@ -68,11 +69,15 @@ class SignIn extends Component {
             <Container style={styles.container}>
                 {/*<Content style={styles.content}>*/}
                 <Grid style={styles.content}>
-                    <Row size={2} style={styles.headerRow}>
-                        <H3 style={styles.header}>LOGIN</H3>
+                    <Row size={1} style={styles.headerRow}>
+                        <H3 style={styles.header}>PASSWORD RECOVER</H3>
+
+                        <Text style={styles.text}>Please enter your email address</Text>
+                        <Text style={styles.text}>and we'll help with this</Text>
+
                     </Row>
 
-                    <Row size={3} style={styles.formRow}>
+                    <Row size={1} style={styles.formRow}>
                         <Form style={styles.form}>
                             <IconInput
                                 placeholder="istifadəçi@email.az"
@@ -80,32 +85,19 @@ class SignIn extends Component {
                                 value={this.state.email}
                                 onChangeText={email => this.setState({email})}
                             />
-                            <IconInput
-                                secureTextEntry
-                                placeholder="Şifrə"
-                                icon="key"
-                                value={this.state.password}
-                                onChangeText={password => this.setState({password})}
-                            />
 
-                            <ButtonRound disabled={false} onPress={this.onButtonPress.bind(this)} text="Enter"/>
-
-                            <Button style={styles.button} transparent onPress={()=>Actions.resetPassword()}>
-                                <Text style={styles.text}>Forget Password?</Text>
-                            </Button>
-
-                            <Text style={styles.text}>{this.state.error}</Text>
+                            <ButtonRound disabled={false} onPress={()=>Actions.signIn()} text="Enter"/>
                         </Form>
                     </Row>
 
-                    <Row size={2} style={styles.footerRow}>
+                    <Row size={1} style={styles.footerRow}>
                         <Footer style={styles.footer}>
                             {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
-                                <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
-                                    <Text style={styles.text}>
-                                        Don't have an account. Create one
-                                    </Text>
-                                </Button>
+                            <Button style={styles.button} transparent onPress={()=>Actions.signIn()}>
+                                <Text style={styles.text}>
+                                    Back to Sign In
+                                </Text>
+                            </Button>
                             {/*</FooterTab>*/}
                         </Footer>
                     </Row>
@@ -116,4 +108,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default ResetPassword;

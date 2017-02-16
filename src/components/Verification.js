@@ -47,6 +47,9 @@ class Verification extends Component {
             form: {
                 flex: 1,
             },
+            button: {
+                alignSelf: 'center'
+            },
             text: {
                 alignSelf: 'center'
             },
@@ -67,7 +70,7 @@ class Verification extends Component {
                 {/*<Content style={styles.content}>*/}
                 <Grid style={styles.content}>
                     <Row size={1} style={styles.headerRow}>
-                        <H3 style={styles.header}>Verification</H3>
+                        <H3 style={styles.header}>VERIFICATION</H3>
 
                         <Text style={styles.text}>Please enter the verification code</Text>
                         <Text style={styles.text}>that we just send to your mobile</Text>
@@ -83,14 +86,14 @@ class Verification extends Component {
                                 onChangeText={email => this.setState({email})}
                             />
 
-                            <ButtonRound disabled={false} onPress={this.onButtonPress.bind(this)} text="Enter"/>
+                            <ButtonRound disabled={false} onPress={()=>Actions.signIn()} text="Enter"/>
                         </Form>
                     </Row>
 
                     <Row size={1} style={styles.footerRow}>
                         <Footer style={styles.footer}>
                             {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
-                            <Button transparent onPress={()=>Actions.signup()}>
+                            <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
                                 <Text style={styles.text}>
                                     Resend Code
                                 </Text>

@@ -36,7 +36,6 @@ class SignUp extends Component {
                 alignSelf: 'center',
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
-                marginTop: 60,
             },
             formRow: {
                 backgroundColor: '#ccc',
@@ -44,6 +43,9 @@ class SignUp extends Component {
             },
             form: {
                 flex: 1,
+            },
+            button: {
+                alignSelf: 'center'
             },
             text: {
                 alignSelf: 'center'
@@ -63,7 +65,7 @@ class SignUp extends Component {
                 {/*<Content style={styles.content}>*/}
                 <Grid style={styles.content}>
                     <Row size={1} style={styles.headerRow}>
-                        <H3 style={styles.header}>Register</H3>
+                        <H3 style={styles.header}>REGISTER</H3>
                     </Row>
 
                     <Row size={3} style={styles.formRow}>
@@ -92,8 +94,9 @@ class SignUp extends Component {
                                 onChangeText={password => this.setState({password})}
                             />
 
-                            <ButtonRound disabled={false} onPress={this.onButtonPress.bind(this)} text="Enter"/>
-                            <Button transparent onPress={()=>Actions.signin()}>
+                            <ButtonRound disabled={false} onPress={()=>Actions.verification()} text="Enter"/>
+
+                            <Button style={styles.button} transparent onPress={()=>Actions.signIn()}>
                                 <Text style={styles.text}>Already have an account? Sign In</Text>
                             </Button>
 
@@ -103,7 +106,7 @@ class SignUp extends Component {
 
                     <Row size={1} style={styles.footerRow}>
                         <Footer style={styles.footer}>
-                            <Button transparent onPress={()=>Actions.signin()}>
+                            <Button style={styles.button} transparent onPress={()=>Actions.signIn()}>
                                 <Text style={styles.text}>Skip</Text>
                             </Button>
                         </Footer>
