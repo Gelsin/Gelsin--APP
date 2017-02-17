@@ -4,18 +4,17 @@ import {
     Header,
     Title,
     Content,
-    Footer,
-    FooterTab,
     Button,
     Left,
     Right,
     Body,
     Icon,
-    H3,
     Text,
     Form,
     Item,
-    ListItem
+    ListItem,
+    Separator,
+    Label
 } from 'native-base';
 import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
@@ -56,38 +55,52 @@ export default class Account extends Component {
                     {/*<Grid>*/}
                     {/*<Row >*/}
                     {/*<Col>*/}
-                    <ListItem itemHeader>
+                    <Separator bordered>
                         <Text>Profile</Text>
-                    </ListItem>
+                    </Separator>
 
-                    <ListItem style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
-                        <Text note>Name Surname</Text>
-                        <Text >Orxan Alirzayev</Text>
-                    </ListItem>
+                    <Form>
+                        <Item stackedLabel>
+                            <Label>Username</Label>
+                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
+                        </Item>
 
-                    <ListItem style={{flexDirection: 'column'}}>
-                        <Text note>Name Surname</Text>
-                        <Text >Orxan Alirzayev</Text>
-                    </ListItem>
+                        <Item stackedLabel>
+                            <Label>Username</Label>
+                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
+                        </Item>
 
-                    <ListItem style={{flexDirection: 'column'}}>
-                        <Text note>Name Surname</Text>
-                        <Text >Orxan Alirzayev</Text>
-                    </ListItem>
+                        <Item stackedLabel>
+                            <Label>Username</Label>
+                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
+                        </Item>
+                    </Form>
 
 
-                    <ListItem itemHeader >
+                    {/*<ListItem itemHeader >*/}
+                        {/*<Text>Profile</Text>*/}
+                    {/*</ListItem>*/}
+
+                    <Separator bordered>
                         <Text>Profile</Text>
-                    </ListItem>
+                    </Separator>
 
-                    <Text note>Name Surname</Text>
-                    <Text >Orxan Alirzayev</Text>
+                    <Form>
+                        <Item stackedLabel>
+                            <Label>Username</Label>
+                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
+                        </Item>
 
-                    <Text note>Name Surname</Text>
-                    <Text >Orxan Alirzayev</Text>
+                        <Item stackedLabel>
+                            <Label>Username</Label>
+                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
+                        </Item>
 
-                    <Text note>Name Surname</Text>
-                    <Text >Orxan Alirzayev</Text>
+                        <Item stackedLabel>
+                            <Label>Username</Label>
+                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
+                        </Item>
+                    </Form>
                     {/*</Col>*/}
                     {/*</Row>*/}
                     {/*</Grid>*/}

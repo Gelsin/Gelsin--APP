@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {Dimensions, View} from 'react-native';
-import {Container, Content, Form, H3, Footer, FooterTab, Header, Button, Text, Input, Item} from 'native-base';
-import {Grid, Row, Col} from 'react-native-easy-grid';
+import {Container, Form, H3, Footer, Header, Button, Text, Input, Item} from 'native-base';
+import {Grid, Row} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
-import  IconInput  from './common/IconInput';
 
 class Verification extends Component {
     constructor(props) {
@@ -35,28 +34,23 @@ class Verification extends Component {
                 backgroundColor: 'transparent',
                 alignItems:'flex-end',
                 elevation: 0,
-                // justifyContent: 'flex-end',
                 height: Dimensions.get('window').height * 0.15
             },
             title: {
-                //alignSelf: 'center',
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
                 fontSize: 16,
                 fontFamily: 'SourceSansPro'
             },
             formRow: {
-                // backgroundColor: '#ccc',
                 justifyContent: 'center'
             },
             form: {
                 flex: 1,
-                // justifyContent: 'center',
                 alignItems: 'center'
             },
             button: {
                 alignSelf: 'center',
-                // marginTop: 10
             },
             text: {
                 alignSelf: 'center',
@@ -65,16 +59,8 @@ class Verification extends Component {
                 fontSize: 15
 
             },
-            // footerRow: {
-            //     backgroundColor: '#fff',
-            //     justifyContent: 'center',
-            //     alignItems: 'flex-end'
-            // },
             footer: {
                 backgroundColor: 'transparent',
-
-                // justifyContent: 'center',
-                // alignItems: 'flex-end'
             },
             item: {
                 borderColor: 'rgba(255, 255, 255, 0.5)'
@@ -82,7 +68,6 @@ class Verification extends Component {
             input: {
                 textAlign: 'center',
                 color: '#e5ddcb',
-                // paddingLeft: -35,
                 fontFamily: 'SourceSansPro'
             }
         };
@@ -96,11 +81,8 @@ class Verification extends Component {
 
                 <Grid style={styles.content}>
                     <Row size={1} style={styles.headerRow}>
-                        {/*<H3 style={styles.header}>VERIFICATION</H3>*/}
-
                         <Text style={styles.text}>Please enter the verification code</Text>
                         <Text style={styles.text}>that we just send to your mobile</Text>
-
                     </Row>
 
                     <Row size={3} style={styles.formRow}>
@@ -112,23 +94,17 @@ class Verification extends Component {
                                 />
                             </Item>
 
-                            <ButtonRound disabled={false} onPress={()=>Actions.signIn()} text="Enter"/>
+                            <ButtonRound disabled={false} onPress={()=>Actions.signIn()} text="Verify"/>
                         </Form>
                     </Row>
-
-                    {/*<Row size={1} style={styles.footerRow}>*/}
-                        {/**/}
-                    {/*</Row>*/}
                 </Grid>
 
                 <Footer style={styles.footer}>
-                    {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
                     <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
                         <Text style={styles.text}>
                             Resend Code
                         </Text>
                     </Button>
-                    {/*</FooterTab>*/}
                 </Footer>
                 {/*</Content>*/}
             </Container>

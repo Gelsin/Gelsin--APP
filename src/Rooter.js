@@ -6,6 +6,7 @@ import Verification from './components/Verification';
 import ResetPassword from './components/ResetPassword';
 import Account from './components/Account';
 import Addresses from './components/Addresses';
+import Cart from './components/Cart';
 
 export default class AppRouter extends Component {
     constructor(props) {
@@ -22,8 +23,9 @@ export default class AppRouter extends Component {
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
                 </Scene>
                 <Scene key="main">
-                    <Scene key="account" component={Account} hideNavBar/>
-                    <Scene key="addresses" component={Addresses} hideNavBa  />
+                    <Scene key="account" component={Account} hideNavBar initial />
+                    <Scene key="addresses" component={Addresses} hideNavBar  />
+                    <Scene key="cart" component={Cart} hideNavBar />
                 </Scene>
             </Router>
 
