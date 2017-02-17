@@ -87,6 +87,9 @@
       <string>Skia.ttf</string>
       <string>Times New Roman.ttf</string>
       <string>Zocial.ttf</string>
+      <string>SourceSansPro-Bold.ttf</string>
+      <string>SourceSansPro-Regular.ttf</string>
+      <string>SourceSansPro-Semibold.ttf</string>
     </array>
   </dict>
 </plist>

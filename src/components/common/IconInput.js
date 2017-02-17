@@ -4,16 +4,24 @@ import {Item, Icon, Input} from 'native-base';
 export default class IconInput extends Component {
     render() {
         const styles = {
+            item: {
+                borderColor: 'rgba(255, 255, 255, 0.5)'
+            },
             input: {
                 textAlign: 'center',
-                // paddingLeft: -50
+                color: '#e5ddcb',
+                paddingLeft: -35,
+                fontFamily: 'SourceSansPro'
+            },
+            icon: {
+                color: '#fff'
             }
         };
 
         return (
-            <Item>
-                <Icon active name={this.props.icon} />
-                <Input style={styles.input} placeholder={this.props.placeholder} {...this.props} />
+            <Item style={styles.item}>
+                <Icon style={styles.icon} name={this.props.icon} />
+                <Input placeholderTextColor="rgba(255, 255, 255, 0.6)" style={styles.input} placeholder={this.props.placeholder} {...this.props} />
             </Item>
         );
     }

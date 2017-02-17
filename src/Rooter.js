@@ -4,6 +4,8 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Verification from './components/Verification';
 import ResetPassword from './components/ResetPassword';
+import Account from './components/Account';
+import Addresses from './components/Addresses';
 
 export default class AppRouter extends Component {
     constructor(props) {
@@ -18,6 +20,10 @@ export default class AppRouter extends Component {
                     <Scene key="signUp" component={SignUp} hideNavBar />
                     <Scene key="verification" component={Verification} hideNavBar />
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
+                </Scene>
+                <Scene key="main">
+                    <Scene key="account" component={Account} hideNavBar/>
+                    <Scene key="addresses" component={Addresses} hideNavBa  />
                 </Scene>
             </Router>
 

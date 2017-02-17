@@ -113,7 +113,7 @@ export default {
 
 
     // Font
-  fontFamily: 'Roboto',
+  fontFamily: 'Georgia',
   fontSizeBase: 15,
 
   get fontSizeH1() {

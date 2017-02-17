@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Dimensions, View} from 'react-native';
-import {Container, Content, Form, H3, Footer, FooterTab, Button, Text} from 'native-base';
+import {Container, Content, Form, H3, Header, Footer, FooterTab, Button, Text} from 'native-base';
 import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
@@ -14,6 +14,7 @@ class SignIn extends Component {
 
     onButtonPress() {
         console.log(this.state);
+        Actions.main();
     }
 
     render() {
@@ -25,20 +26,24 @@ class SignIn extends Component {
             },
             content: {
                 flex: 1,
-                width: Dimensions.get('window').width * 0.85
-            },
-            headerRow: {
-                backgroundColor: '#fff',
-                alignItems:'center',
-                justifyContent: 'center'
+                width: Dimensions.get('window').width * 0.8
             },
             header: {
-                alignSelf: 'center',
+                backgroundColor: 'transparent',
+                alignItems:'flex-end',
+                elevation: 0,
+                // justifyContent: 'flex-end',
+                height: Dimensions.get('window').height * 0.15
+            },
+            title: {
+                //alignSelf: 'center',
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
+                fontSize: 16,
+                fontFamily: 'SourceSansPro-Semibold'
             },
             formRow: {
-                backgroundColor: '#ccc',
+                // backgroundColor: '#ccc',
                 justifyContent: 'center'
             },
             form: {
@@ -47,18 +52,23 @@ class SignIn extends Component {
                 alignItems: 'center'
             },
             button: {
-                alignSelf: 'center'
+                alignSelf: 'center',
+                // marginTop: 10
             },
             text: {
-                alignSelf: 'center'
+                alignSelf: 'center',
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontFamily: 'SourceSansPro'
+
             },
-            footerRow: {
-                backgroundColor: '#fff',
-                justifyContent: 'center',
-                alignItems: 'flex-end'
-            },
+            // footerRow: {
+            //     backgroundColor: '#fff',
+            //     justifyContent: 'center',
+            //     alignItems: 'flex-end'
+            // },
             footer: {
-                // backgroundColor: 'blue',
+                backgroundColor: 'transparent',
+
                 // justifyContent: 'center',
                 // alignItems: 'flex-end'
             }
@@ -67,49 +77,57 @@ class SignIn extends Component {
         return (
             <Container style={styles.container}>
                 {/*<Content style={styles.content}>*/}
+
+                <Header style={styles.header}>
+                    <H3 style={styles.title}>LOGIN</H3>
+                </Header>
+
                 <Grid style={styles.content}>
-                    <Row size={2} style={styles.headerRow}>
-                        <H3 style={styles.header}>LOGIN</H3>
-                    </Row>
+                    {/*<Row size={1} style={styles.headerRow}>*/}
+                        {/*<H3 style={styles.header}>LOGIN</H3>*/}
+                    {/*</Row>*/}
 
                     <Row size={3} style={styles.formRow}>
                         <Form style={styles.form}>
                             <IconInput
                                 placeholder="istifadəçi@email.az"
-                                icon="person"
+                                icon="ios-mail-outline"
                                 value={this.state.email}
                                 onChangeText={email => this.setState({email})}
                             />
                             <IconInput
                                 secureTextEntry
                                 placeholder="Şifrə"
-                                icon="key"
+                                icon="ios-lock-outline"
                                 value={this.state.password}
                                 onChangeText={password => this.setState({password})}
                             />
 
                             <ButtonRound disabled={false} onPress={this.onButtonPress.bind(this)} text="Enter"/>
 
-                            <Button style={styles.button} transparent onPress={()=>Actions.resetPassword()}>
-                                <Text style={styles.text}>Forget Password?</Text>
+                            <Button autoCapitalize="none" style={styles.button} transparent onPress={()=>Actions.resetPassword()}>
+                                <Text autoCapitalize="none" style={styles.text}>Forget your password?</Text>
                             </Button>
 
                             <Text style={styles.text}>{this.state.error}</Text>
                         </Form>
                     </Row>
 
-                    <Row size={2} style={styles.footerRow}>
-                        <Footer style={styles.footer}>
-                            {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
-                                <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
-                                    <Text style={styles.text}>
-                                        Don't have an account. Create one
-                                    </Text>
-                                </Button>
-                            {/*</FooterTab>*/}
-                        </Footer>
-                    </Row>
+                    {/*<Row size={1} style={styles.footerRow}>*/}
+
+                    {/*</Row>*/}
                 </Grid>
+
+                <Footer style={styles.footer}>
+                    {/*<FooterTab style={{backgroundColor: '#ccc'}}>*/}
+                    <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
+                        <Text style={styles.text}>
+                            Don't have an account. Create one
+                        </Text>
+                    </Button>
+                    {/*</FooterTab>*/}
+                </Footer>
+
                 {/*</Content>*/}
             </Container>
         );

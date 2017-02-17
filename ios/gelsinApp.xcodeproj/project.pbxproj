@@ -69,6 +69,9 @@
 		DA7CBACE677B4E4DA0C7211B /* Skia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 181DD52D43C84B0C921C158B /* Skia.ttf */; };
 		32188533C12445359DE10D08 /* Times New Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AAB68DB422C248FA9C9E238F /* Times New Roman.ttf */; };
 		8879F1E07D6447699F6602BA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93ED480D7E97475081E3D6DC /* Zocial.ttf */; };
+		3F97CA6AEC8D4C15B9EDA83A /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6761BF1F45C4401A8BB3AAC7 /* SourceSansPro-Bold.ttf */; };
+		6D3398DE67514532A7515CFC /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29841179CBFE42F0B093026A /* SourceSansPro-Regular.ttf */; };
+		A475E02DC7FF4D30956B76C2 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2179025064434DAF9D7BEA /* SourceSansPro-Semibold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,6 +325,9 @@
 		181DD52D43C84B0C921C158B /* Skia.ttf */ = {isa = PBXFileReference; name = "Skia.ttf"; path = "../node_modules/native-base/Fonts/Skia.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AAB68DB422C248FA9C9E238F /* Times New Roman.ttf */ = {isa = PBXFileReference; name = "Times New Roman.ttf"; path = "../node_modules/native-base/Fonts/Times New Roman.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		93ED480D7E97475081E3D6DC /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6761BF1F45C4401A8BB3AAC7 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; name = "SourceSansPro-Bold.ttf"; path = "../node_modules/native-base/Fonts/SourceSansPro-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		29841179CBFE42F0B093026A /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; name = "SourceSansPro-Regular.ttf"; path = "../node_modules/native-base/Fonts/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0D2179025064434DAF9D7BEA /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; name = "SourceSansPro-Semibold.ttf"; path = "../node_modules/native-base/Fonts/SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,6 +594,9 @@
 				181DD52D43C84B0C921C158B /* Skia.ttf */,
 				AAB68DB422C248FA9C9E238F /* Times New Roman.ttf */,
 				93ED480D7E97475081E3D6DC /* Zocial.ttf */,
+				6761BF1F45C4401A8BB3AAC7 /* SourceSansPro-Bold.ttf */,
+				29841179CBFE42F0B093026A /* SourceSansPro-Regular.ttf */,
+				0D2179025064434DAF9D7BEA /* SourceSansPro-Semibold.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -985,6 +994,9 @@
 				DA7CBACE677B4E4DA0C7211B /* Skia.ttf in Resources */,
 				32188533C12445359DE10D08 /* Times New Roman.ttf in Resources */,
 				8879F1E07D6447699F6602BA /* Zocial.ttf in Resources */,
+				3F97CA6AEC8D4C15B9EDA83A /* SourceSansPro-Bold.ttf in Resources */,
+				6D3398DE67514532A7515CFC /* SourceSansPro-Regular.ttf in Resources */,
+				A475E02DC7FF4D30956B76C2 /* SourceSansPro-Semibold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

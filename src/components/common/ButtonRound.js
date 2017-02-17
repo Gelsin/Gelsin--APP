@@ -11,12 +11,16 @@ export default class ButtonRound extends Component {
                 height: 42,
                 justifyContent: 'center',
                 marginTop: 30,
+                marginBottom: 10
+            },
+            text: {
+                fontFamily: 'SourceSansPro'
             }
         };
 
         return (
             <Button rounded style={styles.button} { ...this.props }>
-                <Text>{this.props.text}</Text>
+                <Text style={styles.text}>{this.props.text}</Text>
             </Button>
         );
     }
