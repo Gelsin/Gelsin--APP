@@ -104,7 +104,7 @@ export default {
 
 
       // Color
-  brandPrimary: '#2874F0',
+  brandPrimary: '#eb7b59',
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
@@ -225,12 +225,12 @@ export default {
 
     // Radio Button
   radioBtnSize: (platform === 'ios') ? 25 : 23,
-  radioSelectedColorAndroid: '#5067FF',
+  radioSelectedColorAndroid: '#eb7b59',
 
     // New Variable
   radioBtnLineHeight: (platform === 'ios') ? 29 : 24,
 
-  radioColor: '#7e7e7e',
+  radioColor: '#eb7b59',
 
   get radioSelectedColor() {
     return color(this.radioColor).darken(0.2).hexString();

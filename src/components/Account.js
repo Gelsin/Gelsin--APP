@@ -16,7 +16,6 @@ import {
     Separator,
     Label
 } from 'native-base';
-import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 
 
@@ -36,12 +35,12 @@ export default class Account extends Component {
                 <Header style={styles.header}>
                     <Left style={{ flex: 1}}>
                         <Button transparent>
-                            <Icon name='arrow-back'/>
+                            <Icon style={{color: '#e5ddcb'}} name='arrow-back'/>
                         </Button>
                     </Left>
 
                     <Body style={{ flex: 7}}>
-                    <Title style={{alignSelf: 'center'}}>Header</Title>
+                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>Header</Title>
                     </Body>
 
                     <Right style={{ flex: 1}}>
@@ -52,67 +51,74 @@ export default class Account extends Component {
                 </Header>
 
                 <Content>
-                    {/*<Grid>*/}
-                    {/*<Row >*/}
-                    {/*<Col>*/}
-                    <Separator bordered>
-                        <Text>Profile</Text>
+                    <Separator style={{backgroundColor: '#fff'}}>
+                        <Text
+                            style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Profile</Text>
                     </Separator>
 
                     <Form>
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
-                        </Item>
+                        <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                            <Text
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                            <Text note
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                        </ListItem>
 
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
-                        </Item>
+                        <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                            <Text
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                            <Text note
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                        </ListItem>
 
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
-                        </Item>
+                        <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                            <Text
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                            <Text note
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                        </ListItem>
                     </Form>
 
 
-                    {/*<ListItem itemHeader >*/}
-                        {/*<Text>Profile</Text>*/}
-                    {/*</ListItem>*/}
+                    <Separator style={{backgroundColor: '#fff', height: 16}}>
+                    </Separator>
 
-                    <Separator bordered>
-                        <Text>Profile</Text>
+                    <Separator style={{backgroundColor: '#fff'}}>
+                        <Text
+                            style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Account</Text>
                     </Separator>
 
                     <Form>
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
-                        </Item>
+                        <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                            <Text
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                            <Text note
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                        </ListItem>
 
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
-                        </Item>
-
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Text style={{alignSelf: 'flex-start'}} >Orxan Alirzayev</Text>
-                        </Item>
+                        <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                            <Text
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                            <Text note
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                        </ListItem>
                     </Form>
-                    {/*</Col>*/}
-                    {/*</Row>*/}
-                    {/*</Grid>*/}
+
+                    <Separator style={{backgroundColor: '#fff', height: 16}}>
+                    </Separator>
+
+                    <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                        <Text
+                            style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Language</Text>
+                        <Text note
+                              style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>English</Text>
+                    </ListItem>
+
+                    <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
+                        <Text
+                            style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Logout</Text>
+                    </ListItem>
                 </Content>
-
-                {/*<Footer>*/}
-                {/*<FooterTab>*/}
-                {/*<Button full onPress={() => Actions.addresses()}>*/}
-                {/*<Text>Log out</Text>*/}
-                {/*</Button>*/}
-                {/*</FooterTab>*/}
-                {/*</Footer>*/}
             </Container>
         );
     }

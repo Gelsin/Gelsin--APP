@@ -7,8 +7,8 @@ export default class ButtonRound extends Component {
             button: {
                 alignSelf: 'center',
                 backgroundColor: this.props.color ? this.props.color : '#e57b59',
-                width: 180,
-                height: 42,
+                width: this.props.width ? this.props.width : 180,
+                height: this.props.height ? this.props.height : 42,
                 justifyContent: 'center',
                 marginTop: 30,
                 marginBottom: 10

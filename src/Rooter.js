@@ -7,6 +7,8 @@ import ResetPassword from './components/ResetPassword';
 import Account from './components/Account';
 import Addresses from './components/Addresses';
 import Cart from './components/Cart';
+import OrderAddress from './components/OrderAddress';
+import Custom from './components/Custom';
 
 export default class AppRouter extends Component {
     constructor(props) {
@@ -22,10 +24,12 @@ export default class AppRouter extends Component {
                     <Scene key="verification" component={Verification} hideNavBar />
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
                 </Scene>
-                <Scene key="main">
-                    <Scene key="account" component={Account} hideNavBar initial />
+                <Scene key="main" initial>
+                    <Scene key="account" component={Account} hideNavBar  />
                     <Scene key="addresses" component={Addresses} hideNavBar  />
-                    <Scene key="cart" component={Cart} hideNavBar />
+                    <Scene key="cart" component={Cart} hideNavBar  />
+                    <Scene key="orderAddress" component={OrderAddress} hideNavBar initial />
+                    {/*<Scene key="custom" component={Custom} hideNavBar initial />*/}
                 </Scene>
             </Router>
 

@@ -104,7 +104,7 @@ export default {
 
 
       // Color
-  brandPrimary: '#3F51B5',
+  brandPrimary: '#eb7b59',
   brandInfo: '#3F57D3',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
@@ -248,7 +248,7 @@ export default {
 
 
     // Text
-  textColor: '#000',
+  textColor: '#ccc',
   inverseTextColor: '#fff',
   noteFontSize: 14,
 

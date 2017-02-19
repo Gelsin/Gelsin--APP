@@ -22,7 +22,7 @@ export default {
   badgePadding: (platform === 'ios') ? 3 : 0,
 
     // Button
-  btnFontFamily: (platform === 'ios') ? 'System' : 'Georgia',
+  btnFontFamily: 'SourceSansPro-Semibold',
   btnDisabledBg: '#b5b5b5',
   btnDisabledClr: '#f1f1f1',
 
@@ -113,7 +113,7 @@ export default {
 
 
     // Font
-  fontFamily: (platform === 'ios') ? 'System' : 'Georgia',
+  fontFamily: 'SourceSansPro-Regular',
   fontSizeBase: 15,
 
   get fontSizeH1() {
@@ -224,15 +224,18 @@ export default {
 
     // Radio Button
   radioBtnSize: (platform === 'ios') ? 25 : 23,
-  radioSelectedColorAndroid: '#5067FF',
+  radioSelectedColorAndroid: '#eb7b59',
+
+    // radioSelectedColor: '#eb7b59',
 
     // New Variable
   radioBtnLineHeight: (platform === 'ios') ? 29 : 24,
 
-  radioColor: '#7e7e7e',
+  radioColor: '#eb7b59',
 
   get radioSelectedColor() {
-    return color(this.radioColor).darken(0.2).hexString();
+    // return color(this.radioColor).darken(0.2).hexString();
+      return this.radioColor;
   },
 
 
@@ -248,13 +251,13 @@ export default {
 
 
     // Text
-  textColor: '#000',
+  textColor: 'red',
   inverseTextColor: '#fff',
   noteFontSize: 14,
 
 
     // Title
-  titleFontfamily: (platform === 'ios') ? 'System' : 'Georgia',
+  titleFontfamily: (platform === 'ios') ? 'System' : 'SourceSansPro-Semibold',
   titleFontSize: (platform === 'ios') ? 17 : 19,
   subTitleFontSize: (platform === 'ios') ? 12 : 14,
   subtitleColor: (platform === 'ios') ? '#8e8e93' : '#FFF',
