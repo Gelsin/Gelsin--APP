@@ -45,7 +45,7 @@ export default class OrderAddress extends Component {
                 </Header>
 
                 <Content>
-                    <Separator style={{backgroundColor: '#fff'}} bordered>
+                    <Separator style={{backgroundColor: '#fff'}} >
                         <Text
                             style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Profile</Text>
                     </Separator>

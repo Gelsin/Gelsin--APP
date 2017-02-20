@@ -9,6 +9,8 @@ import Addresses from './components/Addresses';
 import Cart from './components/Cart';
 import OrderAddress from './components/OrderAddress';
 import Custom from './components/Custom';
+import Categories from './components/Categories';
+import Products from './components/Products';
 
 export default class AppRouter extends Component {
     constructor(props) {
@@ -19,16 +21,19 @@ export default class AppRouter extends Component {
         return (
             <Router>
                 <Scene key="auth">
-                    <Scene key="signIn" component={SignIn} hideNavBar/>
-                    <Scene key="signUp" component={SignUp} hideNavBar />
-                    <Scene key="verification" component={Verification} hideNavBar />
+                    <Scene key="signIn" component={SignIn} hideNavBar />
+                    <Scene key="signUp" component={SignUp} hideNavBar  />
+                    <Scene key="verification" component={Verification} hideNavBar/>
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
                 </Scene>
                 <Scene key="main" initial>
                     <Scene key="account" component={Account} hideNavBar  />
                     <Scene key="addresses" component={Addresses} hideNavBar  />
                     <Scene key="cart" component={Cart} hideNavBar  />
-                    <Scene key="orderAddress" component={OrderAddress} hideNavBar initial />
+                    <Scene key="orderAddress" component={OrderAddress} hideNavBar  />
+                    <Scene key="category" component={Categories}  hideNavBar  initial/>
+                    <Scene key="products" component={Products} hideNavBar />
+
                     {/*<Scene key="custom" component={Custom} hideNavBar initial />*/}
                 </Scene>
             </Router>
