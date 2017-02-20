@@ -42,7 +42,7 @@ class ResetPassword extends Component {
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
                 fontSize: 16,
-                fontFamily: 'SourceSansPro'
+                fontFamily: 'SourceSansPro-Semibold'
             },
             formRow: {
                 justifyContent: 'center'
@@ -57,7 +57,7 @@ class ResetPassword extends Component {
             text: {
                 alignSelf: 'center',
                 color: 'rgba(255, 255, 255, 0.7)',
-                fontFamily: 'SourceSansPro',
+                fontFamily: 'SourceSansPro-Regular',
                 fontSize: 15
 
             },

@@ -54,7 +54,7 @@ class SignIn extends Component {
             text: {
                 alignSelf: 'center',
                 color: 'rgba(255, 255, 255, 0.7)',
-                fontFamily: 'SourceSansPro'
+                fontFamily: 'SourceSansPro-Regular'
             },
             footer: {
                 backgroundColor: 'transparent'

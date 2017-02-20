@@ -11,7 +11,7 @@ export default class IconInput extends Component {
                 textAlign: 'center',
                 color: '#e5ddcb',
                 paddingLeft: -35,
-                fontFamily: 'SourceSansPro'
+                fontFamily: 'SourceSansPro-Regular'
             },
             icon: {
                 color: '#fff'

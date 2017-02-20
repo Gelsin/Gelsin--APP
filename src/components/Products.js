@@ -65,7 +65,7 @@ export default class Products extends Component {
                     </Body>
                     <Right>
                         <Text style={{top: -12,color: '#E5DDCB',fontSize: 14}}>12.50</Text>
-                        <Button transparent>
+                        <Button transparent onPress={()=>Actions.cart()}>
                             <Icon name="ios-cart-outline" style={{color: '#E5DDCB'}}></Icon>
                         </Button>
                     </Right>

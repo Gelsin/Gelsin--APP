@@ -37,7 +37,7 @@ class SignUp extends Component {
                 color: '#e5ddcb',
                 letterSpacing: 0.5,
                 fontSize: 16,
-                fontFamily: 'SourceSansPro'
+                fontFamily: 'SourceSansPro-Semibold'
             },
             formRow: {
                 justifyContent: 'center'
@@ -53,7 +53,7 @@ class SignUp extends Component {
             text: {
                 alignSelf: 'center',
                 color: 'rgba(255, 255, 255, 0.7)',
-                fontFamily: 'SourceSansPro'
+                fontFamily: 'SourceSansPro-Regular'
             },
             footer: {
                 backgroundColor: 'transparent',

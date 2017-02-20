@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Content, Left, Body, Right, Text, Button, Icon, Header, Footer, Title, FooterTab} from 'native-base';
 import CartItem from './common/CartItem';
 import ButtonRound from './common/ButtonRound';
+import {Actions} from 'react-native-router-flux';
 
 export default class Cart extends Component {
     render() {
@@ -132,7 +133,7 @@ export default class Cart extends Component {
                         </Left>
 
                         <Right style={{   }}>
-                            <Button rounded style={styles.button}>
+                            <Button rounded style={styles.button} onPress={()=>Actions.orderAddress()}>
                                 <Text style={styles.text}>Confirm</Text>
                             </Button>
 

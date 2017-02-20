@@ -14,7 +14,7 @@ export default class ButtonRound extends Component {
                 marginBottom: 10
             },
             text: {
-                fontFamily: 'SourceSansPro'
+                fontFamily: 'SourceSansPro-Regular'
             }
         };
 

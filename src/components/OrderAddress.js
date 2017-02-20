@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Content, ListItem, Text, Radio, Right, Left, Body, Separator, Header, Button, Icon, Title, StyleProvider, FooterTab, Footer} from 'native-base';
 import radioTheme from '../../native-base-theme/components/';
 import platform from '../../native-base-theme/variables/platform';
+import {Actions} from 'react-native-router-flux';
 
 export default class OrderAddress extends Component {
     render() {
@@ -98,7 +99,7 @@ export default class OrderAddress extends Component {
                         </Left>
 
                         <Right style={{   }}>
-                            <Button rounded style={styles.button}>
+                            <Button rounded style={styles.button} onPress={()=>Actions.category()}>
                                 <Text style={styles.text}>Confirm</Text>
                             </Button>
 
