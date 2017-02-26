@@ -98,7 +98,7 @@ export default class Categories extends Component {
                  return  <TouchableOpacity disabled={this.state.disabled}
                  style={css.templateRow}
                  onPress={()=>Actions.products(category.id)}>
-                 <Image style={css.templateImage} source={require('./meal.jpeg')}></Image>
+                 <Image style={css.templateImage} source={{uri: category.cover_url}}></Image>
                  <Text style={css.templateMenu}>{category.name}</Text>
             </TouchableOpacity>
                 })}
