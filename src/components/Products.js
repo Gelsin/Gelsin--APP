@@ -3,48 +3,82 @@ import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Button,Input,Content,Card,CardItem} from "native-base";
 import {Actions} from 'react-native-router-flux';
 import Product from './common/ProductItem';
-
+var activeBrand;
 
 export default class Products extends Component {
-
 
 
     constructor(props) {
         super(props);
         this.state = {
-            SubCategories: null,
-            isLoading: true
+            brands: null,
+            activeBrand: null,
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => true
+            })
         }
+
+        this.data = [];
+
     }
+
+    getDataSource(posts) {
+        return this.state.dataSource.cloneWithRows(posts);
+    }
+
+
+    getBrands()
+    {
+        var prodUrl = "http://gelsin.az/app/api/brands";
+        return fetch(prodUrl, {method: "GET"})
+            .then((response) => response.json())
+            .then((responseData) => {
+                if(responseData.error==false)
+                {
+                    this.setState({brands: responseData.brands});
+                }
+            })
+            .done();
+    }
+
+    renderRow(post, sectionID, rowID) {
+        if (post.error == 'true')
+            return null;
+
+       return <Product name={post.name} thumbnail={post.cover_url} price={post.price}/>
+
+
+    }
+
+
 
     getProducts()
     {
-
-    }
-
-    getSubCategories()
-    {
-        CatId = this.props.data;
-        var Url = "http://gelsin.az/app/api/categories/" + CatId;
-        return fetch(Url, {method: "GET"})
+        var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ this.props.branchID;
+        return fetch(prodUrl, {method: "GET"})
             .then((response) => response.json())
             .then((responseData) => {
-                this.setState({SubCategories: responseData.category.childs});
-                this.setState({isLoading: false});
+                if(responseData.error==false) {
+                    this.setState({dataSource: this.getDataSource(responseData.products)});
+                }
             })
             .done();
-        console.log(this.setState.SubCategories);
-
     }
 
     componentWillMount()
     {
-        this.getSubCategories();
+
+        this.getBrands();
+    }
+
+    componentDidMount()
+    {
+        this.getProducts();
     }
 
     render() {
-        if(this.state.SubCategories === null) {
-            return <Header  action={()=>Actions.products(this.props.data)} newsLayoutButton={true} />
+        if(this.state.brands === null) {
+            return <Header  action={()=>Actions.products(this.props.categoryID, this.props.branchID)} newsLayoutButton={true} />
         }
 
         const css = {
@@ -81,8 +115,9 @@ export default class Products extends Component {
         return (
 
 
+
+
             <Container>
-                <ActivityIndicator animating={this.state.isLoading}></ActivityIndicator>
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
                     <Button transparent>
@@ -104,43 +139,49 @@ export default class Products extends Component {
                         <Input placeholder="search something" placeholderTextColor="rgba(255, 255, 255, 0.6)" style={{textAlign: 'center',color: '#FFF'}}/>
                     </Item>
 
+
+
+
+                {/*Scrollable SubCategory bar*/}
+
                 <View horizontal={true} style={css.subCategoryRow}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {this.state.SubCategories.map((category,i) => {
-                  return  <Button rounded style={css.subCategoryBtn}>
-                                <Text style={{color: '#E5DDCB'}}>{category.name}</Text>
+                {this.state.brands.map((brand) => {
+                    //sadece o subKateqoriyaya aid olan brandlar cixir 'horizontal ScrollViewda'
+                    if(brand.category_id==this.props.subCategoryID){
+                  return <Button rounded style={css.subCategoryBtn}>
+                                <Text style={{color: '#E5DDCB'}}>{brand.name}</Text>
                             </Button>
+                    }
                 })}
                     </ScrollView>
 
                 </View>
 
+
+
+                {/*PRODUCTS of choosen category with SubCategory rows*/}
+
                 <Content>
-                    {this.state.SubCategories.map((category,i) => {
-                        return <Card style={{borderWidth: 0,marginLeft: 16,shadowOpacity: 0}}>
-                            <Text style={{borderWidth: 0,marginBottom: 14, color: '#EB7B59'}}>{category.name}</Text>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}  pagingEnabled={true}
-                                style={{flexDirection: 'row'}}>
-                        <Product name="Ice Tea" thumbnail="http://gelsin.az/app/api/product/image/27" price="12.50 ₼"/>
+                    {this.state.brands.map((brand) => {
+                        if(brand.category_id==this.props.subCategoryID) {
+                            return <Card style={{borderWidth: 0,marginLeft: 16,shadowOpacity: 0}}>
+                                <Text style={{borderWidth: 0,marginBottom: 14, color: '#EB7B59'}}>{brand.name}</Text>
+                                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
+                                            pagingEnabled={true}
+                                            style={{flexDirection: 'row','flexWrap': 'wrap'}}>
 
-                        <Product name="Cola" thumbnail="http://gelsin.az/app/api/product/image/32" price="12.50 ₼"/>
-
-
-                        <Product name="Cola" thumbnail="http://gelsin.az/app/api/product/image/30" price="12.50 ₼"/>
-
-
-                        <Product name="Cola" thumbnail="http://gelsin.az/app/api/product/image/31" price="12.50 ₼"/>
-
-
-                        <Product name="Fanta" thumbnail="http://gelsin.az/app/api/product/image/33" price="12.50 ₼"/>
-
-
-                        <Product name="Cola" thumbnail="http://gelsin.az/app/api/product/image/28" price="12.50 ₼"/>
-
-                    </ScrollView>
-                </Card>
-
+                                    <ListView
+                                        enableEmptySections={true}
+                                        dataSource={this.state.dataSource}
+                                        horizontal={true}
+                                        renderRow={this.renderRow.bind(this)}>
+                                    </ListView>
+                                </ScrollView>
+                            </Card>
+                        }
                     })}
+
                 </Content>
 
             </Container>
