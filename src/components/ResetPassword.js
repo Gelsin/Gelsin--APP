@@ -36,6 +36,7 @@ class ResetPassword extends Component {
                 backgroundColor: 'transparent',
                 alignItems:'flex-end',
                 elevation: 0,
+                shadowOpacity: 0,
                 height: Dimensions.get('window').height * 0.15
             },
             title: {
@@ -55,6 +56,7 @@ class ResetPassword extends Component {
                 alignSelf: 'center'
             },
             text: {
+                textAlign: 'center',
                 alignSelf: 'center',
                 color: 'rgba(255, 255, 255, 0.7)',
                 fontFamily: 'SourceSansPro-Regular',
@@ -77,8 +79,9 @@ class ResetPassword extends Component {
                     <Row size={1} style={styles.headerRow}>
                         {/*<H3 style={styles.header}>PASSWORD RECOVER</H3>*/}
 
-                        <Text style={styles.text}>Please enter your email address</Text>
-                        <Text style={styles.text}>and we'll help with this</Text>
+                        <Text style={styles.text}>
+                            Please enter your email address and we'll help with this
+                        </Text>
 
                     </Row>
 

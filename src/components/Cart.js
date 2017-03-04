@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Container, Content, Left, Body, Right, Text, Button, Icon, Header, Footer, Title, FooterTab} from 'native-base';
 import CartItem from './common/CartItem';
-import ButtonRound from './common/ButtonRound';
 import {Actions} from 'react-native-router-flux';
 
 export default class Cart extends Component {
@@ -45,7 +44,7 @@ export default class Cart extends Component {
 
                 </Header>
 
-                <Content>
+                <Content >
                     <CartItem
                         name="Coca Cola"
                         price={0.80}
@@ -119,7 +118,7 @@ export default class Cart extends Component {
                         </Left>
 
                         <Right>
-                            <Button transparent  >
+                            <Button transparent onPress={()=>Actions.ordersMain()} >
                                 <Text style={{color: '#e57b59', textDecorationLine: 'line-through'}}>Empty Basket</Text>
                             </Button>
                         </Right>

@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "native-base": "^2.0.5",
+    "rc-swipeout": "^1.2.4",
     "react": "15.4.2",
     "react-native": "0.41.2",
     "react-native-easy-grid": "^0.1.8",
-    "react-native-router-flux": "^3.37.0"
+    "react-native-router-flux": "^3.37.0",
+    "react-native-swipeout": "^2.0.12"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

@@ -31,6 +31,7 @@ class SignUp extends Component {
                 backgroundColor: 'transparent',
                 alignItems:'flex-end',
                 elevation: 0,
+                shadowOpacity: 0,
                 height: Dimensions.get('window').height * 0.15
             },
             title: {
@@ -51,6 +52,7 @@ class SignUp extends Component {
                 alignSelf: 'center',
             },
             text: {
+                textAlign: 'center',
                 alignSelf: 'center',
                 color: 'rgba(255, 255, 255, 0.7)',
                 fontFamily: 'SourceSansPro-Regular'

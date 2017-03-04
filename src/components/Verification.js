@@ -34,6 +34,7 @@ class Verification extends Component {
                 backgroundColor: 'transparent',
                 alignItems:'flex-end',
                 elevation: 0,
+                shadowOpacity: 0,
                 height: Dimensions.get('window').height * 0.15
             },
             title: {
@@ -53,6 +54,7 @@ class Verification extends Component {
                 alignSelf: 'center',
             },
             text: {
+                textAlign: 'center',
                 alignSelf: 'center',
                 color: 'rgba(255, 255, 255, 0.7)',
                 fontFamily: 'SourceSansPro-Regular',
@@ -81,8 +83,9 @@ class Verification extends Component {
 
                 <Grid style={styles.content}>
                     <Row size={1} style={styles.headerRow}>
-                        <Text style={styles.text}>Please enter the verification code</Text>
-                        <Text style={styles.text}>that we just send to your mobile</Text>
+                        <Text style={styles.text}>
+                            Please enter the verification code that we just send to your mobile
+                        </Text>
                     </Row>
 
                     <Row size={3} style={styles.formRow}>
