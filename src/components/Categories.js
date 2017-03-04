@@ -4,7 +4,7 @@ import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button} from "native-base";
 import {Actions} from 'react-native-router-flux';
 // import css from '../Styles/CategoryStyle';
-const {width, height, scale} = Dimensions.get("window"),
+const {width, height} = Dimensions.get("window"),
     vw = width / 100
     vh = height / 100
 
@@ -41,9 +41,6 @@ export default class Categories extends Component {
     }
 
     render() {
-        if (this.state.categories === null) {
-            return <Header  action={Actions.categories} newsLayoutButton={true}/>
-        }
 
         const css = {
             "templateRow": {
@@ -69,6 +66,14 @@ export default class Categories extends Component {
                 marginBottom: 15
             }}
 
+
+        if (this.state.categories === null) {
+            return <Header  action={Actions.categories} newsLayoutButton={true}/>
+
+        }
+
+
+
         return (
         <Container>
                 <Header style={{"backgroundColor": '#524656'}}>
@@ -89,6 +94,7 @@ export default class Categories extends Component {
                     <Icon name="search" style={{color: '#E5DDCB',marginLeft: 6}}></Icon>
                     <Input placeholder="search something" placeholderTextColor="rgba(255, 255, 255, 0.6)" style={{textAlign: 'center',color: '#FFF'}}/>
                 </Item>
+
             <Content>
 
             <View style={{flexDirection: 'row','flexWrap': 'wrap',alignItems: 'center', padding: 6}}>
@@ -97,7 +103,7 @@ export default class Categories extends Component {
 
                  return  <TouchableOpacity disabled={this.state.disabled}
                  style={css.templateRow}
-                 onPress={()=>Actions.products(category.id)}>
+                 onPress={()=>Actions.subCategories(category.id)}>
                  <Image style={css.templateImage} source={{uri: category.cover_url}}></Image>
                  <Text style={css.templateMenu}>{category.name}</Text>
             </TouchableOpacity>
