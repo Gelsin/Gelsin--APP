@@ -24,7 +24,7 @@ export default class AppRouter extends Component {
             <Router>
                 <Scene key="auth" initial>
                     <Scene key="signIn" component={SignIn} hideNavBar />
-                    <Scene key="signUp" component={SignUp} hideNavBar  />
+                    <Scene key="signUp" component={SignUp} hideNavBar initial />
                     <Scene key="verification" component={Verification} hideNavBar/>
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
                 </Scene>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Dimensions, View} from 'react-native';
-import {Container, Form, H3, Header, Footer, Button, Text} from 'native-base';
+import {Dimensions} from 'react-native';
+import {Container, Form, H3, Header, Footer, Button, Text, Spinner} from 'native-base';
 import {Grid, Row} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
@@ -8,12 +8,101 @@ import  IconInput  from './common/IconInput';
 
 class SignUp extends Component {
     constructor(props) {
+        console.log("inside constructor");
         super(props);
-        this.state = {email: '', password: '', error: '', loading: false};
+        this.state = {contact: '', fullname: '', email: '', password: '', error: '', loading: false};
+        console.log(this.state);
     }
 
+    componentWillMount() {
+        console.log("will mount");
+    };
+
+
+    componentDidMount() {
+        console.log("mounted");
+    };
+
     onButtonPress() {
+        console.log('button pressed');
+
+        const {contact, fullname, email, password} = this.state;
+
+        this.setState({error: '', loading: true});
         console.log(this.state);
+
+        //let url = gelsin.az/app/api/auth/register + encodeURIComponent(this.state.email);
+
+        fetch('http://gelsin.az/app/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify({
+                contact,
+                fullname,
+                email,
+                password
+            })
+        })
+            .then((response) => response.json()
+                .then((responseData) => {
+                    console.log("inside responsejson");
+                    console.log('response object:', responseData);
+                    this.setState({loading: false});
+
+                    switch (responseData.error) {
+                        case false: {
+                            this.onRegisterSuccess();
+                        }
+
+                        default: {
+                            this.setState({error: responseData.message});
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log("Inside nested catch");
+                    console.log(error);
+                    this.setState({loading: false});
+                })
+            )
+            .catch((error) => {
+                console.log(error);
+                this.setState({loading: false});
+            });
+        // .done();
+    }
+
+    onRegisterFail() {
+        this.setState({error: 'Authentication failed', loading: false});
+    }
+
+    onRegisterSuccess() {
+        this.setState({
+            contact: '',
+            fullname: '',
+            email: '',
+            password: '',
+            error: '',
+            loading: false
+        });
+
+        Actions.signIn();
+    }
+
+
+    renderButton() {
+        if (this.state.loading) {
+            return (
+                <Spinner color='#eb7b59'/>
+            )
+        }
+        return (
+            <ButtonRound onPress={this.onButtonPress.bind(this)} text="Sign up"/>
+        );
     }
 
     render() {
@@ -29,7 +118,7 @@ class SignUp extends Component {
             },
             header: {
                 backgroundColor: 'transparent',
-                alignItems:'flex-end',
+                alignItems: 'flex-end',
                 elevation: 0,
                 shadowOpacity: 0,
                 height: Dimensions.get('window').height * 0.15
@@ -75,11 +164,15 @@ class SignUp extends Component {
                             <IconInput
                                 placeholder="+994 44 444 44 44"
                                 icon="ios-call-outline"
+                                value={this.state.contact}
+                                onChangeText={contact => this.setState({contact})}
                             />
 
                             <IconInput
                                 placeholder="Ad Soyad"
                                 icon="ios-person-outline"
+                                value={this.state.fullname}
+                                onChangeText={fullname => this.setState({fullname})}
                             />
 
                             <IconInput
@@ -96,7 +189,7 @@ class SignUp extends Component {
                                 onChangeText={password => this.setState({password})}
                             />
 
-                            <ButtonRound disabled={false} onPress={()=>Actions.verification()} text="Sign up"/>
+                            {this.renderButton()}
 
                             <Button style={styles.button} transparent onPress={()=>Actions.signIn()}>
                                 <Text style={styles.text}>Already have an account? Sign In</Text>
