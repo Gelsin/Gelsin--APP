@@ -120,6 +120,8 @@ class SignIn extends Component {
     };
 
     checkUser(token) {
+        console.log("check user function");
+
         fetch('http://gelsin.az/app/api/auth/user?token=' + this.state.token, {method: 'GET'})
             .then((response) => response.json())
             .then((responseJson) => {
@@ -129,7 +131,7 @@ class SignIn extends Component {
                     if (responseJson.user.confirmed_at) {
                         Actions.main();
                     }
-                    else Actions.verification();
+                    else Actions.verification({token});
                 }
 
             })

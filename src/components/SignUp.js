@@ -201,7 +201,7 @@ class SignUp extends Component {
                 </Grid>
 
                 <Footer style={styles.footer}>
-                    <Button style={styles.button} transparent onPress={()=>Actions.signIn()}>
+                    <Button style={styles.button} transparent onPress={()=>Actions.main()}>
                         <Text style={styles.text}>Skip</Text>
                     </Button>
                 </Footer>

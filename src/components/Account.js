@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {AsyncStorage} from 'react-native';
 import {
     Container,
     Header,
@@ -20,6 +21,68 @@ import {Actions} from 'react-native-router-flux';
 
 
 export default class Account extends Component {
+    constructor(props) {
+        console.log("in constructor");
+        super(props);
+        this.state = {email: '', fullname: '', error: '', loading: false, token: ''};
+        console.log(this.state);
+    };
+
+    componentWillMount() {
+        console.log("will mount");
+    };
+
+
+    componentDidMount() {
+        console.log("mounted");
+        this.getToken();
+    };
+
+    getToken = async () => {
+        try {
+            var value = await AsyncStorage.getItem('@Gelsin:auth_user');
+            if (value !== null){
+                console.log(value);
+                this.setState({token: value});
+                console.log(this.state.token);
+
+                this.getUser(this.state.token)
+
+            } else {
+                console.log(value);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    getUser(token) {
+        console.log("get user function");
+
+        fetch('http://gelsin.az/app/api/auth/user?token=' + this.state.token, {method: 'GET'})
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+
+                if (responseJson.user) {
+                    this.setState({
+                        email: responseJson.user.email,
+                        fullname: responseJson.user.customer_detail.fullname,
+                        contact: responseJson.user.customer_detail.contact,
+                        error: '',
+                        loading: false
+                    });
+
+                    console.log(this.state);
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+
     render() {
         const styles = {
             header: {
@@ -59,23 +122,26 @@ export default class Account extends Component {
                     <Form>
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Name Surname</Text>
                             <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.fullname}</Text>
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Email</Text>
                             <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.email}</Text>
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
-                            <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Address</Text>
+
+                            <Button transparent style={{padding:0}}>
+                                <Text note
+                                      style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Edit Addresses</Text>
+                            </Button>
                         </ListItem>
                     </Form>
 
@@ -91,16 +157,16 @@ export default class Account extends Component {
                     <Form>
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Phone</Text>
                             <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.contact}</Text>
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Username</Text>
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Password</Text>
                             <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Orxan Alirzayev</Text>
+                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Change password</Text>
                         </ListItem>
                     </Form>
 
@@ -115,8 +181,10 @@ export default class Account extends Component {
                     </ListItem>
 
                     <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
-                        <Text
-                            style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Logout</Text>
+                        <Button transparent style={{padding:0}}>
+                            <Text
+                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Logout</Text>
+                        </Button>
                     </ListItem>
                 </Content>
             </Container>
