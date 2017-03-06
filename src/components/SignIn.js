@@ -122,7 +122,7 @@ class SignIn extends Component {
     checkUser(token) {
         console.log("check user function");
 
-        fetch('http://gelsin.az/app/api/auth/user?token=' + this.state.token, {method: 'GET'})
+        fetch('http://gelsin.az/app/api/auth/user?token=' + token, {method: 'GET'})
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson);

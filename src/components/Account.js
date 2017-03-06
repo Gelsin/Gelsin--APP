@@ -42,7 +42,7 @@ export default class Account extends Component {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:auth_user');
             if (value !== null){
-                console.log(value);
+                //console.log(value);
                 this.setState({token: value});
                 console.log(this.state.token);
 
@@ -69,7 +69,6 @@ export default class Account extends Component {
                         email: responseJson.user.email,
                         fullname: responseJson.user.customer_detail.fullname,
                         contact: responseJson.user.customer_detail.contact,
-                        error: '',
                         loading: false
                     });
 
@@ -81,6 +80,15 @@ export default class Account extends Component {
                 console.error(error);
             });
     }
+
+    logout = async () => {
+        try {
+            await AsyncStorage.removeItem('@Gelsin:auth_user');
+            Actions.auth();
+        } catch (error) {
+            this.setState({error: error.message});
+        }
+    };
 
 
     render() {
@@ -138,7 +146,7 @@ export default class Account extends Component {
                             <Text
                                 style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Address</Text>
 
-                            <Button transparent style={{padding:0}}>
+                            <Button transparent style={{padding:0, margin:0}}>
                                 <Text note
                                       style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Edit Addresses</Text>
                             </Button>
@@ -181,7 +189,7 @@ export default class Account extends Component {
                     </ListItem>
 
                     <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
-                        <Button transparent style={{padding:0}}>
+                        <Button transparent style={{padding:0, margin:0}} onPress={this.logout.bind(this)}>
                             <Text
                                 style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Logout</Text>
                         </Button>

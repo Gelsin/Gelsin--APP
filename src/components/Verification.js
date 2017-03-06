@@ -9,7 +9,7 @@ class Verification extends Component {
     constructor(props) {
         console.log("inside  constructor");
         super(props);
-        this.state = {token: this.props.token, code: '', error: '', loading: false};
+        this.state = {token: this.props.token, activation_code: '', error: '', loading: false};
         console.log(this.state);
     }
 
@@ -25,7 +25,7 @@ class Verification extends Component {
     onButtonPress() {
         console.log('button pressed');
 
-        const {token, code} = this.state;
+        const {token, activation_code} = this.state;
 
         this.setState({error: '', loading: true});
         console.log(this.state);
@@ -41,7 +41,7 @@ class Verification extends Component {
             },
             body: JSON.stringify({
                 token,
-                code
+                activation_code
             })
         })
             .then((response) => response.json()
@@ -78,7 +78,7 @@ class Verification extends Component {
 
     onSuccess() {
         this.setState({
-            code: '',
+            activation_code: '',
             error: '',
             loading: false
         });
@@ -176,8 +176,8 @@ class Verification extends Component {
                                 <Input
                                     placeholderTextColor="rgba(255, 255, 255, 0.6)"
                                     style={styles.input}
-                                    value={this.state.code}
-                                    onChangeText={code => this.setState({code})}
+                                    value={this.state.activation_code}
+                                    onChangeText={activation_code => this.setState({activation_code})}
                                 />
                             </Item>
 
@@ -191,7 +191,7 @@ class Verification extends Component {
                 <Footer style={styles.footer}>
                     <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
                         <Text style={styles.text}>
-                            Resend Code
+                            Resend code
                         </Text>
                     </Button>
                 </Footer>
