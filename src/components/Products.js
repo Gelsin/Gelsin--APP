@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
-import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator} from "react-native";
-import {Header,Container,Body,Text,Icon,Right,Left,Item,Button,Input,Content,Card,CardItem} from "native-base";
+import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,AsyncStorage} from "react-native";
+import {Header,Container,Body,Text,Icon,Right,Left,Item,Button,Input,Content,Card,CardItem,Thumbnail} from "native-base";
 import {Actions} from 'react-native-router-flux';
-import Product from './common/ProductItem';
-var activeBrand;
 
 export default class Products extends Component {
-
 
     constructor(props) {
         super(props);
         this.state = {
             brands: null,
             activeBrand: null,
+            cartProducts: [],
+            cartPrice: 0,
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => true
             })
         }
+
 
         this.data = [];
 
@@ -25,6 +25,28 @@ export default class Products extends Component {
     getDataSource(posts) {
         return this.state.dataSource.cloneWithRows(posts);
     }
+
+
+    addItem(product)
+    {
+        pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
+        this.setState({cartPrice: pr});
+        prods = this.state.cartProducts;
+        prods.push(product);
+        this.setState({cartProducts: prods},()=>console.log("CartProducts: ",this.state.cartProducts));
+        this.writeCartToDevice();
+    }
+
+
+    writeCartToDevice = async() => {
+
+        try {
+            cart = this.state.cartProducts;
+            await AsyncStorage.setItem('@Gelsin:Cart', JSON.stringify(cart));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 
     getBrands()
@@ -46,13 +68,25 @@ export default class Products extends Component {
             return null;
 
        return   <View key={post.id}>
-        <Product name={post.name} thumbnail={post.cover_url} price={post.price}/>
+        {/*<Product name={post.name} thumbnail={post.cover_url} price={post.name}/>*/}
+           <CardItem horizontal={false} style={{flexDirection: 'column',borderWidth: 1,borderRadius: 4,padding: 0,marginRight: 14, borderColor: '#E5DDCB'}}>
+               <Thumbnail square size={70} source={{uri: post.cover_url }} style={{marginTop: 12, marginBottom: 12}}/>
+               <Text>{post.name}</Text>
+               <Button full style={{backgroundColor: '#EB7B59',height: 28,marginTop: 8, marginBottom: 8}} onPress={()=>this.addItem(post)}><Text>Add To Cart</Text></Button>
+               <Text style={{marginBottom: 8}}>{post.price}</Text>
+           </CardItem>
        </View>
 
 
     }
 
 
+    readData()
+    {
+        AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
+            console.log("save edilen data: ", value);
+        }).done();
+    }
 
     getProducts()
     {
@@ -69,14 +103,12 @@ export default class Products extends Component {
 
     componentWillMount()
     {
-
         this.getBrands();
+        this.getProducts();
     }
 
     componentDidMount()
-    {
-        this.getProducts();
-    }
+    {}
 
     render() {
         if(this.state.brands === null) {
@@ -130,7 +162,7 @@ export default class Products extends Component {
                     <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
                     </Body>
                     <Right>
-                        <Text style={{top: -12, color: '#E5DDCB',fontSize: 14}}>12.50</Text>
+                        <Text style={{top: -12, color: '#E5DDCB',fontSize: 14}}>{this.state.cartPrice} ₼</Text>
                         <Button transparent onPress={()=>Actions.cart()}>
                             <Icon name="ios-cart-outline" style={{color: '#E5DDCB'}}></Icon>
                         </Button>
