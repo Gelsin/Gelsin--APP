@@ -45,7 +45,9 @@ export default class Products extends Component {
         if (post.error == 'true')
             return null;
 
-       return <Product name={post.name} thumbnail={post.cover_url} price={post.price}/>
+       return   <View key={post.id}>
+        <Product name={post.name} thumbnail={post.cover_url} price={post.price}/>
+       </View>
 
 
     }
@@ -121,7 +123,7 @@ export default class Products extends Component {
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
                     <Button transparent>
-                        <Icon name="ios-arrow-round-back-outline" style={{color: '#E5DDCB'}}></Icon>
+                        <Icon name="arrow-back" style={{color: '#E5DDCB'}}></Icon>
                     </Button>
                     </Left>
                     <Body>
@@ -146,10 +148,10 @@ export default class Products extends Component {
 
                 <View horizontal={true} style={css.subCategoryRow}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {this.state.brands.map((brand) => {
+                {this.state.brands.map((brand,i) => {
                     //sadece o subKateqoriyaya aid olan brandlar cixir 'horizontal ScrollViewda'
                     if(brand.category_id==this.props.subCategoryID){
-                  return <Button rounded style={css.subCategoryBtn}>
+                  return <Button rounded style={css.subCategoryBtn} key={i}>
                                 <Text style={{color: '#E5DDCB'}}>{brand.name}</Text>
                             </Button>
                     }
@@ -163,9 +165,9 @@ export default class Products extends Component {
                 {/*PRODUCTS of choosen category with SubCategory rows*/}
 
                 <Content>
-                    {this.state.brands.map((brand) => {
+                    {this.state.brands.map((brand,i) => {
                         if(brand.category_id==this.props.subCategoryID) {
-                            return <Card style={{borderWidth: 0,marginLeft: 16,shadowOpacity: 0}}>
+                            return <Card style={{borderWidth: 0,marginLeft: 16,shadowOpacity: 0}} key={i}>
                                 <Text style={{borderWidth: 0,marginBottom: 14, color: '#EB7B59'}}>{brand.name}</Text>
                                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
                                             pagingEnabled={true}

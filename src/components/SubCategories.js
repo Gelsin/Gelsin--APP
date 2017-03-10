@@ -1,6 +1,3 @@
-/**
- * Created by alizeynalov on 27/02/17.
- */
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button,Card,CardItem,Thumbnail} from "native-base";
 import React, {Component} from 'react';
 import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions} from "react-native";
@@ -103,8 +100,8 @@ export default class Products extends Component {
    <Content>
        <View style={{flexDirection: 'row','flexWrap': 'wrap',alignItems: 'center', padding: 6}}>
 
-           {this.state.SubCategories.map((subCategory) => {
-               return <TouchableOpacity disabled={this.state.disabled}
+           {this.state.SubCategories.map((subCategory,i) => {
+               return <TouchableOpacity disabled={this.state.disabled} key={i}
                                         style={css.templateRow}
                                         onPress={()=>Actions.products({categoryID:CatID, branchID: 1, subCategoryID: subCategory.id})}>
                    <Image style={css.templateImage}
