@@ -99,9 +99,9 @@ export default class Categories extends Component {
 
             <View style={{flexDirection: 'row','flexWrap': 'wrap',alignItems: 'center', padding: 6}}>
 
-                {this.state.categories.map((category) => {
+                {this.state.categories.map((category,i) => {
 
-                 return  <TouchableOpacity disabled={this.state.disabled}
+                 return  <TouchableOpacity disabled={this.state.disabled} key={i}
                  style={css.templateRow}
                  onPress={()=>Actions.subCategories(category.id)}>
                  <Image style={css.templateImage} source={{uri: category.cover_url}}></Image>
