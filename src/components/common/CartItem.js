@@ -35,12 +35,12 @@ export default class CartItem extends Component {
                             &#x20bc; </Text>
                         </Body>
                         <Right style={{flex:1, padding:0, margin: 0, justifyContent: 'center', alignItems: 'center' }}>
-                            <Button style={{ padding:0, margin: 0,  height: 20, }} transparent>
+                            <Button style={{ padding:0, margin: 0,  height: 20, }} transparent onPress={this.props.increment}>
                                 <Icon style={{padding:0, margin: 0,  color: '#eb7b59'}} name="ios-arrow-up"/>
                             </Button>
                             <Text
                                 style={{ padding:0, margin: 0,   color: '#e57b59', fontFamily: 'SourceSansPro-Semibold'}}> {this.props.quantity} </Text>
-                            <Button style={{ padding:0, margin: 0,  height: 20}} transparent>
+                            <Button style={{ padding:0, margin: 0,  height: 20}} transparent onPress={this.props.decrement}>
                                 <Icon style={{ padding:0, margin: 0,  color: '#e57b59'}} name="ios-arrow-down"/>
                             </Button>
                         </Right>
