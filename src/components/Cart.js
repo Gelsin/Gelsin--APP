@@ -45,26 +45,40 @@ export default class Cart extends Component {
         total_price = 0;
         cart = this.state.cart;
         for (i = 0; i < cart.length; i++) {
-            total_price += cart[i].price * cart[i].cartQuantity;
+            total_price += cart[i].price * cart[i].quantity;
         }
         this.setState({total_price});
     }
 
     changeQuantity (id, change) {
-        //console.log(product.cartQuantity, change);
-        // product.cartQuantity += change;
-        // console.log(product.cartQuantity);
-
         cart = this.state.cart;
 
         for (i = 0; i < cart.length; i++) {
             if (cart[i].id == id) {
-                cart[i].cartQuantity += change;
+                cart[i].quantity += change;
 
                 total_price = this.state.total_price + change * cart[i].price;
             }
         }
         this.setState({cart, total_price});
+        this.saveToDevice();
+    };
+
+    emptyBasket = async () => {
+        this.setState({cart: []});
+        try {
+            await AsyncStorage.removeItem('@Gelsin:Cart');
+        } catch (error) {
+            this.setState({error: error.message});
+        }
+    };
+
+    saveToDevice = async() => {
+        try {
+            await AsyncStorage.setItem('@Gelsin:Cart', JSON.stringify(this.state.cart));
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 
@@ -117,7 +131,7 @@ export default class Cart extends Component {
                                     name={product.name}
                                     price={product.price}
                                     thumbnail={product.cover_url}
-                                    quantity={product.cartQuantity}
+                                    quantity={product.quantity}
                                     increment={()=>this.changeQuantity(product.id, +1)}
                                     decrement={()=>this.changeQuantity(product.id, -1)}
                                 />
@@ -135,7 +149,7 @@ export default class Cart extends Component {
                         </Left>
 
                         <Right>
-                            <Button transparent onPress={()=>Actions.ordersMain()}>
+                            <Button transparent onPress={this.emptyBasket.bind(this)}>
                                 <Text style={{color: '#e57b59', textDecorationLine: 'line-through'}}>Empty Basket</Text>
                             </Button>
                         </Right>
