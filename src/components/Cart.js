@@ -163,7 +163,7 @@ export default class Cart extends Component {
                         </Left>
 
                         <Right style={{   }}>
-                            <Button rounded style={styles.button} onPress={()=>Actions.orderAddress()}>
+                            <Button rounded style={styles.button} onPress={()=>Actions.orderAddress({total_price: this.state.total_price})}>
                                 <Text style={styles.text}>Confirm</Text>
                             </Button>
 

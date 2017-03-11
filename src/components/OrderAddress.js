@@ -1,10 +1,166 @@
 import React, {Component} from 'react';
+import {AsyncStorage} from 'react-native';
 import {Container, Content, ListItem, Text, Radio, Right, Left, Body, Separator, Header, Button, Icon, Title, StyleProvider, FooterTab, Footer} from 'native-base';
 import radioTheme from '../../native-base-theme/components/';
 import platform from '../../native-base-theme/variables/platform';
 import {Actions} from 'react-native-router-flux';
 
 export default class OrderAddress extends Component {
+    constructor(props) {
+        console.log("in constructor");
+        super(props);
+        this.state = {cart: [], products:[], total_price: this.props.total_price, token: '', addresses: [], selectedIndex: 0,
+            selectedAddress: '', error: ''};
+        console.log(this.state);
+    };
+
+    componentWillMount() {
+        console.log("will mount");
+    };
+
+
+    componentDidMount() {
+        console.log("mounted");
+        this.getToken();
+        this.getCart();
+
+    };
+
+    getToken = async () => {
+        try {
+            var value = await AsyncStorage.getItem('@Gelsin:auth_user');
+            if (value !== null){
+                //console.log(value);
+                this.setState({token: value});
+                console.log(this.state.token);
+
+                this.getAddresses(this.state.token);
+
+            } else {
+                console.log(value);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    getCart = async() => {
+        try {
+            var value = await AsyncStorage.getItem('@Gelsin:Cart');
+            if (value !== null) {
+                console.log(value);
+                cart = JSON.parse(value);
+                // console.log(cart);
+                this.setState({cart});
+                console.log(this.state.cart)
+
+                products = this.state.products;
+
+                for (i = 0; i < cart.length; i++) {
+                    products.push({
+                        product_id: cart[i].id,
+                        quantity: cart[i].quantity,
+                        price: cart[i].price
+                    });
+                }
+
+                this.setState({products});
+                console.log(this.state.products);
+
+            } else {
+                console.log(value);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    getAddresses(token) {
+        console.log("getting user addresses");
+
+        fetch('http://gelsin.az/app/api/addresses?token=' + token, {method: 'GET'})
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                this.setState({addresses: responseJson.address});
+                this.setState({
+                    selectedAddress: this.state.addresses[0].address_line + ',' + this.state.addresses[0].branch_address.street_name
+                });
+                console.log(this.state);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    onButtonPress() {
+        console.log('button pressed');
+
+        address = this.state.selectedAddress;
+        delivery_is_now = 1;
+        notes = "Static note";
+        products = this.state.products;
+
+        rbody = {
+            address,
+            delivery_is_now,
+            notes,
+            products
+        };
+        console.log(rbody);
+        console.log(JSON.stringify(rbody));
+
+        fetch('http://gelsin.az/app/api/order/add', {
+            method: 'POST',
+            headers: {
+                'Authorization' : 'Bearer ' + this.state.token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify(rbody)
+        })
+            .then((response) => response.json()
+                .then((responseData) => {
+                    console.log("inside responsejson");
+                    console.log('response object:', responseData);
+
+                    switch (responseData.error) {
+                        case false: {
+                            this.onSuccess();
+                            break;
+                        }
+
+                        default: {
+                            this.setState({error: responseData.message});
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            )
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    onSuccess= async () => {
+        this.setState({
+            cart: [],
+            total_price: 0,
+        });
+
+        try {
+            await AsyncStorage.removeItem('@Gelsin:Cart');
+        } catch (error) {
+            this.setState({error: error.message});
+        }
+
+        Actions.category();
+    };
+
+
     render() {
         const styles = {
             header: {
@@ -51,38 +207,27 @@ export default class OrderAddress extends Component {
                             style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Choose an address</Text>
                     </Separator>
 
-                    <ListItem selected={false} >
-                        <Left style={{ flex: 1}}>
-                            <Radio selected={false} />
-                        </Left>
-                        <Body style={{ flex: 9, }}>
-                        <Text style={{alignSelf: 'flex-start', marginLeft: 0}}> Lorem   Inspum, Narimanov </Text>
-                        </Body>
-                        {/*<Right />*/}
-                    </ListItem>
+                    {this.state.addresses.map((address, i) => {
+                            return (
+                                <ListItem selected={false} key={i}>
+                                    <Left style={{ flex: 1}}>
+                                        <Radio selected={this.state.selectedIndex==i}
+                                        onPress={()=>this.setState({selectedIndex: i,
+                                        selectedAddress: address.address_line + ',' + address.branch_address.street_name },
+                                        ()=>console.log(this.state.selectedAddress))}
+                                        />
+                                    </Left>
+                                    <Body style={{ flex: 9, }}>
+                                    <Text style={{alignSelf: 'flex-start', marginLeft: 0, fontFamily: 'SourceSansPro-Regular'}}>
+                                        {address.address_line}, {address.branch_address.street_name}
+                                    </Text>
+                                    </Body>
+                                </ListItem>
+                            );
+                        }
+                    )}
 
-                    <ListItem selected={true} >
-                        <Left style={{ flex: 1}}>
-                            <Radio selected={true}
-                                   radioColor='red'
-                                   radioBtnSize={34}
-                            />
-                        </Left>
-                        <Body style={{ flex: 9, }}>
-                        <Text style={{alignSelf: 'flex-start', marginLeft: 0}}> Lorem   Inspum, Narimanov </Text>
-                        </Body>
-                        {/*<Right />*/}
-                    </ListItem>
 
-                    <ListItem selected={false} >
-                        <Left style={{ flex: 1}}>
-                            <Radio selected={false} />
-                        </Left>
-                        <Body style={{ flex: 9, }}>
-                        <Text style={{alignSelf: 'flex-start', marginLeft: 0}}> Lorem   Inspum, Narimanov </Text>
-                        </Body>
-                        {/*<Right />*/}
-                    </ListItem>
                 </Content>
 
                 <Footer style={styles.footer}>
@@ -98,11 +243,11 @@ export default class OrderAddress extends Component {
                     <FooterTab style={{backgroundColor: '#524656', flex: 56, paddingLeft: 12, paddingRight: 12 }}>
                         <Left >
                             <Text style={{color: '#e5ddcb', fontFamily: 'SourceSansPro-Semibold', }} >Total amount</Text>
-                            <Text style={{color: '#e57b59', fontFamily: 'SourceSansPro-Regular', fontSize: 18}}>32.50 &#x20bc;</Text>
+                            <Text style={{color: '#e57b59', fontFamily: 'SourceSansPro-Regular', fontSize: 18}}>{this.state.total_price} &#x20bc;</Text>
                         </Left>
 
                         <Right style={{   }}>
-                            <Button rounded style={styles.button} onPress={()=>Actions.category()}>
+                            <Button rounded style={styles.button} onPress={this.onButtonPress.bind(this)}>
                                 <Text style={styles.text}>Confirm</Text>
                             </Button>
                         </Right>
