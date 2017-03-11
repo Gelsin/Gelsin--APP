@@ -50,8 +50,8 @@ export default class Addresses extends Component {
                         </Button>
                     </Left>
 
-                    <Body style={{ flex: 7}} >
-                    <Title style={{alignSelf: 'center',color: '#E5DDCB',paddingLeft: 20,fontFamily: 'SourceSansPro-Regular'}}>GƏLSİN</Title>
+                    <Body style={{ flex: 15}} >
+                    <Title style={{alignSelf: 'center',color: '#E5DDCB',paddingLeft: 20,fontFamily: 'SourceSansPro-Regular',marginRight: 30}}>GƏLSİN</Title>
                     </Body>
                 </Header>
 
@@ -70,7 +70,7 @@ export default class Addresses extends Component {
                             <Left>
                                 <Body>
                                 <Text>Ev 1</Text>
-                                <Text note>Adres 1 Yasamal Serifzade 28, No 33</Text>
+                                <Text note>Yasamal,Serifzade 28, No 33</Text>
                                 </Body>
                             </Left>
                             </Button>
@@ -79,8 +79,8 @@ export default class Addresses extends Component {
                     <Button transparent>
                             <Left>
                                 <Body>
-                                <Text>Ev 1</Text>
-                                <Text note>Adres 1 Yasamal Serifzade 28, No 33</Text>
+                                <Text>Ofis-Kurs 1</Text>
+                                <Text note>2 Sebayil,rayonu Neftciler pr. No 44</Text>
                                 </Body>
                             </Left>
                             </Button>
@@ -89,8 +89,8 @@ export default class Addresses extends Component {
                     <Button transparent>
                             <Left>
                                 <Body>
-                                <Text>Ev 1</Text>
-                                <Text note>Adres 1 Yasamal Serifzade 28, No 33</Text>
+                                <Text>Ofis</Text>
+                                <Text note> Binəqədi,Süleyman Axundov küçəsi, No 12</Text>
                                 </Body>
                             </Left>
                             </Button>
@@ -99,8 +99,8 @@ export default class Addresses extends Component {
                     <Button transparent>
                             <Left>
                                 <Body>
-                                <Text>Ev 1</Text>
-                                <Text note>Adres 1 Yasamal Serifzade 28, No 33</Text>
+                                <Text>Mekteb</Text>
+                                <Text note>Nəsimi, 42 Nömrəli orta məktəb, Otaq 62</Text>
                                 </Body>
                             </Left>
                             </Button>
@@ -142,7 +142,7 @@ export default class Addresses extends Component {
                         {/*</View>*/}
 
                         <Button transparent>
-                           <Text style={{fontFamily: 'SourceSansPro-SemiBold', color: '#FFF'}}>Yeni adres</Text>
+                            <Text style={{fontFamily: 'SourceSansPro-SemiBold', color: '#FFF'}}> + Yeni adres</Text>
                         </Button>
                     </FooterTab>
                 </Footer>

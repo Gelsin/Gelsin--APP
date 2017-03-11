@@ -29,11 +29,40 @@ export default class Products extends Component {
 
     addItem(product)
     {
+
+        //updates the value of Cart in the top-right
         pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
         this.setState({cartPrice: pr});
-        prods = this.state.cartProducts;
-        prods.push(product);
-        this.setState({cartProducts: prods},()=>console.log("CartProducts: ",this.state.cartProducts));
+        //look whether selected item exists in cart or not
+        ProdID=product.id;
+        cartProds = this.state.cartProducts;
+
+        //look whether Cart is empty
+        if(cartProds.length==0)
+        {
+            product.cartQuantity=1;
+            cartProds.push(product);
+            this.setState({cartProducts: cartProds},()=>console.log("Cart after adding new product: ",this.state.cartProducts));
+        }
+        else {
+            for (var i = 0; i < cartProds.length; i++) {
+
+                //if selected product type already exists in Cart, do not add new object, just increade the quantity of existing one.
+
+                if (cartProds[i].id == ProdID) {
+                    cartProds[i].cartQuantity++;
+                    this.setState({cartProducts: cartProds}, () => console.log("Cart after update: ", this.state.cartProducts));
+                    break;
+                }
+
+                //if selected product type does not exist in Cart, add new object to array.
+                product.cartQuantity = 1;
+                cartProds.push(product);
+                this.setState({cartProducts: cartProds}, () => console.log("CartProducts after adding new product: ", this.state.cartProducts));
+
+            }
+        }
+        //write the Cart to Device
         this.writeCartToDevice();
     }
 
@@ -112,7 +141,7 @@ export default class Products extends Component {
 
     render() {
         if(this.state.brands === null) {
-            return <Header  action={()=>Actions.products(this.props.categoryID, this.props.branchID)} newsLayoutButton={true} />
+            return null;
         }
 
         const css = {
@@ -176,7 +205,7 @@ export default class Products extends Component {
 
 
 
-                {/*Scrollable SubCategory bar*/}
+                {/*Scrollable brands bar*/}
 
                 <View horizontal={true} style={css.subCategoryRow}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -194,7 +223,7 @@ export default class Products extends Component {
 
 
 
-                {/*PRODUCTS of choosen category with SubCategory rows*/}
+                {/*PRODUCTS of choosen subCategory with brand rows*/}
 
                 <Content>
                     {this.state.brands.map((brand,i) => {
