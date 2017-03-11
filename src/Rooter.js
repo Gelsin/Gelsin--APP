@@ -34,8 +34,8 @@ export default class AppRouter extends Component {
                     <Scene key="cart" component={Cart} hideNavBar  />
                     <Scene key="ordersMain" component={OrdersMain} hideNavBar  />
                     <Scene key="ordersDetail" component={OrdersDetail} hideNavBar  />
-                    <Scene key="orderAddress" component={OrderAddress} hideNavBar  />
-                    <Scene key="category" component={Categories}  hideNavBar initial />
+                    <Scene key="orderAddress" component={OrderAddress} hideNavBar initial />
+                    <Scene key="category" component={Categories}  hideNavBar  />
                     <Scene key="products" component={Products} hideNavBar />
                     <Scene key="subCategories" component={SubCategories}  hideNavBar />
                 </Scene>

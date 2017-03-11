@@ -17,7 +17,7 @@ export default class OrderAddress extends Component {
             },
             button: {
                 alignSelf: 'flex-end',
-                backgroundColor: '#e57b59',
+                backgroundColor: '#eb7b59',
                 width: 90,
                 height: 32,
                 justifyContent: 'center',
@@ -48,7 +48,7 @@ export default class OrderAddress extends Component {
                 <Content>
                     <Separator style={{backgroundColor: '#fff'}} >
                         <Text
-                            style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Profile</Text>
+                            style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Choose an address</Text>
                     </Separator>
 
                     <ListItem selected={false} >
@@ -63,7 +63,10 @@ export default class OrderAddress extends Component {
 
                     <ListItem selected={true} >
                         <Left style={{ flex: 1}}>
-                            <Radio selected={true} />
+                            <Radio selected={true}
+                                   radioColor='red'
+                                   radioBtnSize={34}
+                            />
                         </Left>
                         <Body style={{ flex: 9, }}>
                         <Text style={{alignSelf: 'flex-start', marginLeft: 0}}> Lorem   Inspum, Narimanov </Text>
@@ -102,7 +105,6 @@ export default class OrderAddress extends Component {
                             <Button rounded style={styles.button} onPress={()=>Actions.category()}>
                                 <Text style={styles.text}>Confirm</Text>
                             </Button>
-
                         </Right>
                     </FooterTab>
                 </Footer>
