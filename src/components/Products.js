@@ -11,6 +11,7 @@ export default class Products extends Component {
             brands: null,
             activeBrand: null,
             cartProducts: [],
+            // Storage: null,
             cartPrice: 0,
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => true
@@ -30,39 +31,53 @@ export default class Products extends Component {
     addItem(product)
     {
 
+        flag = 0;
         //updates the value of Cart in the top-right
         pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
         this.setState({cartPrice: pr});
         //look whether selected item exists in cart or not
         ProdID=product.id;
         cartProds = this.state.cartProducts;
-
-        //look whether Cart is empty
-        if(cartProds.length==0)
+        // look whether Cart is not empty
+        if(cartProds.length > 0)
         {
-            product.cartQuantity=1;
-            cartProds.push(product);
-            this.setState({cartProducts: cartProds},()=>console.log("Cart after adding new product: ",this.state.cartProducts));
-        }
-        else {
             for (var i = 0; i < cartProds.length; i++) {
-
-                //if selected product type already exists in Cart, do not add new object, just increade the quantity of existing one.
+                //if selected product type already exists in Cart, do not add new object, just increase the quantity of existing one.
 
                 if (cartProds[i].id == ProdID) {
-                    cartProds[i].cartQuantity++;
+                    cartProds[i].quantity++;
                     this.setState({cartProducts: cartProds}, () => console.log("Cart after update: ", this.state.cartProducts));
-                    break;
+                    flag=1;
                 }
-
-                //if selected product type does not exist in Cart, add new object to array.
-                product.cartQuantity = 1;
-                cartProds.push(product);
-                this.setState({cartProducts: cartProds}, () => console.log("CartProducts after adding new product: ", this.state.cartProducts));
-
             }
+
+            if(flag==0)
+            {
+                cartProds.push({id: product.id,
+                    stock: product.quantity,
+                    quantity: 1,
+                    cover_url: product.cover_url,
+                    is_discounted: product.is_discounted,
+                    name: product.name,
+                    price: product.price});
+                this.setState({cartProducts: cartProds}, () => console.log("CartProducts after adding new product: ", this.state.cartProducts));
+            }
+
+
+
+
         }
-        //write the Cart to Device
+         else {
+            cartProds.push({id: product.id,
+                stock: product.quantity,
+                quantity: 1,
+                cover_url: product.cover_url,
+                is_discounted: product.is_discounted,
+                name: product.name,
+                price: product.price});
+            this.setState({cartProducts: cartProds},()=>console.log("empty Cart after adding new product: ",this.state.cartProducts));
+        }
+
         this.writeCartToDevice();
     }
 
@@ -132,12 +147,17 @@ export default class Products extends Component {
 
     componentWillMount()
     {
+        AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
+            if(value!=null)
+                this.setState({cartProducts: JSON.parse(value)},()=>console.log("Storage-cartProducts: ",this.state.cartProducts));
+        }).done();
         this.getBrands();
         this.getProducts();
     }
 
-    componentDidMount()
-    {}
+
+
+
 
     render() {
         if(this.state.brands === null) {
@@ -183,7 +203,7 @@ export default class Products extends Component {
             <Container>
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
-                    <Button transparent>
+                    <Button transparent onPress={()=>Actions.subCategories(this.props.categoryID)}>
                         <Icon name="arrow-back" style={{color: '#E5DDCB'}}></Icon>
                     </Button>
                     </Left>
