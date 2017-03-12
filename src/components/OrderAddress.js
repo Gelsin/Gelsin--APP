@@ -236,7 +236,7 @@ export default class OrderAddress extends Component {
                 <Footer style={styles.footer}>
                     <FooterTab style={{backgroundColor: '#e5ddcb', flex: 48, }}>
                         <Left>
-                            <Button transparent style={{  }}>
+                            <Button transparent style={{  }} onPress={()=>Actions.addresses()}>
                                 <Icon style={{color: '#524656'}} name="ios-add-circle-outline" />
                                 <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>Add new address</Text>
                             </Button>

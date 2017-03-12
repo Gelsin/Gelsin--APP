@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, AsyncStorage} from 'react-native';
 import {Container, Form, H3, Footer, Header, Button, Text, Input, Item, Spinner} from 'native-base';
 import {Grid, Row} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
@@ -20,6 +20,25 @@ class Verification extends Component {
 
     componentDidMount() {
         console.log("mounted");
+        this.getToken();
+    };
+
+    getToken = async () => {
+        try {
+            var value = await AsyncStorage.getItem('@Gelsin:auth_user');
+            if (value !== null){
+                console.log(value);
+                this.setState({token: value});
+                console.log(this.state.token);
+
+                // this.checkUser(this.state.token)
+
+            } else {
+                console.log(value);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     onButtonPress() {
@@ -84,6 +103,44 @@ class Verification extends Component {
         });
 
         Actions.main();
+    }
+
+    resend() {
+        console.log('button pressed');
+
+        const {token} = this.state;
+
+        this.setState({error: ''});
+        console.log(this.state);
+
+        //let url = gelsin.az/app/api/auth/login + encodeURIComponent(this.state.email);
+
+        fetch('http://gelsin.az/app/api/auth/user/resend', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token
+            })
+        })
+            .then((response) => response.json()
+                .then((responseData) => {
+                    console.log("inside responsejson");
+                    console.log('response object:', responseData);
+                    //this.setState({loading: false});
+
+                    this.setState({error: responseData.message});
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            )
+            .catch((error) => {
+                console.log(error);
+            });
+        // .done();
     }
 
     renderButton() {
@@ -183,15 +240,21 @@ class Verification extends Component {
 
                             {this.renderButton()}
 
+                            <Button style={styles.button} transparent onPress={this.resend.bind(this)}>
+                                <Text style={styles.text}>
+                                    Resend code
+                                </Text>
+                            </Button>
+
                             <Text style={styles.text}>{this.state.error}</Text>
                         </Form>
                     </Row>
                 </Grid>
 
                 <Footer style={styles.footer}>
-                    <Button style={styles.button} transparent onPress={()=>Actions.signUp()}>
+                    <Button style={styles.button} transparent onPress={()=>Actions.main()}>
                         <Text style={styles.text}>
-                            Resend code
+                            Verify later
                         </Text>
                     </Button>
                 </Footer>

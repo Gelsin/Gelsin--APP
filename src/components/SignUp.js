@@ -162,7 +162,7 @@ class SignUp extends Component {
                     <Row size={3} style={styles.formRow}>
                         <Form style={styles.form}>
                             <IconInput
-                                placeholder="+994 44 444 44 44"
+                                placeholder="994 33 222 11 00"
                                 icon="ios-call-outline"
                                 value={this.state.contact}
                                 onChangeText={contact => this.setState({contact})}

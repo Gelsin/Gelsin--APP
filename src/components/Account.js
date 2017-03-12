@@ -82,6 +82,28 @@ export default class Account extends Component {
     }
 
     logout = async () => {
+        console.log('logout');
+
+        fetch('http://gelsin.az/app/auth/invalidate', {
+            method: 'DELETE',
+            headers: {
+                'Authorization' : 'Bearer ' + this.state.token
+            }
+        })
+            .then((response) => console.log(response)
+                // .then((responseData) => {
+                //     console.log("inside responsejson");
+                //     console.log('response object:', responseData);
+                //
+                // })
+                // .catch((error) => {
+                //     console.log(error);
+                // })
+            )
+            .catch((error) => {
+                console.log(error);
+            });
+
         try {
             await AsyncStorage.removeItem('@Gelsin:auth_user');
             Actions.auth();
@@ -146,7 +168,7 @@ export default class Account extends Component {
                             <Text
                                 style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Address</Text>
 
-                            <Button transparent style={{padding:0, margin:0}}>
+                            <Button transparent style={{padding:0, margin:0}} onPress={()=>Actions.addresses()}>
                                 <Text note
                                       style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Edit Addresses</Text>
                             </Button>
