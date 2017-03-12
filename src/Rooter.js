@@ -13,7 +13,7 @@ import Products from './components/Products';
 import SubCategories from './components/SubCategories';
 import OrdersMain from './components/OrdersMain';
 import OrdersDetail from './components/OrdersDetail';
-
+import NewAddress from './components/NewAddress';
 export default class AppRouter extends Component {
     constructor(props) {
         super(props);
@@ -30,12 +30,13 @@ export default class AppRouter extends Component {
                 </Scene>
                 <Scene key="main" >
                     <Scene key="account" component={Account} hideNavBar  />
+                    <Scene key="newAddress" component={NewAddress} hideNavBar  />
                     <Scene key="addresses" component={Addresses} hideNavBar  />
                     <Scene key="cart" component={Cart} hideNavBar  />
                     <Scene key="ordersMain" component={OrdersMain} hideNavBar  />
                     <Scene key="ordersDetail" component={OrdersDetail} hideNavBar  />
                     <Scene key="orderAddress" component={OrderAddress} hideNavBar  />
-                    <Scene key="category" component={Categories}  hideNavBar initial />
+                    <Scene key="category" component={Categories}  hideNavBar initial/>
                     <Scene key="products" component={Products} hideNavBar />
                     <Scene key="subCategories" component={SubCategories}  hideNavBar />
                 </Scene>
