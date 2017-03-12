@@ -109,7 +109,7 @@ export default class Cart extends Component {
             <Container>
                 <Header style={styles.header}>
                     <Left style={{ flex: 1}}>
-                        <Button transparent>
+                        <Button transparent onPress={()=>Actions.category()}>
                             <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                         </Button>
                     </Left>

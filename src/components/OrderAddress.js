@@ -189,7 +189,7 @@ export default class OrderAddress extends Component {
             <Container>
                 <Header style={styles.header}>
                     <Left style={{ flex: 1}}>
-                        <Button transparent>
+                        <Button transparent onPress={()=>Actions.cart()}>
                             <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                         </Button>
                     </Left>
@@ -209,7 +209,10 @@ export default class OrderAddress extends Component {
 
                     {this.state.addresses.map((address, i) => {
                             return (
-                                <ListItem selected={false} key={i}>
+                                <ListItem selected={this.state.selectedIndex==i} key={i}
+                                          onPress={()=>this.setState({selectedIndex: i,
+                                        selectedAddress: address.address_line + ',' + address.branch_address.street_name },
+                                        ()=>console.log(this.state.selectedAddress))}>
                                     <Left style={{ flex: 1}}>
                                         <Radio selected={this.state.selectedIndex==i}
                                         onPress={()=>this.setState({selectedIndex: i,
