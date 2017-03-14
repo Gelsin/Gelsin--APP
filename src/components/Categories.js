@@ -3,13 +3,14 @@ import React, {Component} from 'react';
 import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions} from "react-native";
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button} from "native-base";
 import {Actions} from 'react-native-router-flux';
-// import css from '../Styles/CategoryStyle';
+import Drawer from 'react-native-drawer';
+import SideBarContent from './common/SideBarContent';
+
 const {width, height} = Dimensions.get("window"),
     vw = width / 100
     vh = height / 100
 
 export default class Categories extends Component {
-
 
     constructor(props) {
         super(props);
@@ -18,7 +19,11 @@ export default class Categories extends Component {
         }
     }
 
-        getCategories() {
+    openControlPanel = () => {
+        this._drawer.open()
+    }
+
+    getCategories() {
         return fetch("http://gelsin.az/app/api/categories", {method: "GET"})
             .then((response) => response.json())
             .then((responseData) => {
@@ -64,21 +69,41 @@ export default class Categories extends Component {
             "templateMenu": {
                 color: '#524656',
                 marginBottom: 15
-            }}
+            }
+        }
+
+        const drawerStyles = {
+            drawer: { shadowColor: '#000000', shadowOpacity: 1.8, shadowRadius: 3, backgroundColor: '#252225'},
+            main: {paddingLeft: 3},
+        }
 
 
         if (this.state.categories === null) {
-            return <Header  action={Actions.categories} newsLayoutButton={true}/>
+            return null;
 
         }
 
 
 
         return (
+
+
         <Container>
+            <Drawer
+                tapToClose={true}
+                open={false}
+                type="overlay"
+                content={<SideBarContent />}
+                ref = {(ref) => this._drawer = ref}
+                openDrawerOffset={250}
+                styles={drawerStyles}
+                tweenHandler={Drawer.tweenPresets.parallax}
+            >
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
+                        <Button transparent onPress={()=>this.openControlPanel()}>
                         <Icon name="ios-menu" style={{color: '#E5DDCB'}}></Icon>
+                        </Button>
                     </Left>
                     <Body>
                         <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
@@ -112,7 +137,9 @@ export default class Categories extends Component {
 
             </View>
             </Content>
+            </Drawer>
         </Container>
+
         );
 
 

@@ -90,7 +90,7 @@ export default class Addresses extends Component {
             <Container >
                 <Header style={styles.header}>
                     <Left style={{ flex: 1}}>
-                        <Button transparent>
+                        <Button transparent onPress={()=>Actions.account()}>
                             <Icon name='arrow-back' style={{color: '#FFF'}}/>
                         </Button>
                     </Left>
