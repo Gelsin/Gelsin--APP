@@ -17,7 +17,8 @@ export default class NewAddress extends Component {
             //selectedBranchID: this.props.adres.branch_address_id ? this.props.adres.branch_address_id: null,
             token: '',
             user: String,
-            branchAddresses: []
+            branchAddresses: [],
+            pageName: ''
         }
 
     }
@@ -91,6 +92,11 @@ export default class NewAddress extends Component {
         {
             this.setState({addresLine: this.props.adres.address_line});
             this.setState({selectedBranchID: this.props.adres.branch_address_id});
+            this.setState({pageName: "Mövcud adres"});
+        }
+        else
+        {
+            this.setState({pageName: "Yeni adres"});
         }
     }
 
@@ -135,7 +141,7 @@ export default class NewAddress extends Component {
 
                     <Content style={{marginTop: 30}}>
                         <Form>
-                            <H3 style={{color: '#EB7B59',fontFamily: 'SourceSansPro-semiBold',paddingLeft: 14}}>Yeni adres</H3>
+                            <H3 style={{color: '#EB7B59',fontFamily: 'SourceSansPro-semiBold',paddingLeft: 14}}>{this.state.pageName ? this.state.pageName:"yeni adres"}</H3>
 
                                 <Picker
                                     iosHeader="Select one"
