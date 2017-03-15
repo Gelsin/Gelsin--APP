@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,Container, Header, Title, Content, Footer, FooterTab, Button, Body, Icon, H3, Text, Form, Item, Input,Card,CardItem,Left,Right} from 'native-base';
+import {View,Container, Header, Title, Content, Footer, FooterTab, Button, Body, Icon, H3, Text, Form, Item, Input,Card,CardItem,Left,Right,InputGroup} from 'native-base';
 import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
@@ -10,15 +10,16 @@ export default class NewAddress extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            addressLine: this.props.adres? this.props.adres.address_line:null,
-            selectedBranchId: this.props.adres? this.props.adres.branch_address_id:null,
+            addressLine: this.props.adres!=undefined ? this.props.adres.address_line: null,
+            selectedBranchID: this.props.adres!=undefined ? this.props.adres.branch_address_id:null,
 
-            //addresLine: this.props.adres.address_line ? this.props.adres.address_line: null ,
-            //selectedBranchID: this.props.adres.branch_address_id ? this.props.adres.branch_address_id: null,
+            // addressLine: this.props.adres!=undefined ? this.props.adres.address_line : null,
+            // selectedBranchID: this.props.adres!=undefined ? this.props.adres.branch_address_id : null,
+
             token: '',
             user: String,
             branchAddresses: [],
-            pageName: ''
+            pageName: this.props.adres ? "mövcud adres" : "yeni adres"
         }
 
     }
@@ -67,39 +68,41 @@ export default class NewAddress extends Component {
                     'Content-Type': 'application/json',
 
             },
-                body: JSON.stringify({token: this.state.token, user_id: this.state.user.id, branch_address_id: this.state.selectedBranchID, address_line: this.state.addresLine})})
+                body: JSON.stringify({token: this.state.token, user_id: this.state.user.id, branch_address_id: this.state.selectedBranchID, address_line: this.state.addressLine})})
                 .then((response) => response.json())
                 .then((responseData) => {
+                if(responseData.message=="success") {
+                    AlertIOS.alert("Adres əlavə olundu.");
+                    console.log("responseData: ", responseData);
+                }
+                else
+                    {
+                        AlertIOS.alert("əlavə edilmədi.");
+                        console.log("responseData: ", responseData);
+                    }
                 })
                 .done();
         }
         else
         {
             //edit Address
-            console.log("EDIT ADRES");
-            console.log("TOKEN: ",this.state.token);
-            console.log("addressID: ",this.props.adres.id);
-            console.log("branchID: ",this.state.selectedBranchId);
-            console.log("Address Line: ",this.state.addressLine);
+
+            fetch("http://gelsin.az/app/api/address/update" ,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify({token: this.state.token, address_id: this.props.adres.id, branch_address_id: this.state.selectedBranchID, address_line: this.state.addressLine})})
+                .then((response) => response.json())
+                .then((responseData) => {
+                    console.log("responseData: ",responseData);
+                })
+                .done();
+
         }
     }
-
-
-    componentWillMount()
-    {
-        this.getToken();
-        if(this.state.addressLine != null && this.state.branchAddresses !=null)
-        {
-            this.setState({addresLine: this.props.adres.address_line});
-            this.setState({selectedBranchID: this.props.adres.branch_address_id});
-            this.setState({pageName: "Mövcud adres"});
-        }
-        else
-        {
-            this.setState({pageName: "Yeni adres"});
-        }
-    }
-
 
     getBranchAddresses()
     {
@@ -112,6 +115,26 @@ export default class NewAddress extends Component {
                 console.error(error);
             });
     }
+
+
+    componentDidMount()
+    {
+        console.log("page name: ",this.state.pageName);
+        this.getToken();
+        if(this.state.addressLine != null && this.state.branchAddresses !=null)
+        {
+            console.log("PROPS: ",this.props);
+            // this.setState({addresLine: this.props.adres.address_line});
+            // this.setState({selectedBranchID: this.props.adres.branch_address_id});
+            // this.setState({pageName: "Mövcud adres"});
+        }
+        else
+        {
+            // this.setState({pageName: "Yeni adres"});
+        }
+    }
+
+
 
     render() {
         const styles = {
@@ -147,6 +170,7 @@ export default class NewAddress extends Component {
                                     iosHeader="Select one"
                                     mode="dropdown"
                                     selectedValue={this.state.selectedBranchID}
+                                    value={this.state.selectedBranchId}
                                     onValueChange={(value)=>this.setState({
                                     selectedBranchID : value},()=>console.log("Street Line: ",this.state.selectedBranchID))}>
                                     {this.state.branchAddresses.map((address,i) =>
@@ -159,7 +183,10 @@ export default class NewAddress extends Component {
                                 <Input
                                     style={{left: 15,color: '#524656',paddingLeft: 0,fontFamily: 'SourceSansPro-Regular',height: 40 }}
                                     placeholder="adres açıqlaması"
-                                    onChangeText={(Line) => this.setState({addresLine: Line},()=>console.log("adresLineS: ",this.state.addresLine))}/>
+                                    value={this.state.addressLine}
+                                    editable={true}
+                                    onChangeText={(Line) => this.setState({addressLine: Line},()=>console.log("this state adresLine: ",this.state.addressLine))}
+                                />
                             </Item>
 
                         </Form>
