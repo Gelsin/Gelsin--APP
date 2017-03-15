@@ -71,15 +71,11 @@ export default class NewAddress extends Component {
                 body: JSON.stringify({token: this.state.token, user_id: this.state.user.id, branch_address_id: this.state.selectedBranchID, address_line: this.state.addressLine})})
                 .then((response) => response.json())
                 .then((responseData) => {
-                if(responseData.message=="success") {
-                    AlertIOS.alert("Adres əlavə olundu.");
+                if(responseData.message !="success") {
+                    AlertIOS.alert("Adres əlavə edildi.");
                     console.log("responseData: ", responseData);
                 }
-                else
-                    {
-                        AlertIOS.alert("əlavə edilmədi.");
-                        console.log("responseData: ", responseData);
-                    }
+
                 })
                 .done();
         }
@@ -97,7 +93,11 @@ export default class NewAddress extends Component {
                 body: JSON.stringify({token: this.state.token, address_id: this.props.adres.id, branch_address_id: this.state.selectedBranchID, address_line: this.state.addressLine})})
                 .then((response) => response.json())
                 .then((responseData) => {
-                    console.log("responseData: ",responseData);
+                    if(responseData.message !="success") {
+                        AlertIOS.alert("Adres yeniləndi.");
+                        console.log("responseData: ",responseData);
+                    }
+
                 })
                 .done();
 
