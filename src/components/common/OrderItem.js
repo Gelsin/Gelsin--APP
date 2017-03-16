@@ -17,11 +17,11 @@ export default class OrderItem extends Component {
         return (
                     <ListItem style={{  margin: 0, paddingRight: 0 }} >
                         <Body  >
-                        <Text style={styles.text}>12/02/2016 - Yasamal Ev</Text>
-                        <Text   style={styles.price}>14.50 &#x20bc;</Text>
+                        <Text style={styles.text}>{this.props.date}</Text>
+                        <Text   style={styles.price}>{this.props.price} &#x20bc;</Text>
                         </Body>
                         <Right >
-                            <Button transparent  onPress={()=>Actions.ordersDetail()}>
+                            <Button transparent  onPress={this.props.action}>
                                 <Icon style={{color: '#eb7b59'}} name="ios-arrow-forward-outline"></Icon>
                             </Button>
                         </Right>

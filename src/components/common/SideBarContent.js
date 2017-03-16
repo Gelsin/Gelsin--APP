@@ -18,7 +18,7 @@ export default class SideBarContent extends Component{
 
 
             <View style={{top: 80}} >
-                <Button transparent onPress={()=>Actions.ordersDetail()}><Text style={css.Button}>Order History</Text></Button>
+                <Button transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
                 <Button transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
                 <Button transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
                 <Button transparent><Text style={css.Button}>Haqqımızda</Text></Button>

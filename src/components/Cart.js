@@ -57,15 +57,22 @@ export default class Cart extends Component {
             if (cart[i].id == id) {
                 cart[i].quantity += change;
 
-                total_price = this.state.total_price + change * cart[i].price;
+                if (cart[i].quantity < 1) {
+                    cart[i].quantity = 1;
+                }
+                else total_price = this.state.total_price + change * cart[i].price;
             }
         }
         this.setState({cart, total_price});
         this.saveToDevice();
     };
 
+    deleteItem(id) {
+        console.log(id, "deleted");
+    }
+
     emptyBasket = async () => {
-        this.setState({cart: []});
+        this.setState({cart: [], total_price: 0});
         try {
             await AsyncStorage.removeItem('@Gelsin:Cart');
         } catch (error) {
@@ -134,6 +141,7 @@ export default class Cart extends Component {
                                     quantity={product.quantity}
                                     increment={()=>this.changeQuantity(product.id, +1)}
                                     decrement={()=>this.changeQuantity(product.id, -1)}
+                                    delete={()=>this.deleteItem(product.id)}
                                 />
                             );
                         }

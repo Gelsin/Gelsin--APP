@@ -87,7 +87,9 @@ export default class Account extends Component {
         fetch('http://gelsin.az/app/auth/invalidate', {
             method: 'DELETE',
             headers: {
-                'Authorization' : 'Bearer ' + this.state.token
+                'Authorization' : 'Bearer ' + this.state.token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then((response) => console.log(response)

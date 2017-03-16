@@ -28,7 +28,7 @@ class SignIn extends Component {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:auth_user');
             if (value !== null){
-                console.log(value);
+                // console.log(value);
                 this.setState({token: value});
                 console.log(this.state.token);
 
