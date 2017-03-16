@@ -31,10 +31,10 @@ export default class Products extends Component {
     addItem(product)
     {
 
-        flag = 0;
-        //updates the value of Cart in the top-right
-        pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
-        this.setState({cartPrice: pr});
+        // flag = 0;
+        // //updates the value of Cart in the top-right
+        // pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
+        // this.setState({cartPrice: pr});
         //look whether selected item exists in cart or not
         ProdID=product.id;
         cartProds = this.state.cartProducts;
@@ -90,6 +90,8 @@ export default class Products extends Component {
         } catch (error) {
             console.log(error);
         }
+
+
     };
 
 
@@ -112,7 +114,6 @@ export default class Products extends Component {
             return null;
 
        return   <View key={post.id}>
-        {/*<Product name={post.name} thumbnail={post.cover_url} price={post.name}/>*/}
            <CardItem horizontal={false} style={{flexDirection: 'column',borderWidth: 1,borderRadius: 4,padding: 0,marginRight: 14, borderColor: '#E5DDCB'}}>
                <Thumbnail square size={70} source={{uri: post.cover_url }} style={{marginTop: 12, marginBottom: 12}}/>
                <Text>{post.name}</Text>
@@ -203,7 +204,7 @@ export default class Products extends Component {
             <Container>
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
-                    <Button transparent onPress={()=>Actions.subCategories(this.props.categoryID)}>
+                    <Button transparent onPress={()=>Actions.subCategories({categoryID: this.props.categoryID, branchID: this.props.branchID, subCategoryID: this.props.subCategoryID})}>
                         <Icon name="arrow-back" style={{color: '#E5DDCB'}}></Icon>
                     </Button>
                     </Left>
