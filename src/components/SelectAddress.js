@@ -8,17 +8,18 @@ export default class SelectAddress extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedBranchID: "",
+            selectedBranchID: null,
             branchAddresses: []
         }
 
     }
 
     onSubmit() {
-        if (this.state.selectedBranchID != null)
-            Actions.category({branchID: this.state.selectedBranchID});
+        if (this.state.selectedBranchID == null || this.state.selectedBranchID == "0") {
+            Alert.alert("Xahiş edirik", "Adres seçimi edəsiniz");
+        }
         else {
-        Alert.alert("Xahiş edirik","Adres seçimi edəsiniz");
+            Actions.category({branchID: this.state.selectedBranchID});
     }
 }
 
@@ -85,6 +86,7 @@ export default class SelectAddress extends Component {
                             value={this.state.selectedBranchID}
                             onValueChange={(value)=>this.setState({
                                     selectedBranchID : value},()=>console.log("Street Line: ",this.state.selectedBranchID))}>
+                            <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label="" value={"0"} />
                             {this.state.branchAddresses.map((address,i) =>
                                 {
                                     return <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label={address.street_name} value={address.id} key={i}/>}
