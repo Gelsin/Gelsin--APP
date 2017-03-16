@@ -32,7 +32,7 @@ export default class Products extends Component {
 
 
     getCategories() {
-        var url = "http://gelsin.az/app/api/categories/" + this.props.data;
+        var url = "http://gelsin.az/app/api/categories/" + this.props.categoryID;
         return fetch(url, {method: "GET"})
             .then((response) => response.json())
             .then((responseData) => {
@@ -82,7 +82,7 @@ export default class Products extends Component {
 
 
         if (this.state.SubCategories === null) {
-            return <Header  action={Actions.subCategories(this.props.data)} newsLayoutButton={true}/>
+            return null;
 
         }
 
@@ -125,7 +125,7 @@ export default class Products extends Component {
            {this.state.SubCategories.map((subCategory,i) => {
                return <TouchableOpacity disabled={this.state.disabled} key={i}
                                         style={css.templateRow}
-                                        onPress={()=>Actions.products({categoryID:CatID, branchID: 1, subCategoryID: subCategory.id})}>
+                                        onPress={()=>Actions.products({categoryID:CatID, branchID: this.props.branchID, subCategoryID: subCategory.id})}>
                    <Image style={css.templateImage}
                           source={{uri: subCategory.cover_url}}></Image>
                    <Text style={css.templateMenu}>{subCategory.name}</Text>
