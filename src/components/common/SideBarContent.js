@@ -18,11 +18,11 @@ export default class SideBarContent extends Component{
 
 
             <View style={{top: 80}} >
-                <Button transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
-                <Button transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
-                <Button transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
-                <Button transparent><Text style={css.Button}>Haqqımızda</Text></Button>
-                <Button transparent onPress={()=>Actions.category()}><Text style={css.Button}>Kateqoriyalar</Text></Button>
+                <Button transparent onPress={()=>Actions.ordersMain()}><Icon style={{color: "#FFF",margin: 10}} name="md-card"/><Text style={css.Button}>Order History</Text></Button>
+                <Button transparent onPress={()=>Actions.account()}><Icon style={{color: "#FFF",margin: 10}} name="md-person-add"/><Text style={css.Button}>Hesabım</Text></Button>
+                <Button transparent onPress={()=>Actions.addresses()}><Icon style={{color: "#FFF",margin: 10}} name="md-navigate"/><Text style={css.Button}>Adreslərim</Text></Button>
+                <Button transparent><Icon style={{color: "#FFF",margin: 10}} name="md-information-circle"/><Text style={css.Button}>Haqqımızda</Text></Button>
+                <Button transparent onPress={()=>Actions.category()}><Icon style={{color: "#FFF",margin: 10}} name="md-archive"/><Text style={css.Button}>Kateqoriyalar</Text></Button>
             </View>
         );
     }

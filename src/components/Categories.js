@@ -15,12 +15,15 @@ export default class Categories extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories: null
+            categories: null,
+            color: "#000000"
         }
     }
 
     openControlPanel = () => {
-        this._drawer.open()
+        this._drawer.open();
+        console.log("Drawer Acildi");
+         this.setState({color: '#000000'},()=>console.log("color ag olmalidi: ",this.state.color));
     }
 
     getCategories() {
@@ -32,6 +35,11 @@ export default class Categories extends Component {
             .done();
 
 
+    }
+
+    onClose()
+    {
+        this.setState({color: "#FFF"},()=>(console.log("BAGLANDI: ",this.state.color)));
     }
 
 
@@ -73,8 +81,7 @@ export default class Categories extends Component {
         }
 
         const drawerStyles = {
-            drawer: { shadowColor: '#000000', shadowOpacity: 1.8, shadowRadius: 3, backgroundColor: '#252225'},
-            main: {paddingLeft: 3},
+            drawer: { shadowRadius: 3, backgroundColor: this.state.color},
         }
 
 
@@ -87,18 +94,21 @@ export default class Categories extends Component {
 
         return (
 
-
-        <Container>
             <Drawer
                 tapToClose={true}
                 open={false}
-                type="overlay"
+                type="displace"
                 content={<SideBarContent />}
                 ref = {(ref) => this._drawer = ref}
-                openDrawerOffset={250}
+                openDrawerOffset={width/3}
+                closedDrawerOffset={0}
                 styles={drawerStyles}
                 tweenHandler={Drawer.tweenPresets.parallax}
+                elevation={0}
+                onClose={()=>this.onClose()}
             >
+        <Container style={{backgroundColor: '#FFF'}}>
+
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
                         <Button transparent onPress={()=>this.openControlPanel()}>
@@ -128,7 +138,7 @@ export default class Categories extends Component {
 
                  return  <TouchableOpacity disabled={this.state.disabled} key={i}
                  style={css.templateRow}
-                 onPress={()=>Actions.subCategories(category.id)}>
+                 onPress={()=>Actions.subCategories({categoryID: category.id, branchID: this.props.branchID})}>
                  <Image style={css.templateImage} source={{uri: category.cover_url}}></Image>
                  <Text style={css.templateMenu}>{category.name}</Text>
             </TouchableOpacity>
@@ -137,9 +147,8 @@ export default class Categories extends Component {
 
             </View>
             </Content>
-            </Drawer>
         </Container>
-
+        </Drawer>
         );
 
 
