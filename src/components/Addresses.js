@@ -28,15 +28,6 @@ export default class Addresses extends Component {
     //     });
     // }
 
-
-    goWithoutParam()
-    {
-       var obj;
-       obj.addres_line=null;
-       obj.branch_addres_id=null;
-       Actions.newAddress(obj);
-    }
-
     getToken = async () => {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:auth_user');
@@ -122,8 +113,8 @@ export default class Addresses extends Component {
                 <Footer style={{"backgroundColor": '#524656'}}>
                     <FooterTab style={{flex: 1}}>
                         <Button transparent onPress={()=>Actions.newAddress()}>
-                            <Icon name="ios-contacts-outline"/>
-                            <Text style={{fontFamily: 'SourceSansPro-SemiBold', color: '#FFF'}}> + Yeni adres</Text>
+                            <Icon style={{color: '#FFF'}} name="ios-add-circle-outline" />
+                            <Text style={{color: '#FFF', fontFamily: 'SourceSansPro-Regular'}}>Yeni adres</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
