@@ -20,26 +20,23 @@ class Verification extends Component {
 
     componentDidMount() {
         console.log("mounted");
-        this.getToken();
+        // this.getToken();
     };
 
-    getToken = async () => {
-        try {
-            var value = await AsyncStorage.getItem('@Gelsin:auth_user');
-            if (value !== null){
-                console.log(value);
-                this.setState({token: value});
-                console.log(this.state.token);
-
-                // this.checkUser(this.state.token)
-
-            } else {
-                console.log(value);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // getToken = async () => {
+    //     try {
+    //         var value = await AsyncStorage.getItem('@Gelsin:auth_user');
+    //         if (value !== null){
+    //             //console.log(value);
+    //             this.setState({token: value});
+    //             console.log(this.state.token);
+    //         } else {
+    //             console.log(value);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     onButtonPress() {
         console.log('button pressed');
@@ -102,7 +99,7 @@ class Verification extends Component {
             loading: false
         });
 
-        Actions.main();
+        Actions.selectAddress();
     }
 
     resend() {

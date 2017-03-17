@@ -10,7 +10,11 @@ class SignIn extends Component {
     constructor(props) {
         console.log("in constructor");
         super(props);
-        this.state = {email: '', password: '', error: '', loading: false, token: ''};
+        this.state = {
+            email: this.props.email ? this.props.email : '',
+            password: this.props.password ? this.props.password : '',
+            error: '', loading: false, token: ''
+        };
         console.log(this.state);
     };
 
@@ -21,13 +25,15 @@ class SignIn extends Component {
 
     componentDidMount() {
         console.log("mounted");
-        this.getToken();
+
+        if (this.state.email != '') this.loginUser();
+        else   this.getToken();
     };
 
-    getToken = async () => {
+    getToken = async() => {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:auth_user');
-            if (value !== null){
+            if (value !== null) {
                 // console.log(value);
                 this.setState({token: value});
                 console.log(this.state.token);
@@ -45,6 +51,10 @@ class SignIn extends Component {
     onButtonPress() {
         console.log('button pressed');
 
+        this.loginUser();
+    };
+
+    loginUser() {
         const {email, password} = this.state;
 
         this.setState({error: '', loading: true});
@@ -88,8 +98,8 @@ class SignIn extends Component {
                 console.log(error);
                 this.setState({loading: false});
             });
-            // .done();
-    };
+        // .done();
+    }
 
     onLoginFail() {
         this.setState({error: 'Authentication failed', loading: false});
@@ -129,7 +139,7 @@ class SignIn extends Component {
 
                 if (responseJson.user) {
                     if (responseJson.user.confirmed_at) {
-                        Actions.main();
+                        Actions.selectAddress();
                     }
                     else Actions.verification({token});
                 }
@@ -164,7 +174,7 @@ class SignIn extends Component {
             },
             header: {
                 backgroundColor: 'transparent',
-                alignItems:'flex-end',
+                alignItems: 'flex-end',
                 elevation: 0,
                 shadowOpacity: 0,
                 height: Dimensions.get('window').height * 0.15,
@@ -224,7 +234,8 @@ class SignIn extends Component {
 
                             {this.renderButton()}
 
-                            <Button autoCapitalize="none" style={styles.button} transparent onPress={()=>Actions.resetPassword()}>
+                            <Button autoCapitalize="none" style={styles.button} transparent
+                                    onPress={()=>Actions.resetPassword()}>
                                 <Text autoCapitalize="none" style={styles.text}>Forget your password?</Text>
                             </Button>
 

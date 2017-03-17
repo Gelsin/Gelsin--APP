@@ -128,21 +128,17 @@ export default class Account extends Component {
         return (
             <Container >
                 <Header style={styles.header}>
-                    <Left style={{ flex: 1}}>
-                        <Button transparent>
-                            <Icon style={{color: '#e5ddcb'}} name='arrow-back'/>
+                    <Left style={{ flex: 1}} >
+                        <Button transparent onPress={()=>Actions.category()}>
+                            <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                         </Button>
                     </Left>
 
                     <Body style={{ flex: 7}}>
-                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>Header</Title>
+                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>Settings</Title>
                     </Body>
 
-                    <Right style={{ flex: 1}}>
-                        <Button transparent>
-                            <Icon name='menu'/>
-                        </Button>
-                    </Right>
+                    <Right style={{ flex: 1}}/>
                 </Header>
 
                 <Content>

@@ -81,6 +81,8 @@ class SignUp extends Component {
     }
 
     onRegisterSuccess() {
+        Actions.signIn({email: this.state.email, password: this.state.password});
+
         this.setState({
             contact: '',
             fullname: '',
@@ -89,8 +91,6 @@ class SignUp extends Component {
             error: '',
             loading: false
         });
-
-        Actions.signIn();
     }
 
 
@@ -201,7 +201,7 @@ class SignUp extends Component {
                 </Grid>
 
                 <Footer style={styles.footer}>
-                    <Button style={styles.button} transparent onPress={()=>Actions.main()}>
+                    <Button style={styles.button} transparent onPress={()=>Actions.selectAddress()}>
                         <Text style={styles.text}>Skip</Text>
                     </Button>
                 </Footer>

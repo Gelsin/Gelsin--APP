@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Content, Left, Body, Right, Text, Button, Icon, Header, Title} from 'native-base';
+import {Container, Content, Left, Body, Right, Text, Button, Icon, Header, Title, FooterTab, Footer} from 'native-base';
 import CartItem from './common/CartItem';
 import {Actions} from 'react-native-router-flux';
 
@@ -9,7 +9,7 @@ export default class OrdersDetail extends Component {
         super(props);
         this.state = {
             error: '', loading: false, products: this.props.products,
-            price: this.props.price, data: this.props.date
+            price: this.props.price, date: this.props.date
         };
         console.log(this.state);
     };
@@ -46,34 +46,40 @@ export default class OrdersDetail extends Component {
                     </Left>
 
                     <Body style={{ flex: 7}}>
-                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>Basket</Title>
+                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>Order Details</Title>
                     </Body>
 
                     <Right style={{ flex: 1}}/>
 
                 </Header>
 
-                <Content  >
-                    {/*{this.state.cart.map((product, i) => {*/}
-                            {/*return (*/}
-                                {/*<CartItem*/}
-                                    {/*key={i}*/}
-                                    {/*id={product.id}*/}
-                                    {/*name={product.name}*/}
-                                    {/*price={product.price}*/}
-                                    {/*thumbnail={product.cover_url}*/}
-                                    {/*quantity={product.quantity}*/}
-                                {/*/>*/}
-                            {/*);*/}
-                        {/*}*/}
-                    {/*)}*/}
-                    <CartItem
-                        name="Coca Cola"
-                        price={0.80}
-                        thumbnail="http://gelsin.az/app/api/product/image/30"
-                        quantity="3"
-                    />
+                <Content >
+                    {this.state.products.map((product, i) => {
+                            return (
+                                <CartItem
+                                    key={i}
+                                    id={product.related_product.id}
+                                    name={product.related_product.name}
+                                    price={product.price}
+                                    thumbnail={product.related_product.cover_url}
+                                    quantity={product.quantity}
+                                />
+                            );
+                        }
+                    )}
                 </Content>
+
+                <Footer >
+                    <FooterTab style={{backgroundColor: '#e5ddcb', paddingLeft: 12, paddingRight: 12 }}>
+                        <Left>
+                            <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>{this.state.date}</Text>
+                        </Left>
+
+                        <Right style={{   }}>
+                            <Text style={{color: '#eb7b59', fontFamily: 'SourceSansPro-Regular'}}>{this.state.price} &#x20bc;</Text>
+                        </Right>
+                    </FooterTab>
+                </Footer>
             </Container>
         );
     }
