@@ -56,7 +56,7 @@ export default class OrderAddress extends Component {
                 this.getAddresses(this.state.token);
 
             } else {
-                console.log(value);
+                Actions.auth();
             }
         } catch (error) {
             console.log(error);

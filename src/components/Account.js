@@ -49,7 +49,7 @@ export default class Account extends Component {
                 this.getUser(this.state.token)
 
             } else {
-                console.log(value);
+                Actions.auth();
             }
         } catch (error) {
             console.log(error);

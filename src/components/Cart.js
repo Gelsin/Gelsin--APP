@@ -8,7 +8,7 @@ export default class Cart extends Component {
     constructor(props) {
         console.log("in constructor");
         super(props);
-        this.state = {cart: [], total_price: 0};
+        this.state = {cart: [], total_price: 0, min_value: 0};
         console.log(this.state);
     };
 
@@ -20,7 +20,22 @@ export default class Cart extends Component {
     componentDidMount() {
         console.log("mounted");
         this.getCart();
+        this.getMinValue();
     };
+
+    getMinValue () {
+        fetch('http://gelsin.az/app/api/setting/min_order', {method: 'GET'})
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+
+                this.setState({min_value:responseJson.value});
+                console.log(this.state);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     getCart = async() => {
         try {

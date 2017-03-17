@@ -15,7 +15,7 @@ export default class OrderItem extends Component {
         };
 
         return (
-                    <ListItem style={{  margin: 0, paddingRight: 0 }} >
+                    <ListItem onPress={this.props.action} style={{  margin: 0, paddingRight: 0 }} >
                         <Body  >
                         <Text style={styles.text}>{this.props.date}</Text>
                         <Text   style={styles.price}>{this.props.price} &#x20bc;</Text>

@@ -33,7 +33,7 @@ export default class AppRouter extends Component {
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
                     <Scene key="selectAddress" component={SelectAddress} hideNavBar />
                 </Scene>
-                <Scene key="main">
+                <Scene key="main" >
                     <Scene key="account" component={Account} hideNavBar  />
                     <Scene key="newAddress" component={NewAddress} hideNavBar  />
                     <Scene key="addresses" component={Addresses} hideNavBar  />
