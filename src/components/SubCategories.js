@@ -12,12 +12,21 @@ export default class Products extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            SubCategories: null
+            SubCategories: null,
+            color: "#000000"
         }
     }
 
     openControlPanel = () => {
-        this._drawer.open()
+        this._drawer.open();
+        console.log("Drawer Acildi");
+        this.setState({color: '#000000'},()=>console.log("color ag olmalidi: ",this.state.color));
+    }
+
+
+    onClose()
+    {
+        this.setState({color: "#FFF"},()=>(console.log("BAGLANDI: ",this.state.color)));
     }
 
     componentWillMount()
@@ -76,8 +85,7 @@ export default class Products extends Component {
         }
 
         const drawerStyles = {
-            drawer: { shadowColor: '#000000', shadowOpacity: 1.8, shadowRadius: 3, backgroundColor: '#252225'},
-            main: {paddingLeft: 3},
+            drawer: { shadowRadius: 3, backgroundColor: this.state.color},
         }
 
 
@@ -87,17 +95,21 @@ export default class Products extends Component {
         }
 
         return (
-        <Container>
             <Drawer
                 tapToClose={true}
                 open={false}
-                type="overlay"
+                type="displace"
                 content={<SideBarContent />}
                 ref = {(ref) => this._drawer = ref}
-                openDrawerOffset={250}
+                openDrawerOffset={width/3}
+                closedDrawerOffset={0}
                 styles={drawerStyles}
                 tweenHandler={Drawer.tweenPresets.parallax}
+                elevation={0}
+                onClose={()=>this.onClose()}
             >
+        <Container style={{backgroundColor: '#FFF'}}>
+
         <Header style={{"backgroundColor": '#524656'}}>
             <Left>
                 <Button transparent onPress={()=>this.openControlPanel()}>
@@ -136,8 +148,8 @@ export default class Products extends Component {
 
        </View>
    </Content>
-            </Drawer>
     </Container>
+    </Drawer>
     );
     }
 
