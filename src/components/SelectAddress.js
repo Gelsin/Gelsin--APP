@@ -19,7 +19,7 @@ export default class SelectAddress extends Component {
             Alert.alert("Xahiş edirik", "Adres seçimi edəsiniz");
         }
         else {
-            Actions.category({branchID: this.state.selectedBranchID});
+            Actions.main({branchID: this.state.selectedBranchID});
     }
 }
 
@@ -66,7 +66,7 @@ export default class SelectAddress extends Component {
         return (
             <Container style={styles.container}>
                 <Header style={styles.header}>
-                        <Button transparent onPress={()=>Actions.auth()}>
+                        <Button transparent onPress={()=>Actions.account()}>
                             <Icon name="arrow-back" style={{color: '#E5DDCB'}}></Icon>
                         </Button>
                     <Body>

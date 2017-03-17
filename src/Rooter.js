@@ -14,6 +14,7 @@ import SubCategories from './components/SubCategories';
 import OrdersMain from './components/OrdersMain';
 import OrdersDetail from './components/OrdersDetail';
 import NewAddress from './components/NewAddress';
+import SelectAddress from './components/SelectAddress';
 
 
 
@@ -26,12 +27,13 @@ export default class AppRouter extends Component {
         return (
             <Router>
                 <Scene key="auth" initial>
-                    <Scene key="signIn" component={SignIn} hideNavBar initial />
+                    <Scene key="signIn" component={SignIn} hideNavBar  initial/>
                     <Scene key="signUp" component={SignUp} hideNavBar  />
                     <Scene key="verification" component={Verification} hideNavBar  />
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
+                    <Scene key="selectAddress" component={SelectAddress} hideNavBar />
                 </Scene>
-                <Scene key="main" >
+                <Scene key="main">
                     <Scene key="account" component={Account} hideNavBar  />
                     <Scene key="newAddress" component={NewAddress} hideNavBar  />
                     <Scene key="addresses" component={Addresses} hideNavBar  />
