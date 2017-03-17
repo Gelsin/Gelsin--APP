@@ -160,7 +160,7 @@ export default class SelectAddress extends Component {
                                 <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label="" value={"0"} />
                                 {this.state.branchAddresses.map((address,i) =>
                                     {
-                                        return <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label={address.street_name} value={address.id} key={i}/>}
+                                        return <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label={address.street_name} value={address.branch_id} key={i}/>}
                                 )}
                             </Picker>
 
