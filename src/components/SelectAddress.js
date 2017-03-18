@@ -134,9 +134,8 @@ export default class SelectAddress extends Component {
                 <Grid style={styles.content}>
                     <Row size={3} style={styles.formRow}>
                         <Form style={styles.form}>
-
                             <Picker
-                                style={{width: 250, marginLeft: 70,marginRight: 70,backgroundColor: '#FFF'}}
+                                style={{width: 250, marginLeft: 70,marginRight: 70}}
                                 selectedValue={this.state.selectedValue}
                                 onValueChange={(value)=>this.onValChange(value)}>
                                 {this.state.branchAddresses.map((address,i) =>
@@ -145,8 +144,6 @@ export default class SelectAddress extends Component {
                                         return <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label={address.street_name} value={address.id} key={i}/>}
                                 )}
                             </Picker>
-
-
                             <ButtonRound onPress={()=>this.onSubmit()} text="Irəli"/>
                         </Form>
                     </Row>

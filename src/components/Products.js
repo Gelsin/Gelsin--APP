@@ -3,12 +3,13 @@ import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Button,Input,Content,Card,CardItem,Thumbnail} from "native-base";
 import {Actions} from 'react-native-router-flux';
 
+var currentBrand;
 export default class Products extends Component {
 
-    constructor(props) {
+    constructor(props)
+    {
         super(props);
         this.state = {
-            // selectedBrID: null,
             brands: null,
             activeBrand: null,
             cartProducts: [],
@@ -33,10 +34,6 @@ export default class Products extends Component {
     {
 
         flag = 0;
-        // //updates the value of Cart in the top-right
-        // pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
-        // this.setState({cartPrice: pr});
-        //look whether selected item exists in cart or not
         ProdID=product.id;
         cartProds = this.state.cartProducts;
         // look whether Cart is not empty
@@ -63,10 +60,6 @@ export default class Products extends Component {
                     price: product.price});
                 this.setState({cartProducts: cartProds}, () => console.log("CartProducts after adding new product: ", this.state.cartProducts));
             }
-
-
-
-
         }
          else {
             cartProds.push({id: product.id,
@@ -83,7 +76,8 @@ export default class Products extends Component {
     }
 
 
-    writeCartToDevice = async() => {
+    writeCartToDevice = async() =>
+    {
 
         try {
             cart = this.state.cartProducts;
@@ -105,34 +99,33 @@ export default class Products extends Component {
             .then((responseData) => {
                 if(responseData.error==false)
                 {
-                    this.setState({brands: responseData.brands});
+                    this.setState({brands: responseData.brands},()=>console.log("Brandlar: ",this.state.brands));
                 }
             })
             .done();
     }
 
-    renderRow(post, sectionID, rowID) {
-        if (post.error == 'true')
-            return null;
-
-       return   <View key={post.id}>
-           <CardItem horizontal={false} style={{flexDirection: 'column',borderWidth: 1,borderRadius: 4,padding: 0,marginRight: 14, borderColor: '#E5DDCB'}}>
-               <Thumbnail square size={70} source={{uri: post.cover_url }} style={{marginTop: 12, marginBottom: 12}}/>
-               <Text>{post.name}</Text>
-               <Button full style={{backgroundColor: '#EB7B59',height: 28,marginTop: 8, marginBottom: 8}} onPress={()=>this.addItem(post)}><Text>Add To Cart</Text></Button>
-               <Text style={{marginBottom: 8}}>{post.price}</Text>
-           </CardItem>
-       </View>
-
-
-    }
-
-
-    readData()
+    renderRow(post,brandID)
     {
-        AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
-            console.log("save edilen data: ", value);
-        }).done();
+
+if(post.brand_id==brandID) {
+    return (
+        <View key={post.id}>
+            <CardItem horizontal={false}
+                      style={{flexDirection: 'column',borderWidth: 1,borderRadius: 4,padding: 0,marginRight: 14, borderColor: '#E5DDCB'}}>
+                <Thumbnail square size={70} source={{uri: post.cover_url }} style={{marginTop: 12, marginBottom: 12}}/>
+                <Text>{post.name}</Text>
+                <Button full style={{backgroundColor: '#EB7B59',height: 28,marginTop: 8, marginBottom: 8}}
+                        onPress={()=>this.addItem(post)}><Text>Add To Cart</Text></Button>
+                <Text style={{marginBottom: 8}}>{post.price}</Text>
+            </CardItem>
+        </View>)
+}
+else
+{
+    return null;
+}
+
     }
 
     getProducts(value)
@@ -164,7 +157,6 @@ export default class Products extends Component {
         AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
             if(value != null) {
                 console.log("VALUEEEEE: ",value);
-                // this.setState({selectedBrID: value},()=>console.log("state: ",this.state.selectedBrID));
                 this.getProducts(JSON.parse(value));
             }
             else
@@ -223,10 +215,6 @@ export default class Products extends Component {
             }}
 
         return (
-
-
-
-
             <Container>
                 <Header style={{"backgroundColor": '#524656'}}>
                     <Left>
@@ -275,7 +263,8 @@ export default class Products extends Component {
                 <Content>
                     {this.state.brands.map((brand,i) => {
                         if(brand.category_id==this.props.subCategoryID) {
-                            return <Card style={{borderWidth: 0,marginLeft: 16,shadowOpacity: 0}} key={i}>
+                            currentBrand=brand.id;
+                                    return <Card style={{borderWidth: 0,marginLeft: 16,shadowOpacity: 0}} key={i}>
                                 <Text style={{borderWidth: 0,marginBottom: 14, color: '#EB7B59'}}>{brand.name}</Text>
                                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
                                             pagingEnabled={true}
@@ -285,7 +274,7 @@ export default class Products extends Component {
                                         enableEmptySections={true}
                                         dataSource={this.state.dataSource}
                                         horizontal={true}
-                                        renderRow={this.renderRow.bind(this)}>
+                                        renderRow={(rowData)=>this.renderRow(rowData,brand.id)}>
                                     </ListView>
                                 </ScrollView>
                             </Card>
