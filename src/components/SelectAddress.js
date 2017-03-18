@@ -18,22 +18,35 @@ export default class SelectAddress extends Component {
     }
 
     onSubmit() {
+        this.writeAddressToDevice()
         Actions.main({branchID: this.state.selectedBranchID});
     }
 
+    writeAddressToDevice = async() => {
+
+        try {
+            Address = this.state.selectedBranchID;
+            await AsyncStorage.setItem('@Gelsin:SelectedAddress', JSON.stringify(Address));
+        } catch (error) {
+            console.log(error);
+        }
 
 
-onValChange(val)
+    };
+
+
+
+
+    onValChange(val)
 {
-    console.log("onValueChange Value: ",val);
     for (i=0; i<this.state.branchAddresses.length; i++)
     {
 
         if(this.state.branchAddresses[i].id == val)
         {
             console.log(this.state.branchAddresses[i]);
-            this.setState({selectedBranchID: this.state.branchAddresses[i].branch_id},console.log("branchID'si",this.state.selectedBranchID));
-            this.setState({selectedValue: this.state.branchAddresses[i].id},console.log("ID'si",this.state.selectedValue));
+            this.setState({selectedBranchID: this.state.branchAddresses[i].branch_id});
+            this.setState({selectedValue: this.state.branchAddresses[i].id});
         }
     }
 
@@ -123,11 +136,8 @@ onValChange(val)
                         <Form style={styles.form}>
 
                             <Picker
-                                style={{width: 250, height: 300,margin: 80,backgroundColor: '#FFF'}}
-                                iosHeader="Select one"
-                                mode="dropdown"
+                                style={{width: 250, marginLeft: 70,marginRight: 70,backgroundColor: '#FFF'}}
                                 selectedValue={this.state.selectedValue}
-                                value={this.state.selectedBranchID}
                                 onValueChange={(value)=>this.onValChange(value)}>
                                 {this.state.branchAddresses.map((address,i) =>
                                     {

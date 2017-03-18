@@ -137,7 +137,7 @@ export default class Products extends Component {
            {this.state.SubCategories.map((subCategory,i) => {
                return <TouchableOpacity disabled={this.state.disabled} key={i}
                                         style={css.templateRow}
-                                        onPress={()=>Actions.products({categoryID:CatID, branchID: this.props.branchID, subCategoryID: subCategory.id})}>
+                                        onPress={()=>Actions.products({categoryID:CatID, subCategoryID: subCategory.id})}>
                    <Image style={css.templateImage}
                           source={{uri: subCategory.cover_url}}></Image>
                    <Text style={css.templateMenu}>{subCategory.name}</Text>
