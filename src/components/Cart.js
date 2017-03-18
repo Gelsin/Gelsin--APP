@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, Alert} from 'react-native';
 import {Container, Content, Left, Body, Right, Text, Button, Icon, Header, Footer, Title, FooterTab} from 'native-base';
 import CartItem from './common/CartItem';
 import {Actions} from 'react-native-router-flux';
@@ -82,8 +82,19 @@ export default class Cart extends Component {
         this.saveToDevice();
     };
 
-    deleteItem(id) {
-        console.log(id, "deleted");
+    deleteItem(item) {
+        console.log(item, "must be deleted");
+
+        cart = this.state.cart;
+        index = cart.indexOf(item);
+        console.log(index);
+        delete cart[index];
+        cart.splice(index, 1);
+
+        total_price = this.state.total_price - item.price * item.quantity;
+
+        this.setState( {cart, total_price} );
+        this.saveToDevice();
     }
 
     emptyBasket = async () => {
@@ -102,6 +113,15 @@ export default class Cart extends Component {
             console.log(error);
         }
     };
+
+    proceed () {
+        if (this.state.total_price < this.state.min_value) {
+            alertTitle = 'You are below minimum value - ' + this.state.min_value + ' AZN' ;
+            alertMessage = 'Please add more products worth ' + (parseFloat(this.state.min_value) - this.state.total_price) + ' AZN to proceed';
+            Alert.alert(alertTitle, alertMessage);
+        }
+        else Actions.orderAddress({total_price: this.state.total_price})
+    }
 
 
     render() {
@@ -156,7 +176,7 @@ export default class Cart extends Component {
                                     quantity={product.quantity}
                                     increment={()=>this.changeQuantity(product.id, +1)}
                                     decrement={()=>this.changeQuantity(product.id, -1)}
-                                    delete={()=>this.deleteItem(product.id)}
+                                    delete={()=>this.deleteItem(product)}
                                 />
                             );
                         }
@@ -186,7 +206,7 @@ export default class Cart extends Component {
                         </Left>
 
                         <Right style={{   }}>
-                            <Button rounded style={styles.button} onPress={()=>Actions.orderAddress({total_price: this.state.total_price})}>
+                            <Button rounded style={styles.button} onPress={()=>this.proceed()}>
                                 <Text style={styles.text}>Confirm</Text>
                             </Button>
 
