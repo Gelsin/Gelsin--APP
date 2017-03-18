@@ -8,6 +8,7 @@ export default class Products extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // selectedBrID: null,
             brands: null,
             activeBrand: null,
             cartProducts: [],
@@ -31,7 +32,7 @@ export default class Products extends Component {
     addItem(product)
     {
 
-        // flag = 0;
+        flag = 0;
         // //updates the value of Cart in the top-right
         // pr = parseFloat(this.state.cartPrice) + parseFloat(product.price);
         // this.setState({cartPrice: pr});
@@ -95,6 +96,7 @@ export default class Products extends Component {
     };
 
 
+
     getBrands()
     {
         var prodUrl = "http://gelsin.az/app/api/brands";
@@ -133,14 +135,25 @@ export default class Products extends Component {
         }).done();
     }
 
-    getProducts()
+    getProducts(value)
     {
-        var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ this.props.branchID;
+        console.log("getProductsa girdi");
+
+
+        var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ value;
         return fetch(prodUrl, {method: "GET"})
             .then((response) => response.json())
             .then((responseData) => {
                 if(responseData.error==false) {
-                    this.setState({dataSource: this.getDataSource(responseData.products)});
+                    console.log("URL gonderilen: ",prodUrl);
+                    this.setState({dataSource: this.getDataSource(responseData.products)},()=>console.log("PRODUKTLAR: ",responseData.products));
+                }
+                else
+                {
+                    console.log("URL gonderilen: ",prodUrl);
+                    console.log(responseData.error);
+                    console.log(responseData.message);
+
                 }
             })
             .done();
@@ -148,12 +161,25 @@ export default class Products extends Component {
 
     componentWillMount()
     {
+        AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
+            if(value != null) {
+                console.log("VALUEEEEE: ",value);
+                // this.setState({selectedBrID: value},()=>console.log("state: ",this.state.selectedBrID));
+                this.getProducts(JSON.parse(value));
+            }
+            else
+                console.log("OLMADI");
+        }).done();
+
+
         AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
             if(value!=null)
                 this.setState({cartProducts: JSON.parse(value)},()=>console.log("Storage-cartProducts: ",this.state.cartProducts));
         }).done();
+
+
         this.getBrands();
-        this.getProducts();
+
     }
 
 
