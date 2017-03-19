@@ -184,6 +184,11 @@ export default class Products extends Component {
                 this.setState({cartProducts: JSON.parse(value)},()=>console.log("Storage-cartProducts: ",this.state.cartProducts));
         }).done();
 
+        AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
+            if(value!=null)
+                this.setState({cartProducts: JSON.parse(value)},()=> this.setCartPrice());
+        }).done();
+
 
         this.getBrands();
 
