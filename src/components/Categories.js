@@ -18,7 +18,7 @@ export default class Categories extends Component {
             categories: null,
             color: "#000000",
             cartProducts: [],
-            cartPrice: null,
+            cartPrice: null
         }
     }
 
@@ -72,7 +72,7 @@ export default class Categories extends Component {
     render() {
 
         const css = {
-            "templateRow": {
+             "templateRow": {
                 "width": (width / 2 - 18),
                 "backgroundColor": "#FFF",
                 "borderWidth": 1,
@@ -152,7 +152,7 @@ export default class Categories extends Component {
 
                 {this.state.categories.map((category,i) => {
 
-                 return  <TouchableOpacity disabled={this.state.disabled} key={i}
+                 return  <TouchableOpacity key={i}
                  style={css.templateRow}
                  onPress={()=>Actions.subCategories({categoryID: category.id})}>
                  <Image style={css.templateImage} source={{uri: category.cover_url}}></Image>
