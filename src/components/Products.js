@@ -13,8 +13,7 @@ export default class Products extends Component {
             brands: null,
             activeBrand: null,
             cartProducts: [],
-            // Storage: null,
-            cartPrice: 0,
+            cartPrice: null,
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => true
             })
@@ -28,6 +27,9 @@ export default class Products extends Component {
     getDataSource(posts) {
         return this.state.dataSource.cloneWithRows(posts);
     }
+
+
+
 
 
     addItem(product)
@@ -73,6 +75,7 @@ export default class Products extends Component {
         }
 
         this.writeCartToDevice();
+        this.setCartPrice();
     }
 
 
@@ -88,6 +91,18 @@ export default class Products extends Component {
 
 
     };
+
+
+    setCartPrice()
+    {
+        Price = 0.00;
+        for (i=0; i<this.state.cartProducts.length; i++)
+        {
+            console.log("products Price: ",this.state.cartProducts[i].price);
+            Price += this.state.cartProducts[i].price * this.state.cartProducts[i].quantity;
+        }
+        this.setState({cartPrice: Price},()=>console.log("Cart Price: ",this.state.cartPrice));
+    }
 
 
 
@@ -108,9 +123,9 @@ export default class Products extends Component {
     renderRow(post,brandID)
     {
 
-if(post.brand_id==brandID) {
-    return (
-        <View key={post.id}>
+    if(post.brand_id==brandID) {
+        return (
+            <View key={post.id}>
             <CardItem horizontal={false}
                       style={{flexDirection: 'column',borderWidth: 1,borderRadius: 4,padding: 0,marginRight: 14, borderColor: '#E5DDCB'}}>
                 <Thumbnail square size={70} source={{uri: post.cover_url }} style={{marginTop: 12, marginBottom: 12}}/>
@@ -119,12 +134,12 @@ if(post.brand_id==brandID) {
                         onPress={()=>this.addItem(post)}><Text>Add To Cart</Text></Button>
                 <Text style={{marginBottom: 8}}>{post.price}</Text>
             </CardItem>
-        </View>)
-}
-else
-{
-    return null;
-}
+            </View>)
+          }
+          else
+          {
+              return null;
+          }
 
     }
 

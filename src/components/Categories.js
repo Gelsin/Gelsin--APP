@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions} from "react-native";
+import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions,AsyncStorage} from "react-native";
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button} from "native-base";
 import {Actions} from 'react-native-router-flux';
 import Drawer from 'react-native-drawer';
@@ -16,7 +16,9 @@ export default class Categories extends Component {
         super(props);
         this.state = {
             categories: null,
-            color: "#000000"
+            color: "#000000",
+            cartProducts: [],
+            cartPrice: null,
         }
     }
 
@@ -33,9 +35,20 @@ export default class Categories extends Component {
                 this.setState({categories: responseData.categoryTree});
             })
             .done();
-
-
     }
+
+
+    setCartPrice()
+    {
+        Price = 0.00;
+        for (i=0; i<this.state.cartProducts.length; i++)
+        {
+            console.log("products Price: ",this.state.cartProducts[i].price);
+            Price += this.state.cartProducts[i].price * this.state.cartProducts[i].quantity;
+        }
+        this.setState({cartPrice: Price},()=>console.log("Cart Price: ",this.state.cartPrice));
+    }
+
 
     onClose()
     {
@@ -46,12 +59,15 @@ export default class Categories extends Component {
     componentWillMount()
     {
         this.getCategories();
-    }
+
+        AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
+            if(value!=null)
+                this.setState({cartProducts: JSON.parse(value)},()=> this.setCartPrice());
+        }).done();
 
 
-    componentDidMount()
-    {
     }
+
 
     render() {
 
@@ -119,7 +135,7 @@ export default class Categories extends Component {
                         <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
                     </Body>
                     <Right>
-                        <Text style={{top: -12,color: '#E5DDCB',fontSize: 14}}>12.50</Text>
+                        <Text style={{top: -12,color: '#E5DDCB',fontSize: 14}}>{this.state.cartPrice} ₼</Text>
                         <Button transparent onPress={()=>Actions.cart()}>
                             <Icon name="ios-cart-outline" style={{color: '#E5DDCB'}}></Icon>
                         </Button>

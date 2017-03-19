@@ -12,10 +12,6 @@ export default class NewAddress extends Component {
         this.state = {
             addressLine: this.props.adres!=undefined ? this.props.adres.address_line: null,
             selectedBranchID: this.props.adres!=undefined ? this.props.adres.branch_address_id:null,
-
-            // addressLine: this.props.adres!=undefined ? this.props.adres.address_line : null,
-            // selectedBranchID: this.props.adres!=undefined ? this.props.adres.branch_address_id : null,
-
             token: '',
             user: String,
             branchAddresses: [],

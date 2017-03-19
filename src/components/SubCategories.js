@@ -1,6 +1,6 @@
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button,Card,CardItem,Thumbnail} from "native-base";
 import React, {Component} from 'react';
-import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions} from "react-native";
+import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions,AsyncStorage} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import Drawer from 'react-native-drawer';
 import SideBarContent from './common/SideBarContent';
@@ -13,7 +13,9 @@ export default class Products extends Component {
         super(props);
         this.state = {
             SubCategories: null,
-            color: "#000000"
+            color: "#000000",
+            cartProducts: [],
+            cartPrice: null
         }
     }
 
@@ -34,9 +36,24 @@ export default class Products extends Component {
         this.getCategories()
     }
 
+
+    setCartPrice()
+    {
+        Price = 0.00;
+        for (i=0; i<this.state.cartProducts.length; i++)
+        {
+            console.log("products Price: ",this.state.cartProducts[i].price);
+            Price += this.state.cartProducts[i].price * this.state.cartProducts[i].quantity;
+        }
+        this.setState({cartPrice: Price},()=>console.log("Cart Price: ",this.state.cartPrice));
+    }
+
     componentDidMount()
     {
-
+        AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
+            if(value!=null)
+                this.setState({cartProducts: JSON.parse(value)},()=> this.setCartPrice());
+        }).done();
     }
 
 
@@ -120,7 +137,7 @@ export default class Products extends Component {
             <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
             </Body>
             <Right>
-                <Text style={{top: -12,color: '#E5DDCB',fontSize: 14}}>13.50</Text>
+                <Text style={{top: -12,color: '#E5DDCB',fontSize: 14}}>{this.state.cartPrice} ₼</Text>
                 <Button transparent onPress={()=>Actions.cart()}>
                     <Icon name="ios-cart-outline" style={{color: '#E5DDCB'}}></Icon>
                 </Button>
