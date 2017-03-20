@@ -274,17 +274,17 @@
 
                 return (
                     <Container>
-                        <Header style={{"backgroundColor": '#524656'}}>
-                            <Left>
+                        <Header style={{"backgroundColor": '#524656',elevation: 0}}>
+                            <Left style={{flex: 1}}>
                                 <Button transparent
                                         onPress={()=>Actions.subCategories({categoryID: this.props.categoryID, branchID: this.props.branchID, subCategoryID: this.props.subCategoryID})}>
                                     <Icon name="arrow-back" style={{color: '#E5DDCB'}}></Icon>
                                 </Button>
                             </Left>
-                            <Body>
+                            <Body style={{flex: 4}}>
                             <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
                             </Body>
-                            <Right>
+                            <Right style={{flex: 1}}>
                                 <Text style={{top: -12, color: '#E5DDCB',fontSize: 14}}>{this.state.cartPrice} ₼</Text>
                                 <Button transparent onPress={()=>Actions.cart()}>
                                     <Icon name="ios-cart-outline" style={{color: '#E5DDCB'}}></Icon>
