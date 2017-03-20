@@ -101,6 +101,7 @@
         setCartPrice()
         {
             Price = 0.00;
+
             for (i=0; i<this.state.cartProducts.length; i++)
             {
                 console.log("products Price: ",this.state.cartProducts[i].price);
@@ -199,7 +200,7 @@
             AsyncStorage.getItem("@Gelsin:Cart").then((value) => {
                 if(value!=null)
                     this.setState({cartProducts: JSON.parse(value)},()=>console.log("Storage-cartProducts: ",this.state.cartProducts));
-                this.setState({cartProducts: JSON.parse(value)},()=> this.setCartPrice());
+                this.setCartPrice();
             }).done();
 
             this.getBrands();
