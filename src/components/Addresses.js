@@ -80,15 +80,18 @@ export default class Addresses extends Component {
 
             <Container>
                 <Header style={styles.header}>
-                    <Left style={{ flex: 2}}>
+                    <Left style={{ flex: 1}}>
                         <Button transparent onPress={()=>Actions.account()}>
-                            <Icon name='ios-arrow-round-back' style={{color: '#FFF'}}/>
+                            <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                         </Button>
                     </Left>
 
-                    <Body style={{ flex: 14}} >
-                    <Title style={{alignSelf: 'center',color: '#E5DDCB',paddingLeft: 20,fontFamily: 'SourceSansPro-Regular',marginRight: 30}}>GƏLSİN</Title>
+                    <Body style={{ flex: 7}}>
+                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>GƏLSİN</Title>
                     </Body>
+
+                    <Right style={{ flex: 1}}/>
+
                 </Header>
 
                 <Content style={{marginTop: 30}}>

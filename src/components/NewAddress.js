@@ -135,7 +135,7 @@ export default class NewAddress extends Component {
     render() {
         const styles = {
             header: {
-                backgroundColor: '#524656',
+                backgroundColor: '#524656',alignItems: 'center'
             },
             item: {
                 flexDirection: 'column'
@@ -144,18 +144,20 @@ export default class NewAddress extends Component {
 
 
             return (
-                <Container >
+                <Container>
                     <Header style={styles.header}>
                         <Left style={{ flex: 1}}>
                             <Button transparent onPress={()=>Actions.addresses()}>
-                                <Icon name='ios-arrow-round-back' style={{color: '#FFF'}}/>
+                                <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                             </Button>
                         </Left>
 
                         <Body style={{ flex: 7}}>
-                        <Title
-                            style={{alignSelf: 'center',color: '#E5DDCB',paddingLeft: 20,fontFamily: 'SourceSansPro-Regular'}}>GƏLSİN</Title>
+                        <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>GƏLSİN</Title>
                         </Body>
+
+                        <Right style={{ flex: 1}}/>
+
                     </Header>
 
                     <Content style={{marginTop: 30}}>
@@ -163,8 +165,6 @@ export default class NewAddress extends Component {
                             <H3 style={{color: '#EB7B59',fontFamily: 'SourceSansPro-semiBold',paddingLeft: 14}}>{this.state.pageName ? this.state.pageName:"yeni adres"}</H3>
 
                                 <Picker
-                                    iosHeader="Select one"
-                                    mode="dropdown"
                                     selectedValue={this.state.selectedBranchID}
                                     value={this.state.selectedBranchId}
                                     onValueChange={(value)=>this.setState({
