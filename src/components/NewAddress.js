@@ -148,7 +148,7 @@ export default class NewAddress extends Component {
                     <Header style={styles.header}>
                         <Left style={{ flex: 1}}>
                             <Button transparent onPress={()=>Actions.addresses()}>
-                                <Icon name='arrow-back' style={{color: '#FFF'}}/>
+                                <Icon name='ios-arrow-round-back' style={{color: '#FFF'}}/>
                             </Button>
                         </Left>
 

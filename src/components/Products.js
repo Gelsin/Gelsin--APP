@@ -281,7 +281,7 @@
                             <Left style={{flex: 1}}>
                                 <Button transparent
                                         onPress={()=>Actions.subCategories({categoryID: this.props.categoryID, branchID: this.props.branchID, subCategoryID: this.props.subCategoryID})}>
-                                    <Icon name="arrow-back" style={{color: '#E5DDCB'}}></Icon>
+                                    <Icon name="ios-arrow-round-back" style={{color: '#E5DDCB'}}></Icon>
                                 </Button>
                             </Left>
                             <Body style={{flex: 4}}>

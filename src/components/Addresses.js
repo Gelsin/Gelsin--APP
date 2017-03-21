@@ -68,7 +68,7 @@ export default class Addresses extends Component {
 
         const styles = {
             header: {
-                backgroundColor: '#524656',
+                backgroundColor: '#524656',alignItems: 'center'
             },
             item: {
                 flexDirection: 'column'
@@ -78,15 +78,15 @@ export default class Addresses extends Component {
         return (
 
 
-            <Container >
+            <Container>
                 <Header style={styles.header}>
-                    <Left style={{ flex: 1}}>
+                    <Left style={{ flex: 2}}>
                         <Button transparent onPress={()=>Actions.account()}>
-                            <Icon name='arrow-back' style={{color: '#FFF'}}/>
+                            <Icon name='ios-arrow-round-back' style={{color: '#FFF'}}/>
                         </Button>
                     </Left>
 
-                    <Body style={{ flex: 15}} >
+                    <Body style={{ flex: 14}} >
                     <Title style={{alignSelf: 'center',color: '#E5DDCB',paddingLeft: 20,fontFamily: 'SourceSansPro-Regular',marginRight: 30}}>GƏLSİN</Title>
                     </Body>
                 </Header>
