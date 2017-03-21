@@ -19,6 +19,7 @@
                 selectedBrand: null,
                 cartProducts: [],
                 cartPrice: null,
+                wholeProducts: [],
                 dataSource: new ListView.DataSource({
                     rowHasChanged: (row1, row2) => true
                 })
@@ -128,25 +129,12 @@
 
         renderRow(post)
         {
-            console.log("selected brand: ",this.state.selectedBrand);
-            console.log("Produktun brand IDsi: ",post.brand_id);
+            if(this.state.brands == null)
+                return null;
 
-            if(this.state.selectedBrand == null){
-                return (
+            return(
                     <ProductItem name={post.name} price={post.price} thumbnail={post.cover_url} addItem={()=>this.addItem(post)}/>
-
-                );
-            }
-
-            if(this.state.selectedBrand === post.brand_id) {
-                        console.log("eynidi.");
-                        console.log(post);
-                        return (
-                            <ProductItem name={post.name} price={post.price} thumbnail={post.cover_url} addItem={()=>this.addItem(post)}/>
-                        );
-                    }
-
-                    return null;
+            );
 
 
 
@@ -156,13 +144,27 @@
 
         selectBrand(brand_id)
         {
-            this.setState({selectedBrand: brand_id},()=>console.log("selected Brand: ",this.state.selectedBrand));
+
+
+
+            if(brand_id == -1)
+           {
+               ar = this.state.wholeProducts;
+               this.setState({dataSource: this.getDataSource(ar)},()=>console.log("dataSource butunde: ",this.state.dataSource));
+           }
+           else {
+                var arr = [];
+                for (i = 0; i < this.state.wholeProducts.length; i++) {
+                    if (this.state.wholeProducts[i].brand_id == brand_id) {
+                        arr.push(this.state.wholeProducts[i]);
+                    }
+                }
+                this.setState({dataSource: this.getDataSource(arr)}, () => console.log("filterDan sonra datasource: ", this.state.dataSource));
+            }
         }
 
         getProducts(value)
         {
-            console.log("getProductsa girdi");
-
 
             var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ value;
             return fetch(prodUrl, {method: "GET"})
@@ -170,6 +172,7 @@
                 .then((responseData) => {
                     if(responseData.error==false) {
                         console.log("URL gonderilen: ",prodUrl);
+                        this.setState({wholeProducts: responseData.products});
                         this.setState({dataSource: this.getDataSource(responseData.products)},()=>console.log("PRODUKTLAR: ",responseData.products));
                     }
                     else
@@ -186,14 +189,13 @@
         componentWillMount()
         {
 
-            console.log("STATE Yenilenende: ",this.state.selectedBrand);
             AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
                 if(value != null) {
                     console.log("VALUEEEEE: ",value);
                     this.getProducts(JSON.parse(value));
                 }
                 else
-                    console.log("OLMADI");
+                    console.log("get Error on read from device storage");
             }).done();
 
 
@@ -304,6 +306,9 @@
 
                         <View horizontal={true} style={css.subCategoryRow}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <Button rounded style={css.subCategoryBtn} key={i} onPress={()=>this.selectBrand(-1)}>
+                                    <Text style={{color: '#E5DDCB'}}>Bütün Məhsullar</Text>
+                                </Button>
                                 {this.state.brands.map((brand, i) => {
                                     //sadece o subKateqoriyaya aid olan brandlar cixir 'horizontal ScrollViewda'
                                     if (brand.category_id == this.props.subCategoryID) {
@@ -322,6 +327,7 @@
                         <Content>
                                             <ListView contentContainerStyle={{flexDirection: 'row',flex: 1, flexWrap: 'wrap'}}
                                                 dataSource={this.state.dataSource}
+                                                enableEmptySections={true}
                                                 horizontal
                                                 renderRow={(rowData)=>this.renderRow(rowData)}>
                                             </ListView>
