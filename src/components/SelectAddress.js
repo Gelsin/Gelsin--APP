@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {Dimensions, AsyncStorage,Picker,Alert} from 'react-native';
-import {Container, Form, H3, Header, Footer, Button, Text, Spinner} from 'native-base';
+import {Container, Form, H3, Header, Footer, Button, Text, Spinner,Card,Left,Body,Content,ListItem, Radio} from 'native-base';
 import {Grid, Row} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
 
+const {width, height} = Dimensions.get("window"),
+    vw = width / 100
+vh = height / 100
 export default class SelectAddress extends Component {
 
     constructor(props) {
@@ -12,14 +15,16 @@ export default class SelectAddress extends Component {
         this.state = {
             selectedBranchID: 1,
             branchAddresses: [],
-            selectedValue: 1
+            selectedValue: 1,
+            selectedIndex: 0,
+            selectedAddress: ''
         }
 
     }
 
     onSubmit() {
-        this.writeAddressToDevice()
-        Actions.main({branchID: this.state.selectedBranchID});
+        this.writeAddressToDevice();
+        Actions.main();
     }
 
     writeAddressToDevice = async() => {
@@ -38,19 +43,11 @@ export default class SelectAddress extends Component {
 
 
     onValChange(val)
-{
-    for (i=0; i<this.state.branchAddresses.length; i++)
     {
-
-        if(this.state.branchAddresses[i].id == val)
-        {
-            console.log(this.state.branchAddresses[i]);
-            this.setState({selectedBranchID: this.state.branchAddresses[i].branch_id});
-            this.setState({selectedValue: this.state.branchAddresses[i].id});
-        }
+         this.setState({selectedBranchID: val},()=>console.log("selected branchID: ",this.state.selectedBranchID));
     }
 
-}
+
 
 
     getBranchAddresses()
@@ -131,23 +128,55 @@ export default class SelectAddress extends Component {
                 </Header>
 
 
-                <Grid style={styles.content}>
-                    <Row size={3} style={styles.formRow}>
-                        <Form style={styles.form}>
-                            <Picker
-                                style={{width: 250, marginLeft: 70,marginRight: 70}}
-                                selectedValue={this.state.selectedValue}
-                                onValueChange={(value)=>this.onValChange(value)}>
-                                {this.state.branchAddresses.map((address,i) =>
-                                    {
+                {/*<Grid style={styles.content}>*/}
+                    {/*<Row size={3} style={styles.formRow}>*/}
+                        {/*<Content>*/}
+                        {/*<Form style={styles.form}>*/}
+                            {/*{this.state.branchAddresses.map((adres,i) => {*/}
+                                {/*return  <Card key={i}>*/}
+                                    {/*<Button transparent onPress={()=>this.onValChange(adres.branch_id)}>*/}
+                                        {/*<Left>*/}
+                                            {/*<Body>*/}
+                                                {/*<Text>{adres.street_name}</Text>*/}
+                                            {/*</Body>*/}
+                                        {/*</Left>*/}
+                                    {/*</Button>*/}
+                                {/*</Card>*/}
+                            {/*})}*/}
+                            {/*<ButtonRound onPress={()=>this.onSubmit()} text="Irəli"/>*/}
+                        {/*</Form>*/}
+                        {/*</Content>*/}
+                    {/*</Row>*/}
+                {/*</Grid>*/}
 
-                                        return <Picker.Item style={{fontFamily: 'SourceSansPro-Regular'}} label={address.street_name} value={address.id} key={i}/>}
-                                )}
-                            </Picker>
-                            <ButtonRound onPress={()=>this.onSubmit()} text="Irəli"/>
-                        </Form>
-                    </Row>
-                </Grid>
+                <Content style={{width: width}}>
+                {this.state.branchAddresses.map((address, i) => {
+                        return (
+                            <ListItem selected={this.state.selectedIndex==i} key={i}
+                                      onPress={()=>this.setState({selectedIndex: i,
+                                        selectedAddress: address.street_name },
+                                        ()=>this.onValChange(address.branch_id))}>
+                                <Left style={{ flex: 1}}>
+                                    <Radio selected={this.state.selectedIndex==i}
+                                           onPress={()=>this.setState({selectedIndex: i,
+                                        selectedAddress: address.street_name},
+                                        ()=>console.log(this.state.selectedAddress))}
+                                    />
+                                </Left>
+                                <Body style={{ flex: 9,alignItems: 'center'}}>
+                                <Text
+                                    style={{alignSelf: 'flex-start', marginLeft: 0, fontFamily: 'SourceSansPro-Regular',color: '#FFF'}}>
+                                    {address.street_name}
+                                </Text>
+                                </Body>
+                            </ListItem>
+
+                        );
+                    }
+                )}
+                    <ButtonRound onPress={()=>this.onSubmit()} text="Irəli"/>
+                </Content>
+
             </Container>
 
         );
