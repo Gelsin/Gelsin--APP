@@ -1,6 +1,6 @@
 import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button,Card,CardItem,Thumbnail} from "native-base";
 import React, {Component} from 'react';
-import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions,AsyncStorage} from "react-native";
+import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions,AsyncStorage,Alert} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import Drawer from 'react-native-drawer';
 import SideBarContent from './common/SideBarContent';
@@ -62,10 +62,16 @@ export default class Products extends Component {
         return fetch(url, {method: "GET"})
             .then((response) => response.json())
             .then((responseData) => {
-                if(responseData.error==false) {
-                    CatID = responseData.category.id;
-                    this.setState({SubCategories: responseData.category.childs});
-                }
+            if(responseData.message == "This category has no childs!")
+            {
+                Alert.alert("Təəssüf ki","Bu Kateqoriya hal-hazırda boşdur.");
+                this.setState({SubCategories: responseData.category.childs});
+            }
+            else if(responseData.error==false) {
+                CatID = responseData.category.id;
+                this.setState({SubCategories: responseData.category.childs});
+            }
+
 
         })
             .done();
