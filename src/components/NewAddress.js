@@ -191,8 +191,8 @@ export default class NewAddress extends Component {
                     <Footer style={{"backgroundColor": '#524656'}}>
                         <FooterTab style={{flex: 1}}>
                             <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
-                                <Button transparent>
-                                    <Text style={{fontFamily: 'SourceSansPro-Regular',marginTop: 10, color: '#FFF'}}>Cancel</Text>
+                                <Button transparent onPress={()=>Actions.addresses()}>
+                                    <Text style={{fontFamily: 'SourceSansPro-Regular',marginTop: 10, color: '#FFF'}}>Geri</Text>
                                 </Button>
                                 <Button rounded
                                         style={{backgroundColor: '#EB7B59',marginTop: 10,marginRight: 15, width: 120,height: 30,justifyContent: 'center'}}
