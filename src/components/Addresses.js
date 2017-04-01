@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View,Container, Header, Title, Content, Footer, FooterTab, Button, Body, Icon, H3, Text, Form, Item, Picker,Input,Card,CardItem,Left,Right} from 'native-base';
 import {Grid, Row, Col} from 'react-native-easy-grid';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage,Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
 
@@ -42,6 +42,43 @@ export default class Addresses extends Component {
             console.log(error);
         }
     };
+
+
+    deleteClicked(addressID)
+    {
+        //delete Address
+
+        Alert.alert("Hörmətli istifadəçi","Bu adresi silmək istədiyinizə əminsiniz?",
+            [
+
+                {text: 'Bəli', onPress: (()=>this.deleteAddress(addressID))},
+                {text: 'Xeyir'}
+            ],{ cancelable: false })
+    }
+
+
+    deleteAddress(addressID)
+    {
+
+        fetch("http://gelsin.az/app/api/address/delete" ,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify({token: this.state.token, address_id: addressID})})
+            .then((response) => response.json())
+            .then((responseData) => {
+                if(responseData.message !="success") {
+                    Alert.alert("Adres silindi.");
+                    this.componentWillMount();
+                    console.log("responseData: ",responseData);
+                }
+
+            })
+            .done();
+    }
 
 
     getAddresses(token) {
@@ -99,15 +136,19 @@ export default class Addresses extends Component {
 
                     {this.state.address.map((adres,i) => {
                         return  <Card key={i}>
-                            <Button transparent onPress={()=>Actions.newAddress({adres})}>
-                                <Left>
+
+                                <Left style={{flexDirection: 'row'}}>
+                                    <Button transparent onPress={()=>Actions.newAddress({adres})} style={{flex: 9}}>
                                     <Body>
                                     <Text>{adres.branch_address.street_name}</Text>
                                     <Text note>{adres.address_line}</Text>
                                     </Body>
+                                    </Button>
+                                    <Button transparent style={{flex: 1,alignItems: 'flex-end' }} onPress={()=>this.deleteClicked(adres.id)}>
+                                        <Icon  name='ios-trash-outline'/></Button>
                                 </Left>
-                            </Button>
                         </Card>
+
                     })}
 
 

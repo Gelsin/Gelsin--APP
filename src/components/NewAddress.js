@@ -68,7 +68,7 @@ export default class NewAddress extends Component {
                 .then((response) => response.json())
                 .then((responseData) => {
                 if(responseData.message !="success") {
-                    AlertIOS.alert("Adres əlavə edildi.");
+                    Alert.alert("Adres əlavə edildi.");
                     console.log("responseData: ", responseData);
                 }
 
