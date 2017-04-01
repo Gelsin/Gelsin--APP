@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {View,Container, Header, Title, Content, Footer, FooterTab, Button, Body, Icon, H3, Text, Form, Item, Picker,Input,Card,CardItem,Left,Right} from 'native-base';
-import {Grid, Row, Col} from 'react-native-easy-grid';
 import {AsyncStorage,Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import  ButtonRound  from './common/ButtonRound';
 
 export default class Addresses extends Component {
 
@@ -15,18 +13,6 @@ export default class Addresses extends Component {
             selectedAddress: ''
         }
     }
-
-    // onSeherChange (value: string) {
-    //     this.setState({
-    //         selected : value
-    //     });
-    // }
-    //
-    // onRayonChange (value: string) {
-    //     this.setState({
-    //         selected1 : value
-    //     });
-    // }
 
     getToken = async () => {
         try {
@@ -94,6 +80,8 @@ export default class Addresses extends Component {
             });
     }
 
+
+
     componentWillMount() {
         console.log("mounted");
         this.getToken();
@@ -148,10 +136,7 @@ export default class Addresses extends Component {
                                         <Icon  name='ios-trash-outline'/></Button>
                                 </Left>
                         </Card>
-
                     })}
-
-
                 </Content>
 
                 <Footer style={{"backgroundColor": '#524656'}}>

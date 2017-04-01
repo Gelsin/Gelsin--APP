@@ -3,7 +3,7 @@ import {View,Container, Header, Title, Content, Footer, FooterTab, Button, Body,
 import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
-import {AsyncStorage,Picker,AlertIOS,TextInput} from 'react-native';
+import {AsyncStorage,Picker,Alert,TextInput} from 'react-native';
 
 export default class NewAddress extends Component {
 
@@ -115,18 +115,15 @@ export default class NewAddress extends Component {
 
     componentDidMount()
     {
-        console.log("page name: ",this.state.pageName);
         this.getToken();
         if(this.state.addressLine != null && this.state.branchAddresses !=null)
         {
             console.log("PROPS: ",this.props);
-            // this.setState({addresLine: this.props.adres.address_line});
-            // this.setState({selectedBranchID: this.props.adres.branch_address_id});
-            // this.setState({pageName: "Mövcud adres"});
+
         }
         else
         {
-            // this.setState({pageName: "Yeni adres"});
+
         }
     }
 
