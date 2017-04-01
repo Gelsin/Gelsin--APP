@@ -14,7 +14,8 @@ import SubCategories from './components/SubCategories';
 import OrdersMain from './components/OrdersMain';
 import OrdersDetail from './components/OrdersDetail';
 import NewAddress from './components/NewAddress';
-import SelectAddress from './components/SelectAddress';
+import SelectBranchAddress from './components/SelectBranchAddress';
+import SelectBranch from './components/SelectBranch';
 
 
 
@@ -31,7 +32,8 @@ export default class AppRouter extends Component {
                     <Scene key="signUp" component={SignUp} hideNavBar  />
                     <Scene key="verification" component={Verification} hideNavBar  />
                     <Scene key="resetPassword" component={ResetPassword} hideNavBar />
-                    <Scene key="selectAddress" component={SelectAddress} hideNavBar />
+                    <Scene key="selectBranch" component={SelectBranch} hideNavBar />
+                    <Scene key="selectBranchAddress" component={SelectBranchAddress} hideNavBar />
                 </Scene>
                 <Scene key="main" >
                     <Scene key="account" component={Account} hideNavBar  />

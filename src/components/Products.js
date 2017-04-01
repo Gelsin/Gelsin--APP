@@ -177,6 +177,10 @@
                     }
                     else
                     {
+                        if(responseData.message ==  "No related products!")
+                        {
+                            Alert.alert("Təəssüf ki","Bu Kateqoriyada hal-hazırda hər hansı bir məhsul yoxdur.");
+                        }
                         console.log("URL gonderilen: ",prodUrl);
                         console.log(responseData.error);
                         console.log(responseData.message);
