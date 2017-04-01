@@ -112,7 +112,7 @@ export default class Addresses extends Component {
                     </Left>
 
                     <Body style={{ flex: 7}}>
-                    <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>GƏLSİN</Title>
+                    <Title style={{alignSelf: 'center', color: '#e5ddcb',fontFamily: 'SourceSansPro-Regular'}}>GƏLSİN</Title>
                     </Body>
 
                     <Right style={{ flex: 1}}/>
