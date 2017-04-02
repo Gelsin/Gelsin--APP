@@ -18,13 +18,15 @@ import {
     Label
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
+import Update from './common/Update';
 
 
 export default class Account extends Component {
     constructor(props) {
         console.log("in constructor");
         super(props);
-        this.state = {email: '', fullname: '', error: '', loading: false, token: ''};
+        this.state = {email: '', fullname: '', error: '', loading: false, token: '',
+            nameUpdate: false, phoneUpdate: false, message: ''};
         console.log(this.state);
     };
 
@@ -114,6 +116,34 @@ export default class Account extends Component {
         }
     };
 
+    onUpdate(label) {
+        if (label=="name") {
+            this.setState({message: label + " updated successfully", nameUpdate: !this.state.nameUpdate});
+        }
+        else {
+            this.setState({message: label + " updated successfully ", phoneUpdate: !this.state.phoneUpdate});
+        }
+    }
+
+    onClose(label) {
+
+    }
+
+    renderMessage () {
+        if (this.state.message != '') {
+            return (
+                <Item style={{backgroundColor: '#e5ddcb', margin: 0, height: 48, padding: 12 }}>
+                    <Icon style={{color: '#524656'}} name="ios-checkmark-outline" />
+
+                    <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>
+                        {this.state.message}
+                    </Text>
+                </Item>
+
+            );
+        }
+    }
+
 
     render() {
         const styles = {
@@ -141,6 +171,8 @@ export default class Account extends Component {
                     <Right style={{ flex: 1}}/>
                 </Header>
 
+                {this.renderMessage()}
+
                 <Content>
                     <Separator style={{backgroundColor: '#fff'}}>
                         <Text
@@ -151,8 +183,16 @@ export default class Account extends Component {
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
                                 style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Name Surname</Text>
-                            <Text note
+                            <Text note onPress={()=> this.setState({ nameUpdate: !this.state.nameUpdate}) }
                                   style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.fullname}</Text>
+                            <Update
+                                visible={this.state.nameUpdate}
+                                label="Full Name"
+                                value={this.state.fullname}
+                                onChange={fullname => this.setState({fullname})}
+                                onPress={()=> this.onUpdate("name")}
+                                close={()=> this.setState({ nameUpdate: !this.state.nameUpdate, message: '' }, this.getUser(this.state.token))}
+                            />
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
@@ -186,8 +226,16 @@ export default class Account extends Component {
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
                                 style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Phone</Text>
-                            <Text note
+                            <Text note onPress={()=> this.setState({ phoneUpdate: !this.state.phoneUpdate }) }
                                   style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.contact}</Text>
+                            <Update
+                                visible={this.state.phoneUpdate}
+                                label="Phone"
+                                value={this.state.contact}
+                                onChange={contact => this.setState({contact})}
+                                onPress={()=> this.onUpdate("phone")}
+                                close={()=> this.setState({ phoneUpdate: !this.state.phoneUpdate, message: '' }, this.getUser(this.state.token))}
+                            />
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AsyncStorage} from 'react-native';
-import {Container, Content, Left, Body, Right, Text, Button, Icon, Header,  Title} from 'native-base';
+import {Container, Content, Left, Body, Right, Text, Button, Icon, Header,  Title, Item} from 'native-base';
 import OrderItem from './common/OrderItem';
 import {Actions} from 'react-native-router-flux';
 
@@ -10,6 +10,8 @@ export default class OrdersMain extends Component {
         super(props);
         this.state = { error: '', loading: false, token: '', orders: []};
         console.log(this.state);
+
+        console.log(this.props.message);
     };
 
     componentWillMount() {
@@ -49,7 +51,7 @@ export default class OrdersMain extends Component {
                 console.log(responseJson);
                 if (responseJson.orders.length > 0) {
                     this.setState({
-                        orders: responseJson.orders
+                        orders: responseJson.orders.reverse()
                     });
                 }
                 console.log(this.state);
@@ -59,11 +61,25 @@ export default class OrdersMain extends Component {
             });
     }
 
+    renderMessage () {
+        if (this.props.message) {
+            return (
+            <Item style={{backgroundColor: '#e5ddcb', margin: 0, height: 48, padding: 12 }}>
+                <Icon style={{color: '#524656'}} name="ios-checkmark-outline" />
+
+                <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>
+                    {this.props.message}
+                </Text>
+            </Item>
+
+            );
+        }
+    }
+
     render() {
         const styles = {
             header: {
                 backgroundColor: '#524656',
-                marginBottom: 10
             },
             text: {
                 fontFamily: 'SourceSansPro-Regular'
@@ -84,10 +100,11 @@ export default class OrdersMain extends Component {
                     </Body>
 
                     <Right style={{ flex: 1}}/>
-
                 </Header>
 
                 <Content >
+                    {this.renderMessage()}
+
                     {this.state.orders.map((order, i) => {
                             return (
                                 <OrderItem

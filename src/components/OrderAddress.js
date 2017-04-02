@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, Alert} from 'react-native';
 import {
     Container,
     Content,
@@ -172,13 +172,17 @@ export default class OrderAddress extends Component {
             total_price: 0,
         });
 
+        alertTitle = 'Success' ;
+        alertMessage = 'Order completed successfully';
+        Alert.alert(alertTitle, alertMessage);
+
         try {
             await AsyncStorage.removeItem('@Gelsin:Cart');
         } catch (error) {
             this.setState({error: error.message});
         }
 
-        Actions.category();
+        Actions.ordersMain({message: alertMessage});
     };
 
 
