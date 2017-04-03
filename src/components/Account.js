@@ -25,8 +25,10 @@ export default class Account extends Component {
     constructor(props) {
         console.log("in constructor");
         super(props);
-        this.state = {email: '', fullname: '', error: '', loading: false, token: '',
-            nameUpdate: false, phoneUpdate: false, message: ''};
+        this.state = {
+            email: '', fullname: '', error: '', loading: false, token: '',
+            nameUpdate: false, phoneUpdate: false, message: ''
+        };
         console.log(this.state);
     };
 
@@ -43,7 +45,7 @@ export default class Account extends Component {
     getToken = async () => {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:auth_user');
-            if (value !== null){
+            if (value !== null) {
                 //console.log(value);
                 this.setState({token: value});
                 console.log(this.state.token);
@@ -89,7 +91,7 @@ export default class Account extends Component {
         fetch('http://gelsin.az/app/auth/invalidate', {
             method: 'DELETE',
             headers: {
-                'Authorization' : 'Bearer ' + this.state.token,
+                'Authorization': 'Bearer ' + this.state.token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
@@ -116,24 +118,79 @@ export default class Account extends Component {
         }
     };
 
+    updateUser(label) {
+
+        const {token, contact, fullname} = this.state;
+
+        body = JSON.stringify({
+            token,
+            fullname
+        });
+
+        if (label == 'contact') {
+            body = JSON.stringify({
+                token,
+                contact
+            });
+        }
+
+        console.log(body);
+
+        fetch('http://gelsin.az/app/api/profile/update', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+
+            },
+            body
+        })
+            .then((response) => response.json()
+                .then((responseData) => {
+                    console.log("inside responsejson");
+                    console.log('response object:', responseData);
+
+                    if (responseData.error) {
+                        this.setState({message: responseData.message, phoneUpdate: false, nameUpdate: false})
+                    }
+                    else {
+                        if (label == "fullname") {
+                            this.setState({message: "Name updated successfully", nameUpdate: !this.state.nameUpdate});
+                        }
+                        else {
+                            this.setState({
+                                message: "Phone updated successfully",
+                                phoneUpdate: !this.state.phoneUpdate
+                            });
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            )
+            .catch((error) => {
+                console.log(error);
+            });
+        // .done();
+    }
+
     onUpdate(label) {
-        if (label=="name") {
-            this.setState({message: label + " updated successfully", nameUpdate: !this.state.nameUpdate});
+        if (label == "fullname") {
+            this.updateUser(label)
+            //this.setState({message: label + " updated successfully", nameUpdate: !this.state.nameUpdate});
         }
         else {
-            this.setState({message: label + " updated successfully ", phoneUpdate: !this.state.phoneUpdate});
+            this.updateUser(label)
+            //this.setState({message: label + " updated successfully ", phoneUpdate: !this.state.phoneUpdate});
         }
     }
 
-    onClose(label) {
-
-    }
-
-    renderMessage () {
+    renderMessage() {
         if (this.state.message != '') {
             return (
-                <Item style={{backgroundColor: '#e5ddcb', margin: 0, height: 48, padding: 12 }}>
-                    <Icon style={{color: '#524656'}} name="ios-checkmark-outline" />
+                <Item style={{backgroundColor: '#e5ddcb', margin: 0, height: 48, padding: 12}}>
+                    <Icon style={{color: '#524656'}} name="ios-checkmark-outline"/>
 
                     <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>
                         {this.state.message}
@@ -158,17 +215,17 @@ export default class Account extends Component {
         return (
             <Container >
                 <Header style={styles.header}>
-                    <Left style={{ flex: 1}} >
-                        <Button transparent onPress={()=>Actions.category()}>
+                    <Left style={{flex: 1}}>
+                        <Button transparent onPress={() => Actions.category()}>
                             <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                         </Button>
                     </Left>
 
-                    <Body style={{ flex: 7}}>
+                    <Body style={{flex: 7}}>
                     <Title style={{alignSelf: 'center', color: '#e5ddcb'}}>Settings</Title>
                     </Body>
 
-                    <Right style={{ flex: 1}}/>
+                    <Right style={{flex: 1}}/>
                 </Header>
 
                 {this.renderMessage()}
@@ -176,39 +233,76 @@ export default class Account extends Component {
                 <Content>
                     <Separator style={{backgroundColor: '#fff'}}>
                         <Text
-                            style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Profile</Text>
+                            style={{
+                                fontFamily: 'SourceSansPro-Semibold',
+                                fontSize: 16,
+                                color: '#eb7b59'
+                            }}>Profile</Text>
                     </Separator>
 
                     <Form>
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Name Surname</Text>
-                            <Text note onPress={()=> this.setState({ nameUpdate: !this.state.nameUpdate}) }
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.fullname}</Text>
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    fontFamily: 'SourceSansPro-Regular',
+                                    fontSize: 16,
+                                    color: '#524656'
+                                }}>Name Surname</Text>
+                            <Text note onPress={() => this.setState({nameUpdate: !this.state.nameUpdate}) }
+                                  style={{
+                                      alignSelf: 'flex-start',
+                                      fontFamily: 'SourceSansPro-Semibold',
+                                      fontSize: 14,
+                                      color: '#524656'
+                                  }}>{this.state.fullname}</Text>
                             <Update
                                 visible={this.state.nameUpdate}
                                 label="Full Name"
                                 value={this.state.fullname}
                                 onChange={fullname => this.setState({fullname})}
-                                onPress={()=> this.onUpdate("name")}
-                                close={()=> this.setState({ nameUpdate: !this.state.nameUpdate, message: '' }, this.getUser(this.state.token))}
+                                onPress={() => this.onUpdate("fullname")}
+                                close={() => this.setState({
+                                    nameUpdate: !this.state.nameUpdate,
+                                    message: ''
+                                }, this.getUser(this.state.token))}
                             />
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Email</Text>
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    fontFamily: 'SourceSansPro-Regular',
+                                    fontSize: 16,
+                                    color: '#524656'
+                                }}>Email</Text>
                             <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.email}</Text>
+                                  style={{
+                                      alignSelf: 'flex-start',
+                                      fontFamily: 'SourceSansPro-Semibold',
+                                      fontSize: 14,
+                                      color: '#524656'
+                                  }}>{this.state.email}</Text>
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Address</Text>
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    fontFamily: 'SourceSansPro-Regular',
+                                    fontSize: 16,
+                                    color: '#524656'
+                                }}>Address</Text>
 
-                            <Button transparent style={{padding:0, margin:0}} onPress={()=>Actions.addresses()}>
+                            <Button transparent style={{padding: 0, margin: 0}} onPress={() => Actions.addresses()}>
                                 <Text note
-                                      style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Edit Addresses</Text>
+                                      style={{
+                                          alignSelf: 'flex-start',
+                                          fontFamily: 'SourceSansPro-Semibold',
+                                          fontSize: 14,
+                                          color: '#524656'
+                                      }}>Edit Addresses</Text>
                             </Button>
                         </ListItem>
                     </Form>
@@ -219,30 +313,57 @@ export default class Account extends Component {
 
                     <Separator style={{backgroundColor: '#fff'}}>
                         <Text
-                            style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Account</Text>
+                            style={{
+                                fontFamily: 'SourceSansPro-Semibold',
+                                fontSize: 16,
+                                color: '#eb7b59'
+                            }}>Account</Text>
                     </Separator>
 
                     <Form>
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Phone</Text>
-                            <Text note onPress={()=> this.setState({ phoneUpdate: !this.state.phoneUpdate }) }
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>{this.state.contact}</Text>
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    fontFamily: 'SourceSansPro-Regular',
+                                    fontSize: 16,
+                                    color: '#524656'
+                                }}>Phone</Text>
+                            <Text note onPress={() => this.setState({phoneUpdate: !this.state.phoneUpdate}) }
+                                  style={{
+                                      alignSelf: 'flex-start',
+                                      fontFamily: 'SourceSansPro-Semibold',
+                                      fontSize: 14,
+                                      color: '#524656'
+                                  }}>{this.state.contact}</Text>
                             <Update
                                 visible={this.state.phoneUpdate}
                                 label="Phone"
                                 value={this.state.contact}
                                 onChange={contact => this.setState({contact})}
-                                onPress={()=> this.onUpdate("phone")}
-                                close={()=> this.setState({ phoneUpdate: !this.state.phoneUpdate, message: '' }, this.getUser(this.state.token))}
+                                onPress={() => this.onUpdate("contact")}
+                                close={() => this.setState({
+                                    phoneUpdate: !this.state.phoneUpdate,
+                                    message: ''
+                                }, this.getUser(this.state.token))}
                             />
                         </ListItem>
 
                         <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Password</Text>
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    fontFamily: 'SourceSansPro-Regular',
+                                    fontSize: 16,
+                                    color: '#524656'
+                                }}>Password</Text>
                             <Text note
-                                  style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>Change password</Text>
+                                  style={{
+                                      alignSelf: 'flex-start',
+                                      fontFamily: 'SourceSansPro-Semibold',
+                                      fontSize: 14,
+                                      color: '#524656'
+                                  }}>Change password</Text>
                         </ListItem>
                     </Form>
 
@@ -251,15 +372,30 @@ export default class Account extends Component {
 
                     <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
                         <Text
-                            style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Language</Text>
+                            style={{
+                                alignSelf: 'flex-start',
+                                fontFamily: 'SourceSansPro-Regular',
+                                fontSize: 16,
+                                color: '#524656'
+                            }}>Language</Text>
                         <Text note
-                              style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Semibold', fontSize: 14, color: '#524656'}}>English</Text>
+                              style={{
+                                  alignSelf: 'flex-start',
+                                  fontFamily: 'SourceSansPro-Semibold',
+                                  fontSize: 14,
+                                  color: '#524656'
+                              }}>English</Text>
                     </ListItem>
 
                     <ListItem style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'column'}}>
-                        <Button transparent style={{padding:0, margin:0}} onPress={this.logout.bind(this)}>
+                        <Button transparent style={{padding: 0, margin: 0}} onPress={this.logout.bind(this)}>
                             <Text
-                                style={{alignSelf: 'flex-start', fontFamily: 'SourceSansPro-Regular', fontSize: 16, color: '#524656'}}>Logout</Text>
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    fontFamily: 'SourceSansPro-Regular',
+                                    fontSize: 16,
+                                    color: '#524656'
+                                }}>Logout</Text>
                         </Button>
                     </ListItem>
                 </Content>
