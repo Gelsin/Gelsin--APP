@@ -149,10 +149,6 @@ export default class Products extends Component {
                 </Button>
             </Right>
         </Header>
-        <Item style={{backgroundColor: '#EB7B59',justifyContent: 'center',margin: 0}}>
-        <Icon name="search" style={{color: '#E5DDCB',marginLeft: 6}}></Icon>
-        <Input placeholder="search something" placeholderTextColor="rgba(255, 255, 255, 0.6)" style={{textAlign: 'center',color: '#FFF'}}/>
-    </Item>
 
    <Content>
        <View style={{flexDirection: 'row','flexWrap': 'wrap',alignItems: 'center', padding: 6}}>

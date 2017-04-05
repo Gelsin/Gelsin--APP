@@ -7,7 +7,6 @@
         vw = width / 100
     vh = height / 100
 
-    var currentBrand;
     export default class Products extends Component {
 
         constructor(props)
@@ -19,8 +18,12 @@
                 selectedBrand: null,
                 cartProducts: [],
                 cartPrice: null,
+                searchText: "",
                 wholeProducts: [],
                 dataSource: new ListView.DataSource({
+                    rowHasChanged: (row1, row2) => true
+                }),
+                dataSourceCopy: new ListView.DataSource({
                     rowHasChanged: (row1, row2) => true
                 })
             }
@@ -36,6 +39,30 @@
 
 
 
+        searchProducts()
+        {
+            pattern = this.state.searchText;
+            this.setState({dataSource: this.state.dataSourceCopy});
+            if(pattern == "") {
+                return;
+            }
+
+            var resArr = [];
+            this.setState({searchText: pattern});
+               var arr = [];
+               for (i=0; i<this.state.dataSourceCopy._dataBlob.s1.length; i++)
+               {
+                    arr.push(this.state.dataSourceCopy._dataBlob.s1[i].name);
+               }
+
+            for (var j=0; j<arr.length; j++) {
+                if ((this.state.dataSourceCopy._dataBlob.s1[j].name.toUpperCase()).match(pattern.toUpperCase()))
+                    resArr.push(this.state.dataSourceCopy._dataBlob.s1[j]);
+            }
+
+            this.setState({dataSource: this.getDataSource(resArr)});
+
+        }
 
 
         addItem(product)
@@ -105,7 +132,6 @@
 
             for (i=0; i<this.state.cartProducts.length; i++)
             {
-                console.log("products Price: ",this.state.cartProducts[i].price);
                 Price += this.state.cartProducts[i].price * this.state.cartProducts[i].quantity;
             }
             this.setState({cartPrice: Price},()=>console.log("Cart Price: ",this.state.cartPrice));
@@ -151,6 +177,8 @@
            {
                ar = this.state.wholeProducts;
                this.setState({dataSource: this.getDataSource(ar)},()=>console.log("dataSource butunde: ",this.state.dataSource));
+               this.setState({dataSourceCopy: this.getDataSource(ar)});
+               this.setState({searchText: ""});
            }
            else {
                 var arr = [];
@@ -160,13 +188,15 @@
                     }
                 }
                 this.setState({dataSource: this.getDataSource(arr)}, () => console.log("filterDan sonra datasource: ", this.state.dataSource));
+                this.setState({dataSourceCopy: this.getDataSource(arr)});
+                this.setState({searchText: ""});
             }
         }
 
         getProducts(value)
         {
 
-            var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ value;
+            var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ 1;
             return fetch(prodUrl, {method: "GET"})
                 .then((response) => response.json())
                 .then((responseData) => {
@@ -174,6 +204,7 @@
                         console.log("URL gonderilen: ",prodUrl);
                         this.setState({wholeProducts: responseData.products});
                         this.setState({dataSource: this.getDataSource(responseData.products)},()=>console.log("PRODUKTLAR: ",responseData.products));
+                        this.setState({dataSourceCopy: this.getDataSource(responseData.products)});
                     }
                     else
                     {
@@ -182,7 +213,6 @@
                             Alert.alert("Təəssüf ki","Bu Kateqoriyada hal-hazırda hər hansı bir məhsul yoxdur.");
                         }
                         console.log("URL gonderilen: ",prodUrl);
-                        console.log(responseData.error);
                         console.log(responseData.message);
 
                     }
@@ -195,7 +225,6 @@
 
             AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
                 if(value != null) {
-                    console.log("VALUEEEEE: ",value);
                     this.getProducts(JSON.parse(value));
                 }
                 else
@@ -301,7 +330,14 @@
                         <Item
                             style={{backgroundColor: '#EB7B59',justifyContent: 'center',margin: 0, paddingLeft: -40, borderWidth: 0}}>
                             <Icon name="search" style={{color: '#E5DDCB',marginLeft: 6}}></Icon>
-                            <Input placeholder="search something" placeholderTextColor="rgba(255, 255, 255, 0.6)"
+                            <Input placeholder="axtar"
+                                   autoCapitalize={"none"}
+                                   autoCorrect={false}
+                                   value={this.state.searchText}
+                                   keyboardType='default'
+                                   returnKeyType='search'
+                                   placeholderTextColor="rgba(255, 255, 255, 0.6)"
+                                   onChangeText={(text)=>this.setState({searchText: text},()=>this.searchProducts()) }
                                    style={{textAlign: 'center',color: '#FFF'}}/>
                         </Item>
 
@@ -314,7 +350,6 @@
                                     <Text style={{color: '#E5DDCB'}}>Bütün Məhsullar</Text>
                                 </Button>
                                 {this.state.brands.map((brand, i) => {
-                                    //sadece o subKateqoriyaya aid olan brandlar cixir 'horizontal ScrollViewda'
                                     if (brand.category_id == this.props.subCategoryID) {
                                         return <Button rounded style={css.subCategoryBtn} key={i} onPress={()=>this.selectBrand(brand.id)}>
                                             <Text style={{color: '#E5DDCB'}}>{brand.name}</Text>
