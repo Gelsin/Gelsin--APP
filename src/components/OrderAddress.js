@@ -174,7 +174,7 @@ export default class OrderAddress extends Component {
 
         alertTitle = 'Success' ;
         alertMessage = 'Order completed successfully';
-        Alert.alert(alertTitle, alertMessage);
+        // Alert.alert(alertTitle, alertMessage);
 
         try {
             await AsyncStorage.removeItem('@Gelsin:Cart');

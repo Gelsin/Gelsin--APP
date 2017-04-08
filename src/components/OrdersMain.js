@@ -111,6 +111,7 @@ export default class OrdersMain extends Component {
                                     key={i}
                                     date={order.created_at}
                                     price={order.total_price}
+                                    status={order.status}
                                     action={()=>Actions.ordersDetail({products: order.products, date: order.created_at, price: order.total_price})}
                                 />
                             );
