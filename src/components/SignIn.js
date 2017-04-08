@@ -139,7 +139,7 @@ class SignIn extends Component {
 
                 if (responseJson.user) {
                     if (responseJson.user.confirmed_at) {
-                        Actions.selectBranch();
+                        Actions.category();
                     }
                     else Actions.verification({token});
                 }

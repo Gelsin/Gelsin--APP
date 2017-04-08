@@ -24,7 +24,7 @@ export default class SelectBranchAddress extends Component {
     }
 
     onSubmit() {
-        Actions.main();
+        Actions.category();
     }
 
 

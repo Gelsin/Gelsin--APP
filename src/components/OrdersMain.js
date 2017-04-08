@@ -35,7 +35,7 @@ export default class OrdersMain extends Component {
 
                 this.getOrders(this.state.token);
             } else {
-                Actions.auth();
+                Actions.signIn();
             }
         } catch (error) {
             console.log(error);

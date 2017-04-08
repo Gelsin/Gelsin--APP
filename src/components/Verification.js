@@ -99,7 +99,7 @@ class Verification extends Component {
             loading: false
         });
 
-        Actions.selectAddress();
+        Actions.category();
     }
 
     resend() {
@@ -249,7 +249,7 @@ class Verification extends Component {
                 </Grid>
 
                 <Footer style={styles.footer}>
-                    <Button style={styles.button} transparent onPress={()=>Actions.main()}>
+                    <Button style={styles.button} transparent onPress={()=>Actions.category()}>
                         <Text style={styles.text}>
                             Verify later
                         </Text>

@@ -53,7 +53,7 @@ export default class Account extends Component {
                 this.getUser(this.state.token)
 
             } else {
-                Actions.auth();
+                Actions.signIn();
             }
         } catch (error) {
             console.log(error);
@@ -112,7 +112,7 @@ export default class Account extends Component {
 
         try {
             await AsyncStorage.removeItem('@Gelsin:auth_user');
-            Actions.auth();
+            Actions.signIn();
         } catch (error) {
             this.setState({error: error.message});
         }
