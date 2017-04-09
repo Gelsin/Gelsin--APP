@@ -90,7 +90,7 @@ export default class NewAddress extends Component {
                 .then((response) => response.json())
                 .then((responseData) => {
                     if(responseData.message !="success") {
-                        AlertIOS.alert("Adres yeniləndi.");
+                        Alert.alert("Adres yeniləndi.");
                         console.log("responseData: ",responseData);
                     }
 
@@ -102,14 +102,36 @@ export default class NewAddress extends Component {
 
     getBranchAddresses()
     {
-        fetch('http://gelsin.az/app/api/branch/addresses', {method: 'GET'})
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({branchAddresses: responseJson.branches}, ()=>console.log("Branch adresleri: ",this.state.branchAddresses));
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        if(this.props.adres == null)
+        {
+            AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
+                if(value != null) {
+                    branchid=value;
+
+                    var Url = 'http://gelsin.az/app/api/branches/' + branchid +  '/addresses';
+                    fetch(Url, {method: 'GET'})
+                        .then((response) => response.json())
+                        .then((responseJson) => {
+                            this.setState({branchAddresses: responseJson.addresses}, ()=>console.log("Branch adresleri: ",this.state.branchAddresses));
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+                else
+                    console.log("get Error on read from device storage");
+            }).done();
+        }
+        else {
+            fetch('http://gelsin.az/app/api/branch/addresses', {method: 'GET'})
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({branchAddresses: responseJson.branches}, () => console.log("Branch adresleri: ", this.state.branchAddresses));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
     }
 
 
@@ -178,6 +200,8 @@ export default class NewAddress extends Component {
                                     placeholder="adres açıqlaması"
                                     value={this.state.addressLine}
                                     editable={true}
+                                    autoCapitalize={"none"}
+                                    autoCorrect={false}
                                     onChangeText={(Line) => this.setState({addressLine: Line},()=>console.log("this state adresLine: ",this.state.addressLine))}
                                 />
                             </Item>

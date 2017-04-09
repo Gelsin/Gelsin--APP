@@ -196,7 +196,7 @@
         getProducts(value)
         {
 
-            var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id="+ 1;
+            var prodUrl = "http://gelsin.az/app/api/products?category_id=" + this.props.subCategoryID + "&branch_id=" + value   ;
             return fetch(prodUrl, {method: "GET"})
                 .then((response) => response.json())
                 .then((responseData) => {
