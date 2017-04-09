@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {View,Container, Header, Title, Content, Footer, FooterTab, Button, Body, Icon, H3, Text, Form, Item, Input,Card,CardItem,Left,Right,InputGroup} from 'native-base';
-import {Grid, Row, Col} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
-import  ButtonRound  from './common/ButtonRound';
 import {AsyncStorage,Picker,Alert,TextInput} from 'react-native';
 
 export default class NewAddress extends Component {
@@ -56,24 +54,36 @@ export default class NewAddress extends Component {
     {
         if(this.props.adres == null)
         {
-            //add Address
-            fetch("http://gelsin.az/app/api/address/add" ,{
-            method: 'POST',
-                headers: {
-                'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+            if(this.state.addressLine != null) {
+                //add Address
+                fetch("http://gelsin.az/app/api/address/add", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
 
-            },
-                body: JSON.stringify({token: this.state.token, user_id: this.state.user.id, branch_address_id: this.state.selectedBranchID, address_line: this.state.addressLine})})
-                .then((response) => response.json())
-                .then((responseData) => {
-                if(responseData.message !="success") {
-                    Alert.alert("Adres əlavə edildi.");
-                    console.log("responseData: ", responseData);
-                }
-
+                    },
+                    body: JSON.stringify({
+                        token: this.state.token,
+                        user_id: this.state.user.id,
+                        branch_address_id: this.state.selectedBranchID,
+                        address_line: this.state.addressLine
+                    })
                 })
-                .done();
+                    .then((response) => response.json())
+                    .then((responseData) => {
+                        if (responseData.message != "success") {
+                            Alert.alert("Adres əlavə edildi.");
+                            console.log("responseData: ", responseData);
+                        }
+
+                    })
+                    .done();
+            }
+            else{
+                Alert.alert("Hörmətli müştəri","Xahiş olunur adres açıqlaması qismini boş buraxmayın.");
+                return;
+            }
         }
         else
         {
