@@ -13,6 +13,7 @@ export default class Update extends Component {
             },
             input: {
                 fontFamily: 'SourceSansPro-Regular',
+                margin: 12
             }
         };
 
@@ -38,7 +39,7 @@ export default class Update extends Component {
                                 onChangeText={this.props.onChange}
                             />
 
-                            <ButtonRound width={100} text="Update" onPress={this.props.onPress}/>
+                            <ButtonRound width={123} text="Update" onPress={this.props.onPress}/>
                         </View>
                     </TouchableWithoutFeedback>
 
