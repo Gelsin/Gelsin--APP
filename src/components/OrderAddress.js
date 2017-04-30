@@ -45,7 +45,7 @@ export default class OrderAddress extends Component {
 
     };
 
-    getToken = async() => {
+    getToken = async () => {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:auth_user');
             if (value !== null) {
@@ -63,7 +63,7 @@ export default class OrderAddress extends Component {
         }
     };
 
-    getCart = async() => {
+    getCart = async () => {
         try {
             var value = await AsyncStorage.getItem('@Gelsin:Cart');
             if (value !== null) {
@@ -101,13 +101,21 @@ export default class OrderAddress extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson);
-                this.setState({addresses: responseJson.address});
-                if (this.state.addresses.length > 0) {
-                    this.setState({
-                        selectedAddress: this.state.addresses[0].address_line + ',' + this.state.addresses[0].branch_address.street_name
-                    });
+
+                if (responseJson.address) {
+                    this.setState({addresses: responseJson.address});
+
+                    if (this.state.addresses.length > 0) {
+                        this.setState({
+                            selectedAddress: this.state.addresses[0].address_line + ',' + this.state.addresses[0].branch_address.street_name
+                        });
+                    }
+                    console.log(this.state);
                 }
-                console.log(this.state);
+                else {
+                    console.log(responseJson.message);
+                    Actions.signIn();
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -166,13 +174,13 @@ export default class OrderAddress extends Component {
             });
     };
 
-    onSuccess = async() => {
+    onSuccess = async () => {
         this.setState({
             cart: [],
             total_price: 0,
         });
 
-        alertTitle = 'Success' ;
+        alertTitle = 'Success';
         alertMessage = 'Order completed successfully';
         // Alert.alert(alertTitle, alertMessage);
 
@@ -213,41 +221,50 @@ export default class OrderAddress extends Component {
             <StyleProvider style={radioTheme(platform)}>
                 <Container>
                     <Header style={styles.header}>
-                        <Left style={{ flex: 1}}>
-                            <Button transparent onPress={()=>Actions.cart()}>
+                        <Left style={{flex: 1}}>
+                            <Button transparent onPress={() => Actions.cart()}>
                                 <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                             </Button>
                         </Left>
 
-                        <Body style={{ flex: 7}}>
+                        <Body style={{flex: 7}}>
                         <Title style={{alignSelf: 'center', fontSize: 16, color: '#e5ddcb'}}>Address</Title>
                         </Body>
 
-                        <Right style={{ flex: 1}}/>
+                        <Right style={{flex: 1}}/>
                     </Header>
 
                     <Content>
                         <Separator style={{backgroundColor: '#fff'}}>
                             <Text
-                                style={{ fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Choose an address</Text>
+                                style={{fontFamily: 'SourceSansPro-Semibold', fontSize: 16, color: '#eb7b59'}}>Choose an
+                                address</Text>
                         </Separator>
 
                         {this.state.addresses.map((address, i) => {
                                 return (
-                                    <ListItem selected={this.state.selectedIndex==i} key={i}
-                                              onPress={()=>this.setState({selectedIndex: i,
-                                        selectedAddress: address.address_line + ',' + address.branch_address.street_name },
-                                        ()=>console.log(this.state.selectedAddress))}>
-                                        <Left style={{ flex: 1}}>
-                                            <Radio selected={this.state.selectedIndex==i}
-                                                   onPress={()=>this.setState({selectedIndex: i,
-                                        selectedAddress: address.address_line + ',' + address.branch_address.street_name },
-                                        ()=>console.log(this.state.selectedAddress))}
+                                    <ListItem selected={this.state.selectedIndex == i} key={i}
+                                              onPress={() => this.setState({
+                                                      selectedIndex: i,
+                                                      selectedAddress: address.address_line + ',' + address.branch_address.street_name
+                                                  },
+                                                  () => console.log(this.state.selectedAddress))}>
+                                        <Left style={{flex: 1}}>
+                                            <Radio selected={this.state.selectedIndex == i}
+                                                   onPress={() => this.setState({
+                                                           selectedIndex: i,
+                                                           selectedAddress: address.address_line + ',' + address.branch_address.street_name
+                                                       },
+                                                       () => console.log(this.state.selectedAddress))}
                                             />
                                         </Left>
-                                        <Body style={{ flex: 9, }}>
+                                        <Body style={{flex: 9,}}>
                                         <Text
-                                            style={{alignSelf: 'flex-start', marginLeft: 0, fontFamily: 'SourceSansPro-Regular'}}>
+                                            style={{
+                                                alignSelf: 'flex-start',
+                                                marginLeft: 0,
+                                                fontFamily: 'SourceSansPro-Regular'
+                                            }}>
                                             {address.address_line}, {address.branch_address.street_name}
                                         </Text>
                                         </Body>
@@ -260,25 +277,31 @@ export default class OrderAddress extends Component {
                     </Content>
 
                     <Footer style={styles.footer}>
-                        <FooterTab style={{backgroundColor: '#e5ddcb', flex: 48, }}>
+                        <FooterTab style={{backgroundColor: '#e5ddcb', flex: 48,}}>
                             <Left>
-                                <Button transparent style={{  }} onPress={()=>Actions.addresses()}>
+                                <Button transparent style={{}} onPress={() => Actions.addresses()}>
                                     <Icon style={{color: '#524656'}} name="ios-add-circle-outline"/>
-                                    <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>Add new address</Text>
+                                    <Text style={{color: '#524656', fontFamily: 'SourceSansPro-Regular'}}>Add new
+                                        address</Text>
                                 </Button>
                             </Left>
                         </FooterTab>
 
-                        <FooterTab style={{backgroundColor: '#524656', flex: 56, paddingLeft: 12, paddingRight: 12 }}>
+                        <FooterTab style={{backgroundColor: '#524656', flex: 56, paddingLeft: 12, paddingRight: 12}}>
                             <Left >
                                 <Text
-                                    style={{color: '#e5ddcb', fontFamily: 'SourceSansPro-Semibold', }}>Total amount</Text>
+                                    style={{color: '#e5ddcb', fontFamily: 'SourceSansPro-Semibold',}}>Total
+                                    amount</Text>
                                 <Text
-                                    style={{color: '#e57b59', fontFamily: 'SourceSansPro-Regular', fontSize: 18}}>{this.state.total_price}
+                                    style={{
+                                        color: '#e57b59',
+                                        fontFamily: 'SourceSansPro-Regular',
+                                        fontSize: 18
+                                    }}>{this.state.total_price}
                                     &#x20bc;</Text>
                             </Left>
 
-                            <Right style={{   }}>
+                            <Right style={{}}>
                                 <Button rounded style={styles.button} onPress={this.onButtonPress.bind(this)}>
                                     <Text style={styles.text}>Confirm</Text>
                                 </Button>

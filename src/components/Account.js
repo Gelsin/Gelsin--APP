@@ -78,6 +78,7 @@ export default class Account extends Component {
 
                     console.log(this.state);
                 }
+                else Actions.signIn();
 
             })
             .catch((error) => {
