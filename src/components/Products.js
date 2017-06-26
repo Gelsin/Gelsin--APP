@@ -364,7 +364,7 @@
                         {/*PRODUCTS of choosen subCategory with brand rows*/}
 
                         <Content>
-                                            <ListView contentContainerStyle={{flexDirection: 'row',flex: 1, flexWrap: 'wrap'}}
+                                            <ListView contentContainerStyle={{flexDirection: 'row',flex: 1, flexWrap: 'wrap', left: 5}}
                                                 dataSource={this.state.dataSource}
                                                 enableEmptySections={true}
                                                 horizontal
