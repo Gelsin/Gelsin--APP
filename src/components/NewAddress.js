@@ -112,8 +112,8 @@ export default class NewAddress extends Component {
 
     getBranchAddresses()
     {
-        if(this.props.adres == null)
-        {
+        // if(this.props.adres == null)
+        // {
             AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
                 if(value != null) {
                     branchid=value;
@@ -131,17 +131,17 @@ export default class NewAddress extends Component {
                 else
                     console.log("get Error on read from device storage");
             }).done();
-        }
-        else {
-            fetch('http://gelsin.az/app/api/branch/addresses', {method: 'GET'})
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({branchAddresses: responseJson.branches}, () => console.log("Branch adresleri: ", this.state.branchAddresses));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
+        // }
+        // else {
+        //     fetch('http://gelsin.az/app/api/branch/addresses', {method: 'GET'})
+        //         .then((response) => response.json())
+        //         .then((responseJson) => {
+        //             this.setState({branchAddresses: responseJson.branches}, () => console.log("Branch adresleri: ", this.state.branchAddresses));
+        //         })
+        //         .catch((error) => {
+        //             console.error(error);
+        //         });
+        // }
     }
 
 
