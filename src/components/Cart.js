@@ -137,13 +137,15 @@ export default class Cart extends Component {
             button: {
                 alignSelf: 'flex-end',
                 backgroundColor: '#e57b59',
-                width: 90,
-                height: 32,
+                width: 111,
+                height: 33,
                 justifyContent: 'center',
                 padding: 0,
             },
             text: {
-                fontFamily: 'SourceSansPro-Regular'
+                fontFamily: 'SourceSansPro-Regular',
+                margin: 0,
+                padding: 0,
             }
         };
 

@@ -72,6 +72,7 @@
 		D1EB6D5955BB434DBADDCE93 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4150552035484FD483103005 /* Zocial.ttf */; };
 		16B28C57E4084CF79F674CB5 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC838DB8B7AD485481802604 /* SourceSansPro-Regular.ttf */; };
 		D7EE0C73FC90400BB225B667 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9DAFE900BAE340FF9CBB6553 /* SourceSansPro-Semibold.ttf */; };
+		2DBE23B2149A413A81FF3402 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C64B86D2B141319222C4AB /* SimpleLineIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -329,6 +330,7 @@
 		4150552035484FD483103005 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BC838DB8B7AD485481802604 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; name = "SourceSansPro-Regular.ttf"; path = "../node_modules/native-base/Fonts/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9DAFE900BAE340FF9CBB6553 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; name = "SourceSansPro-Semibold.ttf"; path = "../node_modules/native-base/Fonts/SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D4C64B86D2B141319222C4AB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -599,6 +601,7 @@
 				4150552035484FD483103005 /* Zocial.ttf */,
 				BC838DB8B7AD485481802604 /* SourceSansPro-Regular.ttf */,
 				9DAFE900BAE340FF9CBB6553 /* SourceSansPro-Semibold.ttf */,
+				D4C64B86D2B141319222C4AB /* SimpleLineIcons.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -998,6 +1001,7 @@
 				D1EB6D5955BB434DBADDCE93 /* Zocial.ttf in Resources */,
 				16B28C57E4084CF79F674CB5 /* SourceSansPro-Regular.ttf in Resources */,
 				D7EE0C73FC90400BB225B667 /* SourceSansPro-Semibold.ttf in Resources */,
+				2DBE23B2149A413A81FF3402 /* SimpleLineIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,30 +1,24 @@
-import { Platform } from 'react-native';
-import _ from 'lodash';
+import { Platform } from "react-native";
 
-import variable from './../variables/platform';
+import variable from "./../variables/platform";
 
 export default (variables = variable) => {
   const radioTheme = {
-      '.selected': {
-        'NativeBase.Icon': {
-          color: variables.radioSelectedColor,
-        },
-        'NativeBase.IconNB': {
-          color: variables.radioSelectedColor,
-        },
-      },
-      'NativeBase.Icon': {
-        color: variables.radioColor,
-        lineHeight: variables.radioBtnLineHeight,
-        fontSize: variables.radioBtnSize,
-      },
-      'NativeBase.IconNB': {
-        color: variables.radioColor,
-        lineHeight: variables.radioBtnLineHeight,
-        fontSize: variables.radioBtnSize,
-      },
+    ".selected": {
+      "NativeBase.IconNB": {
+        color: 'eb7b59',
+        lineHeight: Platform.OS === "ios" ? 25 : variables.radioBtnLineHeight,
+        height: Platform.OS === "ios" ? 20 : undefined
+      }
+    },
+    "NativeBase.IconNB": {
+      color: Platform.OS === "ios" ? "transparent" : '#eb7b59',
+      lineHeight: Platform.OS === "ios"
+        ? undefined
+        : variables.radioBtnLineHeight,
+      fontSize: Platform.OS === "ios" ? undefined : variables.radioBtnSize
+    }
   };
-
 
   return radioTheme;
 };

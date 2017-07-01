@@ -207,13 +207,16 @@ export default class OrderAddress extends Component {
             button: {
                 alignSelf: 'flex-end',
                 backgroundColor: '#eb7b59',
-                width: 90,
-                height: 32,
+                width: 111,
+                height: 33,
                 justifyContent: 'center',
                 padding: 0,
+                margin: 0,
             },
             text: {
-                fontFamily: 'SourceSansPro-Regular'
+                fontFamily: 'SourceSansPro-Regular',
+                padding: 0,
+                margin: 0,
             }
         };
 
