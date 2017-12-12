@@ -313,7 +313,7 @@
                         <Header style={{"backgroundColor": '#524656',elevation: 0}}>
                             <Left style={{flex: 1}}>
                                 <Button transparent
-                                        onPress={()=>Actions.subCategories({categoryID: this.props.categoryID, branchID: this.props.branchID, subCategoryID: this.props.subCategoryID})}>
+                                        onPress={()=>Actions.pop()}>
                                     <Icon name="ios-arrow-round-back" style={{color: '#E5DDCB'}}></Icon>
                                 </Button>
                             </Left>
@@ -364,10 +364,9 @@
                         {/*PRODUCTS of choosen subCategory with brand rows*/}
 
                         <Content>
-                                            <ListView contentContainerStyle={{flexDirection: 'row',flex: 1, flexWrap: 'wrap', left: 5}}
+                                            <ListView contentContainerStyle={{flexDirection: 'row', flexWrap: 'wrap', left: 5}}
                                                 dataSource={this.state.dataSource}
                                                 enableEmptySections={true}
-                                                horizontal
                                                 renderRow={(rowData)=>this.renderRow(rowData)}>
                                             </ListView>
 

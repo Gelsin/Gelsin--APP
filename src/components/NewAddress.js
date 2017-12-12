@@ -176,7 +176,7 @@ export default class NewAddress extends Component {
                 <Container>
                     <Header style={styles.header}>
                         <Left style={{ flex: 1}}>
-                            <Button transparent onPress={()=>Actions.addresses()}>
+                            <Button transparent onPress={()=>Actions.pop()}>
                                 <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                             </Button>
                         </Left>

@@ -12,7 +12,7 @@ render()
 return(
     <CardItem horizontal={false}
               style={{flexDirection: 'column',borderWidth: 1,borderRadius: 4,padding: 0,marginRight: 14,
-     borderColor: '#E5DDCB',height: 180, margin: 6,width: (width-36)/2}}>
+     borderColor: '#E5DDCB',height: 180, margin: 6,width: (width-40)/2}}>
         <Thumbnail square size={70} source={{uri: this.props.thumbnail }} style={{marginTop: 12, marginBottom: 12}}/>
         <Text>{this.props.name}</Text>
         <Button full

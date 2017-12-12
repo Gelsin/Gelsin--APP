@@ -106,7 +106,7 @@ export default class Addresses extends Component {
             <Container>
                 <Header style={styles.header}>
                     <Left style={{ flex: 1}}>
-                        <Button transparent onPress={()=>Actions.orderAddress()}>
+                        <Button transparent onPress={()=>Actions.pop()}>
                             <Icon style={{color: '#e5ddcb'}} name='ios-arrow-round-back'/>
                         </Button>
                     </Left>
