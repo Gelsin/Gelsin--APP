@@ -2,9 +2,12 @@ import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button,Car
 import React, {Component} from 'react';
 import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions,AsyncStorage,Alert} from "react-native";
 import {Actions} from 'react-native-router-flux';
-import Drawer from 'react-native-drawer';
 import SideBarContent from './common/SideBarContent';
 const {width} = Dimensions.get("window");
+
+import Drawer from 'react-native-drawer-menu';
+import {Easing} from 'react-native'; // Customize easing function (Optional)
+
 
 var CatID;
 export default class Products extends Component {
@@ -20,7 +23,7 @@ export default class Products extends Component {
     }
 
     openControlPanel = () => {
-        this._drawer.open();
+        this._drawer.openDrawer();
         console.log("Drawer Acildi");
         this.setState({color: '#000000'},()=>console.log("color ag olmalidi: ",this.state.color));
     }
@@ -82,6 +85,20 @@ export default class Products extends Component {
 
     render()
     {
+
+
+
+        var customStyles = {
+            drawer: {
+                shadowColor: '',
+                shadowOpacity: 0.4,
+                shadowRadius: 10
+            },
+            mask: {}, // style of mask if it is enabled
+            main: {} // style of main board
+        };
+
+
         const css = {
                 "templateRow": {
                     "width": (width / 2 - 18),
@@ -94,6 +111,12 @@ export default class Products extends Component {
                     borderRadius: 4
 
                 },
+            container: {
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#F5FCFF',
+            },
             "templateImage": {
                 width: 110,
                 height: 80,
@@ -104,8 +127,20 @@ export default class Products extends Component {
             "templateMenu": {
                 color: '#524656',
                 marginBottom: 15
-            }
+            },
+            "Button": {color: '#E5DDCB',fontFamily: 'SourceSansPro-Regular'}
         }
+
+
+        var drawerContent = (
+            <View style={{top: 80}} >
+                <Button transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
+                <Button transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
+                <Button transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
+                <Button transparent><Text style={css.Button}>Haqqımızda</Text></Button>
+                <Button transparent onPress={()=>Actions.category()}><Text style={css.Button}>Kateqoriyalar</Text></Button>
+            </View>);
+
 
         const drawerStyles = {
             drawer: { shadowRadius: 3, backgroundColor: this.state.color},
@@ -119,17 +154,18 @@ export default class Products extends Component {
 
         return (
             <Drawer
-                tapToClose={true}
-                open={false}
-                type="displace"
-                content={<SideBarContent />}
+                style={css.container}
+                drawerWidth={170}
+                maskAlpha={2.0}
+                duration={100}
                 ref = {(ref) => this._drawer = ref}
-                openDrawerOffset={width/3}
-                closedDrawerOffset={0}
-                styles={drawerStyles}
-                tweenHandler={Drawer.tweenPresets.parallax}
-                elevation={0}
-                onClose={()=>this.onClose()}
+                drawerContent={drawerContent}
+                type={Drawer.types.Overlay}
+                customStyles={{drawer: css.main}}
+                drawerPosition={Drawer.positions.Left}
+                onDrawerOpen={() => {console.log('Drawer is opened');}}
+                onDrawerClose={() => {console.log('Drawer is closed')}}
+                easingFunc={Easing.ease}
             >
         <Container style={{backgroundColor: '#FFF'}}>
 

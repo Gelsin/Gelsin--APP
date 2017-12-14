@@ -8,14 +8,15 @@ export default class SideBarContent extends Component{
     constructor() {
         super();
     }
+
     render()
     {
         const css = {
             "Button": {color: '#E5DDCB',fontFamily: 'SourceSansPro-Regular'}
         }
 
-        return(
 
+        return(
 
             <View style={{top: 80}} >
                 <Button transparent onPress={()=>Actions.ordersMain()}><Icon style={{color: "#FFF",margin: 10}} name="md-card"/><Text style={css.Button}>Order History</Text></Button>
