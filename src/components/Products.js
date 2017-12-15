@@ -317,7 +317,7 @@
                                     <Icon name="ios-arrow-round-back" style={{color: '#E5DDCB'}}></Icon>
                                 </Button>
                             </Left>
-                            <Body style={{flex: 4}}>
+                            <Body style={{flex: 1}}>
                             <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
                             </Body>
                             <Right style={{flex: 1}}>

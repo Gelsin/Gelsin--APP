@@ -169,16 +169,16 @@ export default class Products extends Component {
             >
         <Container style={{backgroundColor: '#FFF'}}>
 
-        <Header style={{"backgroundColor": '#524656'}}>
-            <Left>
+        <Header style={{"backgroundColor": '#524656', justifyContent: 'space-between'}}>
+            <Left style={{flex: 1}}>
                 <Button transparent onPress={()=>this.openControlPanel()}>
                 <Icon name="ios-menu" style={{color: '#E5DDCB'}}></Icon>
                 </Button>
             </Left>
-            <Body>
+            <Body style={{flex: 1}}>
             <Text style={{letterSpacing: 0.5,color: '#E5DDCB'}}>GƏLSİN</Text>
             </Body>
-            <Right>
+            <Right style={{flex: 1}}>
                 <Text style={{top: -12,color: '#E5DDCB',fontSize: 14}}>{this.state.cartPrice} ₼</Text>
                 <Button transparent onPress={()=>Actions.cart()}>
                     <Icon name="ios-cart-outline" style={{color: '#E5DDCB'}}></Icon>
