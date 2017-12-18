@@ -15,6 +15,7 @@ import OrdersMain from './components/OrdersMain';
 import OrdersDetail from './components/OrdersDetail';
 import NewAddress from './components/NewAddress';
 import GetAddress from './components/GetAddress';
+import SelectBranch from './components/SelectBranchAddress';
 
 export default class AppRouter extends Component {
     constructor(props) {
@@ -33,6 +34,7 @@ export default class AppRouter extends Component {
                 <Scene key="account" component={Account} hideNavBar/>
                 <Scene key="newAddress" component={NewAddress} hideNavBar/>
                 <Scene key="getAddress" component={GetAddress} hideNavBar initial/>
+                <Scene key="selectBranch" component={SelectBranch} hideNavBar />
                 <Scene key="addresses" component={Addresses} hideNavBar/>
                 <Scene key="cart" component={Cart} hideNavBar/>
                 <Scene key="ordersMain" component={OrdersMain} hideNavBar/>
