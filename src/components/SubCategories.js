@@ -2,13 +2,13 @@ import {Header,Container,Body,Text,Icon,Right,Left,Item,Input,Content,Button,Car
 import React, {Component} from 'react';
 import {ListView, TextInput, View, Image, Platform, TouchableOpacity, ScrollView, StyleSheet,Animated,ActivityIndicator,Dimensions,AsyncStorage,Alert} from "react-native";
 import {Actions} from 'react-native-router-flux';
-import SideBarContent from './common/SideBarContent';
-const {width} = Dimensions.get("window");
 
 import Drawer from 'react-native-drawer-menu';
 import {Easing} from 'react-native'; // Customize easing function (Optional)
 
-
+const {width, height} = Dimensions.get("window"),
+    vw = width / 100
+vh = height / 100
 var CatID;
 export default class Products extends Component {
 
@@ -132,14 +132,14 @@ export default class Products extends Component {
         }
 
 
-        var drawerContent = (
-            <View style={{top: 80}} >
-                <Button transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
-                <Button transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
-                <Button transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
-                <Button transparent><Text style={css.Button}>Haqqımızda</Text></Button>
-                <Button transparent onPress={()=>Actions.category()}><Text style={css.Button}>Kateqoriyalar</Text></Button>
-            </View>);
+         var drawerContent = (
+        <View style={{ backgroundColor: 'black', height: height}} >
+            <Button  style={{marginTop: 80}} transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
+            <Button  transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
+            <Button  transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
+            <Button  transparent><Text style={css.Button}>Haqqımızda</Text></Button>
+            <Button  transparent onPress={()=>Actions.category()}><Text style={css.Button}>Kateqoriyalar</Text></Button>
+        </View>);
 
 
         const drawerStyles = {

@@ -1,87 +1,143 @@
 import React, {Component} from 'react';
-import {Dimensions, AsyncStorage,Picker,Alert} from 'react-native';
-import {Container, Form, H3, Header, Footer, Button, Text, Spinner,Card,Left,Body,Content,ListItem, Radio} from 'native-base';
+import {Dimensions, AsyncStorage} from 'react-native';
+import {Container, Form, H3, Header, Footer, Button, Text, Spinner, Item, Picker} from 'native-base';
+import {Grid, Row} from 'react-native-easy-grid';
 import {Actions} from 'react-native-router-flux';
 import  ButtonRound  from './common/ButtonRound';
+import SmartPicker from 'react-native-smart-picker';
 
-const {width, height} = Dimensions.get("window"),
-    vw = width / 100
-vh = height / 100
-export default class GetAddress extends Component {
-
+class GetAddress extends Component {
     constructor(props) {
+        console.log("in constructor");
         super(props);
         this.state = {
-            selectedBranchID: 1,
+            branches: [],
+            error: '',
+            loading: true,
+            selectedBranch: '0',
             branchAddresses: [],
-            selectedValue: 1,
-            selectedIndex: 0,
-            selectedAddress: ''
-        }
+            selectedBranchAddress: '00'
+        };
+        console.log(this.state);
+    };
 
-    }
+    componentWillMount() {
+        this.getBranches();
+        console.log("will mount");
+
+    };
+
+
+    componentDidMount() {
+        console.log("mounted");
+    };
 
 
     writeAddressToDevice = async() =>
     {
+        console.log("WriteToDevice");
+
         try {
-            await AsyncStorage.setItem('@Gelsin:SelectedAddress', JSON.stringify(this.state.selectedBranchID));
+            await AsyncStorage.setItem('@Gelsin:SelectedAddress', JSON.stringify(this.state.selectedBranch)).then(this.getBranchAddresses());
         } catch (error) {
             console.log(error);
         }
     }
 
-    onSubmit() {
-        this.writeAddressToDevice();
-        Actions.selectBranch();
+    renderButton() {
+
+        if (this.state.loading) {
+            return (
+                <Spinner color='#eb7b59'/>
+            )
+        }
+
+        var selAdd = this.state.selectedBranchAddress;
+        var selBra = this.state.selectedBranch;
+        if(selAdd=='00' || selBra=='0'){
+            return (
+                <Spinner color='#eb7b59'/>
+            )
+        }
+
+        return (
+            <ButtonRound onPress={()=>Actions.category()} text="Next"/>
+        );
     }
 
-
-
-
-
-
-    onValChange(val)
-    {
-        this.setState({selectedBranchID: val},()=>console.log("selected branchID: ",this.state.selectedBranchID));
-    }
 
 
 
 
     getBranchAddresses()
     {
-        fetch('http://gelsin.az/app/api/branches', {method: 'GET'})
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({branchAddresses: responseJson.branches}, ()=>console.log("Branch adresleri: ",this.state.branchAddresses));
-                this.setState({selectedBranchID: responseJson.branches[0].id});
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        var branchid;
+        var selBra = this.state.selectedBranch;
+        console.log("SEL BRA: ", selBra);
+        if(selBra==0)
+        {
+            return
+        }
+        AsyncStorage.getItem("@Gelsin:SelectedAddress").then((value) => {
+            if(value != null) {
+                branchid=value;
 
-
+                var Url = 'http://gelsin.az/app/api/branches/' + branchid +  '/addresses';
+                fetch(Url, {method: 'GET'})
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        this.setState({branchAddresses: responseJson.addresses}, ()=>console.log("Branch adresleri: ",this.state.branchAddresses));
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+            else
+                console.log("get Error on read from device storage");
+        }).done();
     }
 
 
-    componentWillMount()
+    getBranches()
     {
-        this.getBranchAddresses();
-
+        console.log("GET BRANCHES CAGRILDI");
+        fetch('http://gelsin.az/app/api/branches', {method: 'GET'})
+            .then((response) => response.json()
+                .then((responseJson) => {
+                    this.setState({branches: responseJson.branches}, ()=>console.log("Branchlar: ",this.state.branches));
+                    this.setState({selectedBranchID: responseJson.branches[0].id});
+                })
+                .catch((error) => {
+                    console.log(error);
+                })).
+        catch((error) => {
+            console.log(error);
+        });
     }
+
+
+    onBranchSelected(selectedValue)
+    {
+        console.log("Secilen Branches: ",selectedValue);
+        this.setState({selectedBranch: selectedValue},()=>this.writeAddressToDevice());
+    }
+
+
+    onBranchAddressSelected(selectedValue)
+    {
+        this.setState({selectedBranchAddress: selectedValue, loading: false},()=>console.log("Selected Branch Address: ", this.state.selectedBranchAddress));
+        console.log("Branch Address Selected");
+    }
+
 
 
 
     render() {
 
-
         const styles = {
             container: {
                 backgroundColor: '#524656',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flex: 0.1
+                alignItems: 'center'
             },
             content: {
                 flex: 1,
@@ -122,45 +178,65 @@ export default class GetAddress extends Component {
             }
         };
 
-
         return (
-
             <Container style={styles.container}>
+                {/*<Content style={styles.content}>*/}
                 <Header style={styles.header}>
-                    <H3 style={styles.title}>ŞÖBƏ</H3>
+                    <H3 style={styles.title}>ADDRESS</H3>
                 </Header>
 
-                <Content style={{width: width}}>
-                    {this.state.branchAddresses.map((address, i) => {
-                            return (
-                                <ListItem selected={this.state.selectedIndex==i} key={i}
-                                          onPress={()=>this.setState({selectedIndex: i,
-                                                  selectedAddress: address.address_line},
-                                              ()=>this.onValChange(address.id))}>
-                                    <Left style={{ flex: 1}}>
-                                        <Radio selected={this.state.selectedIndex==i}
-                                               onPress={()=>this.setState({selectedIndex: i,
-                                                       selectedAddress: address.address_line},
-                                                   ()=>console.log(this.state.selectedAddress))}
-                                        />
-                                    </Left>
-                                    <Body style={{ flex: 9,alignItems: 'center'}}>
-                                    <Text
-                                        style={{alignSelf: 'flex-start', marginLeft: 0, fontFamily: 'SourceSansPro-Regular',color: '#FFF'}}>
-                                        {address.address_line}
-                                    </Text>
-                                    </Body>
-                                </ListItem>
+                <Grid style={styles.content}>
+                    <Row size={3} style={styles.formRow}>
+                        <Form style={styles.form}>
+                            <Item style={{justifyContent: 'space-between', marginBottom: 30}}>
+                                <Picker style={{ width: 200, height: 40}}
 
-                            );
-                        }
-                    )}
-                    <ButtonRound onPress={()=>this.onSubmit()} text="Irəli"/>
-                </Content>
+                                        textStyle={{color: 'white'}}
+                                        selectedValue={this.state.selectedBranch}
+                                        onValueChange={(value)=>this.onBranchSelected(value)}
+                                >
+                                    <Picker.Item label="Select" value="0">SS</Picker.Item>
+                                    {this.state.branches.map((branches, i)=>{
+                                            return(
+                                                <Picker.Item label={branches.address_line} value={branches.id} key={i}/>
+                                            );
+                                        }
+                                    )}
+                                </Picker>
+                            </Item>
+                            <Item>
+                                <Picker style={{ width: 200, height: 40}}
+                                        textStyle={{color: 'white'}}
+                                        selectedValue={this.state.selectedBranchAddress}
+                                        onValueChange={this.onBranchAddressSelected.bind(this)}
+                                >
+                                    <Picker.Item label="Select Address" value="00">SS</Picker.Item>
+                                    {this.state.branchAddresses.map((address, k)=>{
+                                            return(
+                                                <Picker.Item label={address.street_name} value={address.id} key={k}/>
+                                            );
+                                        }
+                                    )}
 
+                                </Picker>
+                            </Item>
+
+
+                            {this.renderButton()}
+
+                            <Button autoCapitalize="none" style={styles.button} transparent>
+                                <Text autoCapitalize="none" style={styles.text}>Get my Location</Text>
+                            </Button>
+
+                            <Text style={styles.text}>{this.state.error}</Text>
+                        </Form>
+                    </Row>
+                </Grid>
+
+                {/*</Content>*/}
             </Container>
-
         );
-
     }
 }
+
+export default GetAddress;

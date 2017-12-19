@@ -104,12 +104,12 @@ export default class Categories extends Component {
 
 
         var drawerContent = (
-            <View style={{top: 80}} >
-                <Button transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
-                <Button transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
-                <Button transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
-                <Button transparent><Text style={css.Button}>Haqqımızda</Text></Button>
-                <Button transparent onPress={()=>Actions.category()}><Text style={css.Button}>Kateqoriyalar</Text></Button>
+            <View style={{ backgroundColor: 'black', height: height}} >
+                <Button  style={{marginTop: 80}} transparent onPress={()=>Actions.ordersMain()}><Text style={css.Button}>Order History</Text></Button>
+                <Button  transparent onPress={()=>Actions.account()}><Text style={css.Button}>Hesabım</Text></Button>
+                <Button  transparent onPress={()=>Actions.addresses()}><Text style={css.Button}>Adreslərim</Text></Button>
+                <Button  transparent><Text style={css.Button}>Haqqımızda</Text></Button>
+                <Button  transparent onPress={()=>Actions.category()}><Text style={css.Button}>Kateqoriyalar</Text></Button>
             </View>);
 
 
@@ -131,12 +131,12 @@ export default class Categories extends Component {
             <Drawer
                 style={css.container}
                 drawerWidth={170}
-                maskAlpha={2.0}
+                maskAlpha={1.0}
+                showMask={false}
                 duration={100}
                 ref = {(ref) => this._drawer = ref}
                 drawerContent={drawerContent}
-                type={Drawer.types.Overlay}
-                customStyles={{drawer: css.main}}
+                type={Drawer.types.Default}
                 drawerPosition={Drawer.positions.Left}
                 onDrawerOpen={() => {console.log('Drawer is opened');}}
                 onDrawerClose={() => {console.log('Drawer is closed')}}

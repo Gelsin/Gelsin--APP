@@ -44,23 +44,19 @@ class GetAddress extends Component {
         }
     }
 
-
-    getBranches()
-    {
-        console.log("GET BRANCHES CAGRILDI");
-        fetch('http://gelsin.az/app/api/branches', {method: 'GET'})
-            .then((response) => response.json()
-                .then((responseJson) => {
-                this.setState({branches: responseJson.branches}, ()=>console.log("Branchlar: ",this.state.branches));
-                this.setState({selectedBranchID: responseJson.branches[0].id});
-            })
-                .catch((error) => {
-                    console.log(error);
-                })).
-            catch((error) => {
-            console.log(error);
-        });
+    renderButton() {
+        if (this.state.loading) {
+            return (
+                <Spinner color='#eb7b59'/>
+            )
+        }
+        return (
+            <ButtonRound onPress={()=>Actions.category()} text="Next"/>
+        );
     }
+
+
+
 
 
     getBranchAddresses()
@@ -87,16 +83,28 @@ class GetAddress extends Component {
     }
 
 
+    getBranches()
+    {
+        console.log("GET BRANCHES CAGRILDI");
+        fetch('http://gelsin.az/app/api/branches', {method: 'GET'})
+            .then((response) => response.json()
+                .then((responseJson) => {
+                    this.setState({branches: responseJson.branches}, ()=>console.log("Branchlar: ",this.state.branches));
+                    this.setState({selectedBranchID: responseJson.branches[0].id});
+                })
+                .catch((error) => {
+                    console.log(error);
+                })).
+        catch((error) => {
+            console.log(error);
+        });
+    }
+
+
      onBranchSelected(selectedValue)
     {
         console.log("Secilen Branches: ",selectedValue);
         this.setState({selectedBranch: selectedValue},()=>this.writeAddressToDevice());
-    }
-
-
-    nananay()
-    {
-        console.log("KUlFETINI SIKIM");
     }
 
 
@@ -107,16 +115,7 @@ class GetAddress extends Component {
     }
 
 
-    renderButton() {
-        if (this.state.loading) {
-            return (
-                <Spinner color='#eb7b59'/>
-            )
-        }
-        return (
-            <ButtonRound onPress={()=>Actions.category()} text="Next"/>
-        );
-    }
+
 
     render() {
 

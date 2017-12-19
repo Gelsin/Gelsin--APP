@@ -168,6 +168,9 @@ export default class NewAddress extends Component {
             },
             item: {
                 flexDirection: 'column'
+            },
+            footerStyle: {
+                    backgroundColor: '#524656',
             }
         };
 
@@ -219,8 +222,8 @@ export default class NewAddress extends Component {
                         </Form>
                     </Content>
 
-                    <Footer style={{"backgroundColor": '#524656'}}>
-                        <FooterTab style={{flex: 1}}>
+                    <Footer style={styles.footerStyle}>
+                        <FooterTab style={{flex: 1,backgroundColor: '#524656'}}>
                             <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
                                 <Button transparent onPress={()=>Actions.addresses()}>
                                     <Text style={{fontFamily: 'SourceSansPro-Regular',marginTop: 10, color: '#FFF'}}>Geri</Text>

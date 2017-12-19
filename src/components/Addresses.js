@@ -140,7 +140,7 @@ export default class Addresses extends Component {
                 </Content>
 
                 <Footer style={{"backgroundColor": '#524656'}}>
-                    <FooterTab style={{flex: 1}}>
+                    <FooterTab style={{flex: 1,backgroundColor: '#524656'}}>
                         <Button transparent onPress={()=>Actions.newAddress()}>
                             <Icon style={{color: '#FFF'}} name="ios-add-circle-outline" />
                             <Text style={{color: '#FFF', fontFamily: 'SourceSansPro-Regular'}}>Yeni adres</Text>
